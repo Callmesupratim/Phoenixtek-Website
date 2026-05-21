@@ -431,6 +431,76 @@
             color: #ddd;
         }
 
+        /* Slideshow Navigation */
+        .slideshow-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .slideshow-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .slideshow-image.active {
+            display: block;
+        }
+
+        .slideshow-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--dark);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: all 0.3s;
+            opacity: 0;
+        }
+
+        .portfolio-item:hover .slideshow-arrow {
+            opacity: 1;
+        }
+
+        .slideshow-arrow:hover {
+            background: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .slideshow-arrow.prev {
+            left: 10px;
+        }
+
+        .slideshow-arrow.next {
+            right: 10px;
+        }
+
+        .slideshow-counter {
+            position: absolute;
+            bottom: 80px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            z-index: 10;
+        }
+
         /* About Section */
         #about {
             background: linear-gradient(180deg, #F0F9FF 0%, #FFFFFF 100%);
@@ -792,27 +862,6 @@
             }
         }
 
-        @media (max-width: 600px) {
-            nav ul {
-                flex-direction: column;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: white;
-                padding: 1rem;
-                display: none;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            }
-
-            .cta-buttons {
-                flex-direction: column;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-        }
 
         /* Scroll animations */
         .fade-in {
@@ -825,6 +874,134 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 5px;
+            background: none;
+            border: none;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 26px;
+            height: 3px;
+            background: var(--dark);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.open span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 8px);
+        }
+
+        .hamburger.open span:nth-child(2) {
+            opacity: 0;
+            transform: scaleX(0);
+        }
+
+        .hamburger.open span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -8px);
+        }
+
+        /* Skeleton Loading */
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 20px;
+        }
+
+        /* WhatsApp Floating Button */
+        .whatsapp-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.45);
+            z-index: 999;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .whatsapp-btn:hover {
+            transform: scale(1.12);
+            box-shadow: 0 8px 30px rgba(37, 211, 102, 0.55);
+        }
+
+        .whatsapp-btn svg {
+            width: 32px;
+            height: 32px;
+            fill: white;
+        }
+
+        /* Google Maps */
+        .map-container {
+            margin-top: 2rem;
+            border-radius: 15px;
+            overflow: hidden;
+            height: 210px;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* Responsive — hamburger breakpoint */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            nav ul {
+                position: fixed;
+                top: 78px;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                align-items: center;
+                padding: 1.5rem;
+                gap: 1.5rem;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+                transform: translateY(-110%);
+                opacity: 0;
+                pointer-events: none;
+                transition: transform 0.3s ease, opacity 0.3s ease;
+                z-index: 999;
+            }
+
+            nav ul.open {
+                transform: translateY(0);
+                opacity: 1;
+                pointer-events: all;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -835,7 +1012,7 @@
                 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" alt="Phoenixtek Logo" class="logo-img" style="display: none;">
                 <div class="logo">Phoenixtek</div>
             </div>
-            <ul>
+            <ul id="nav-links">
                 <li><a href="#home" class="active">Home</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#services">Services</a></li>
@@ -844,6 +1021,11 @@
                 <li><a href="#media">Media</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
+            <button class="hamburger" id="hamburger" aria-label="Toggle navigation" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </nav>
 
@@ -1111,6 +1293,14 @@
                         </div>
                     </div>
                 </div>
+                <div class="map-container">
+                    <iframe
+                        src="https://maps.google.com/maps?q=Diamond+Harbour,West+Bengal,India&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                        allowfullscreen
+                        loading="lazy"
+                        title="Phoenixtek Solution Location">
+                    </iframe>
+                </div>
             </div>
             <div class="contact-form">
                 <form action="https://formspree.io/f/xnjrdqjv" method="POST">
@@ -1182,7 +1372,51 @@
         </div>
     </footer>
 
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/919734115880" target="_blank" class="whatsapp-btn" title="Chat on WhatsApp">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+    </a>
+
     <script>
+        // Hamburger menu toggle
+        function toggleMenu() {
+            const nav = document.getElementById('nav-links');
+            const btn = document.getElementById('hamburger');
+            nav.classList.toggle('open');
+            btn.classList.toggle('open');
+        }
+
+        // Close menu when a nav link is clicked
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('#nav-links a').forEach(link => {
+                link.addEventListener('click', () => {
+                    document.getElementById('nav-links').classList.remove('open');
+                    document.getElementById('hamburger').classList.remove('open');
+                });
+            });
+        });
+
+        // Show skeleton placeholders while data loads
+        function initSkeletons() {
+            const sections = [
+                { selector: '#services .services-grid', count: 6, height: '200px' },
+                { selector: '#portfolio .portfolio-grid', count: 4, height: '400px' },
+                { selector: '#photos .media-grid',       count: 6, height: '300px' },
+                { selector: '#videos .media-grid',       count: 4, height: '300px' },
+                { selector: '#blog .blog-grid',          count: 3, height: '350px' },
+            ];
+            sections.forEach(({ selector, count, height }) => {
+                const el = document.querySelector(selector);
+                if (el) {
+                    el.innerHTML = Array(count).fill(0).map(() =>
+                        `<div class="skeleton" style="height:${height};"></div>`
+                    ).join('');
+                }
+            });
+        }
+
         // Smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -1300,12 +1534,13 @@
                 
                 container.innerHTML = ''; // Clear existing
                 
-                projects.forEach((project, index) => {
+                projects.forEach((project, projectIndex) => {
                     if (!project.Name) return;
                     
-                    const bgStyle = project.ImageURL ? 
-                        `style="background: url('${project.ImageURL}') center/cover;"` : 
-                        '';
+                    // Split ImageURL by comma to support multiple images
+                    const imageURLs = project.ImageURL ? 
+                        project.ImageURL.split(',').map(url => url.trim()).filter(url => url) : 
+                        [];
                     
                     const colors = [
                         'linear-gradient(135deg, #FF6B35, #9D4EDD)',
@@ -1314,12 +1549,36 @@
                         'linear-gradient(135deg, #9D4EDD, #00D9FF)'
                     ];
                     
-                    const gradientStyle = !project.ImageURL ? 
-                        `style="background: ${colors[index % colors.length]};"` : '';
+                    // Create slideshow HTML if multiple images, otherwise single image
+                    let backgroundHTML = '';
+                    
+                    if (imageURLs.length > 0) {
+                        backgroundHTML = `
+                            <div class="slideshow-container" id="slideshow-${projectIndex}">
+                                ${imageURLs.map((url, imgIndex) => `
+                                    <div class="portfolio-bg slideshow-image ${imgIndex === 0 ? 'active' : ''}" 
+                                         style="background: url('${url}') center/cover;">
+                                    </div>
+                                `).join('')}
+                                ${imageURLs.length > 1 ? `
+                                    <button class="slideshow-arrow prev" onclick="changeSlide(${projectIndex}, -1)">‹</button>
+                                    <button class="slideshow-arrow next" onclick="changeSlide(${projectIndex}, 1)">›</button>
+                                    <div class="slideshow-counter">
+                                        <span id="counter-${projectIndex}">1</span> / ${imageURLs.length}
+                                    </div>
+                                ` : ''}
+                            </div>
+                        `;
+                    } else {
+                        // No images - use gradient
+                        backgroundHTML = `
+                            <div class="portfolio-bg" style="background: ${colors[projectIndex % colors.length]};"></div>
+                        `;
+                    }
                     
                     container.innerHTML += `
                         <div class="portfolio-item">
-                            <div class="portfolio-bg" ${project.ImageURL ? bgStyle : gradientStyle}></div>
+                            ${backgroundHTML}
                             <div class="portfolio-overlay">
                                 <h3>${project.Name}</h3>
                                 <p>${project.Description || ''}</p>
@@ -1327,8 +1586,44 @@
                         </div>
                     `;
                 });
+                
+                // Initialize slideshow indexes
+                window.slideshowIndexes = projects.map(() => 0);
+                
             } catch (error) {
                 console.log('Using default projects:', error);
+            }
+        }
+
+        // Slideshow navigation function
+        function changeSlide(projectIndex, direction) {
+            const slideshow = document.getElementById(`slideshow-${projectIndex}`);
+            if (!slideshow) return;
+            
+            const slides = slideshow.querySelectorAll('.slideshow-image');
+            if (slides.length === 0) return;
+            
+            // Hide current slide
+            slides[window.slideshowIndexes[projectIndex]].classList.remove('active');
+            
+            // Update index
+            window.slideshowIndexes[projectIndex] += direction;
+            
+            // Wrap around
+            if (window.slideshowIndexes[projectIndex] >= slides.length) {
+                window.slideshowIndexes[projectIndex] = 0;
+            }
+            if (window.slideshowIndexes[projectIndex] < 0) {
+                window.slideshowIndexes[projectIndex] = slides.length - 1;
+            }
+            
+            // Show new slide
+            slides[window.slideshowIndexes[projectIndex]].classList.add('active');
+            
+            // Update counter
+            const counter = document.getElementById(`counter-${projectIndex}`);
+            if (counter) {
+                counter.textContent = window.slideshowIndexes[projectIndex] + 1;
             }
         }
 
@@ -1482,19 +1777,62 @@
             }
         }
 
+        // Load Blog posts from Google Sheets (BLOG tab)
+        // Columns: Date | Category | Title | Excerpt | Link | ImageURL
+        async function loadBlog() {
+            try {
+                const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:csv&sheet=BLOG`;
+                const response = await fetch(url);
+                const csv = await response.text();
+                const posts = parseCSV(csv);
+
+                const container = document.querySelector('#blog .blog-grid');
+                if (!container) return;
+
+                const validPosts = posts.filter(p => p.Title);
+                if (validPosts.length === 0) return; // fall back to static HTML
+
+                const gradients = [
+                    'linear-gradient(135deg, var(--accent), var(--purple))',
+                    'linear-gradient(135deg, var(--primary), var(--secondary))',
+                    'linear-gradient(135deg, var(--green), var(--accent))',
+                ];
+
+                container.innerHTML = '';
+                validPosts.forEach((post, i) => {
+                    const bgStyle = post.ImageURL
+                        ? `background: url('${post.ImageURL}') center/cover;`
+                        : `background: ${gradients[i % gradients.length]};`;
+                    const linkAttr = post.Link && post.Link !== '#' ? `href="${post.Link}" target="_blank"` : `href="#"`;
+                    container.innerHTML += `
+                        <div class="blog-card">
+                            <div class="blog-image" style="${bgStyle}"></div>
+                            <div class="blog-content">
+                                <div class="blog-meta">${post.Date || ''} • ${post.Category || ''}</div>
+                                <h3>${post.Title}</h3>
+                                <p>${post.Excerpt || ''}</p>
+                                <a ${linkAttr} class="read-more">Read More →</a>
+                            </div>
+                        </div>
+                    `;
+                });
+            } catch (error) {
+                console.log('Using default blog posts:', error);
+            }
+        }
+
         // Load all data when page loads
         window.addEventListener('DOMContentLoaded', async () => {
-            console.log('🔄 Loading data from Google Sheets...');
-            
+            initSkeletons();
+
             await Promise.all([
                 loadProjects(),
                 loadServices(),
                 loadVideos(),
                 loadPhotos(),
-                loadContact()
+                loadContact(),
+                loadBlog(),
             ]);
-            
-            console.log('✅ Data loaded from Google Sheets!');
         });
     </script>
 </body>
