@@ -643,7 +643,7 @@
             line-height: 1.6;
             font-size: 0.95rem;
             display: -webkit-box;
-            -webkit-line-clamp: 3;
+            -webkit-line-clamp: 5;
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
@@ -1962,18 +1962,24 @@
             }
         }
 
-        // Build a blog card HTML string
+        // HTML-escape a string for use in a data-* attribute value
+        function he(str) {
+            return (str || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        }
+
+        // Build a blog card — data stored in data-* attributes, click handled by delegation
         function buildBlogCard(title, meta, excerpt, imageURL, gradient, link) {
             const imgHtml = imageURL
-                ? `<img src="${imageURL}" alt="${title}"><div class="blog-read-overlay"><span>Click to Read</span></div>`
+                ? `<img src="${imageURL}" alt="${he(title)}"><div class="blog-read-overlay"><span>Click to Read</span></div>`
                 : `<div class="blog-gradient" style="background:${gradient};width:100%;height:100%;"></div><div class="blog-read-overlay"><span>Click to Read</span></div>`;
-            const safeExcerpt = excerpt.replace(/\\/g,'\\\\').replace(/`/g,'\\`').replace(/'/g,"\\'");
-            const safeTitle   = title.replace(/'/g,"\\'");
-            const safeMeta    = meta.replace(/'/g,"\\'");
-            const safeGrad    = gradient.replace(/'/g,"\\'");
-            const safeLink    = (link || '').replace(/'/g,"\\'");
             return `
-                <div class="blog-card" onclick="openBlogModal('${safeTitle}','${safeMeta}','${safeExcerpt}','${imageURL||''}','${safeGrad}','${safeLink}')">
+                <div class="blog-card"
+                     data-title="${he(title)}"
+                     data-meta="${he(meta)}"
+                     data-excerpt="${he(excerpt)}"
+                     data-image="${he(imageURL)}"
+                     data-gradient="${he(gradient)}"
+                     data-link="${he(link)}">
                     <div class="blog-image-wrap">${imgHtml}</div>
                     <div class="blog-content">
                         <div class="blog-meta">${meta}</div>
@@ -1982,6 +1988,20 @@
                     </div>
                 </div>`;
         }
+
+        // Single delegated click listener for all blog cards
+        document.addEventListener('click', function(e) {
+            const card = e.target.closest('.blog-card');
+            if (!card) return;
+            openBlogModal(
+                card.dataset.title,
+                card.dataset.meta,
+                card.dataset.excerpt,
+                card.dataset.image,
+                card.dataset.gradient,
+                card.dataset.link
+            );
+        });
 
         // Default static blog posts (shown when BLOG sheet tab doesn't exist or is empty)
         function renderDefaultBlog() {
