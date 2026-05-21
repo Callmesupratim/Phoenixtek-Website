@@ -555,62 +555,97 @@
         }
 
         /* Blog Section */
-        #blog {
-            background: #FFFBF5;
-        }
+        #blog { background: #FFFBF5; }
 
         .blog-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
             gap: 2rem;
         }
 
         .blog-card {
             background: white;
-            border-radius: 20px;
+            border-radius: 24px;
             overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.07);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            position: relative;
         }
 
         .blog-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.13);
         }
 
-        .blog-image {
+        .blog-image-wrap {
+            position: relative;
             width: 100%;
-            height: 200px;
+            height: 280px;
+            overflow: hidden;
             background: linear-gradient(135deg, var(--accent), var(--purple));
         }
 
-        .blog-card:nth-child(2) .blog-image {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        .blog-image-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: #f5f5f5;
+            display: block;
         }
 
-        .blog-card:nth-child(3) .blog-image {
-            background: linear-gradient(135deg, var(--green), var(--accent));
+        .blog-image-wrap .blog-gradient {
+            width: 100%;
+            height: 100%;
         }
 
-        .blog-content {
-            padding: 1.5rem;
+        .blog-read-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(26,26,46,0.55);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
         }
+
+        .blog-card:hover .blog-read-overlay { opacity: 1; }
+
+        .blog-read-overlay span {
+            color: white;
+            font-weight: 700;
+            font-size: 1.1rem;
+            background: var(--primary);
+            padding: 0.7rem 1.8rem;
+            border-radius: 50px;
+        }
+
+        .blog-content { padding: 1.6rem; }
 
         .blog-meta {
             color: #999;
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            margin-bottom: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .blog-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
+            font-size: 1.25rem;
+            margin-bottom: 0.8rem;
             color: var(--dark);
+            line-height: 1.4;
         }
 
         .blog-card p {
             color: #666;
             line-height: 1.6;
-            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         .read-more {
@@ -620,6 +655,118 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
+        }
+
+        /* Blog Modal */
+        .blog-modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.75);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            backdrop-filter: blur(6px);
+        }
+
+        .blog-modal-overlay.open { display: flex; }
+
+        .blog-modal-box {
+            background: white;
+            border-radius: 28px;
+            max-width: 760px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.3);
+            animation: modalIn 0.3s ease;
+        }
+
+        @keyframes modalIn {
+            from { opacity: 0; transform: scale(0.93) translateY(20px); }
+            to   { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .blog-modal-img {
+            width: 100%;
+            height: 320px;
+            object-fit: contain;
+            background: #f5f5f5;
+            border-radius: 28px 28px 0 0;
+            display: block;
+        }
+
+        .blog-modal-img-gradient {
+            width: 100%;
+            height: 320px;
+            border-radius: 28px 28px 0 0;
+        }
+
+        .blog-modal-body { padding: 2.5rem; }
+
+        .blog-modal-meta {
+            color: #999;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.8rem;
+        }
+
+        .blog-modal-body h2 {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+            line-height: 1.3;
+        }
+
+        .blog-modal-text {
+            color: #444;
+            line-height: 1.9;
+            font-size: 1.05rem;
+            white-space: pre-line;
+        }
+
+        .blog-modal-close {
+            position: absolute;
+            top: 1.2rem;
+            right: 1.2rem;
+            width: 42px;
+            height: 42px;
+            background: rgba(0,0,0,0.55);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.4rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: background 0.2s;
+        }
+
+        .blog-modal-close:hover { background: var(--primary); }
+
+        .blog-modal-link {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 0.9rem 2.2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: transform 0.2s;
+        }
+
+        .blog-modal-link:hover { transform: translateY(-2px); }
+
+        @media (max-width: 600px) {
+            .blog-modal-body h2 { font-size: 1.4rem; }
+            .blog-modal-img, .blog-modal-img-gradient { height: 200px; }
         }
 
         /* Media Section */
@@ -1373,6 +1520,20 @@
         </div>
     </footer>
 
+    <!-- Blog Modal -->
+    <div id="blog-modal" class="blog-modal-overlay" onclick="closeBlogModal(event)">
+        <div class="blog-modal-box">
+            <button class="blog-modal-close" onclick="closeBlogModal()">×</button>
+            <div id="modal-img-wrap"></div>
+            <div class="blog-modal-body">
+                <div class="blog-modal-meta" id="modal-meta"></div>
+                <h2 id="modal-title"></h2>
+                <div class="blog-modal-text" id="modal-text"></div>
+                <a id="modal-link" href="#" target="_blank" class="blog-modal-link" style="display:none;">Read Full Article →</a>
+            </div>
+        </div>
+    </div>
+
     <!-- WhatsApp Floating Button -->
     <a href="https://wa.me/919734115880" target="_blank" class="whatsapp-btn" title="Chat on WhatsApp">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -1801,40 +1962,71 @@
             }
         }
 
+        // Build a blog card HTML string
+        function buildBlogCard(title, meta, excerpt, imageURL, gradient, link) {
+            const imgHtml = imageURL
+                ? `<img src="${imageURL}" alt="${title}"><div class="blog-read-overlay"><span>Click to Read</span></div>`
+                : `<div class="blog-gradient" style="background:${gradient};width:100%;height:100%;"></div><div class="blog-read-overlay"><span>Click to Read</span></div>`;
+            const safeExcerpt = excerpt.replace(/\\/g,'\\\\').replace(/`/g,'\\`').replace(/'/g,"\\'");
+            const safeTitle   = title.replace(/'/g,"\\'");
+            const safeMeta    = meta.replace(/'/g,"\\'");
+            const safeGrad    = gradient.replace(/'/g,"\\'");
+            const safeLink    = (link || '').replace(/'/g,"\\'");
+            return `
+                <div class="blog-card" onclick="openBlogModal('${safeTitle}','${safeMeta}','${safeExcerpt}','${imageURL||''}','${safeGrad}','${safeLink}')">
+                    <div class="blog-image-wrap">${imgHtml}</div>
+                    <div class="blog-content">
+                        <div class="blog-meta">${meta}</div>
+                        <h3>${title}</h3>
+                        <p>${excerpt}</p>
+                    </div>
+                </div>`;
+        }
+
         // Default static blog posts (shown when BLOG sheet tab doesn't exist or is empty)
         function renderDefaultBlog() {
             const container = document.querySelector('#blog .blog-grid');
             if (!container) return;
-            container.innerHTML = `
-                <div class="blog-card">
-                    <div class="blog-image"></div>
-                    <div class="blog-content">
-                        <div class="blog-meta">May 15, 2026 • Technology</div>
-                        <h3>IoT in Structural Health Monitoring</h3>
-                        <p>Exploring how Internet of Things is revolutionizing real-time infrastructure monitoring and predictive maintenance.</p>
-                        <a href="#" class="read-more">Read More →</a>
-                    </div>
-                </div>
-                <div class="blog-card">
-                    <div class="blog-image" style="background: linear-gradient(135deg, var(--primary), var(--secondary));"></div>
-                    <div class="blog-content">
-                        <div class="blog-meta">May 10, 2026 • Standards</div>
-                        <h3>Bridge Load Testing Guidelines in India</h3>
-                        <p>Understanding IRC standards and best practices for highway bridge safety assessment and certification.</p>
-                        <a href="#" class="read-more">Read More →</a>
-                    </div>
-                </div>
-                <div class="blog-card">
-                    <div class="blog-image" style="background: linear-gradient(135deg, var(--green), var(--accent));"></div>
-                    <div class="blog-content">
-                        <div class="blog-meta">May 5, 2026 • Safety</div>
-                        <h3>Geotechnical Monitoring for Metro Projects</h3>
-                        <p>Essential instrumentation strategies for underground construction and urban infrastructure development.</p>
-                        <a href="#" class="read-more">Read More →</a>
-                    </div>
-                </div>
-            `;
+            const defaults = [
+                { title: 'IoT in Structural Health Monitoring',        meta: 'May 15, 2026 • Technology', excerpt: 'Exploring how Internet of Things is revolutionizing real-time infrastructure monitoring and predictive maintenance for bridges, highways and critical structures.', gradient: 'linear-gradient(135deg,var(--accent),var(--purple))' },
+                { title: 'Bridge Load Testing Guidelines in India',    meta: 'May 10, 2026 • Standards',  excerpt: 'Understanding IRC standards and best practices for highway bridge safety assessment and certification across Indian road networks.', gradient: 'linear-gradient(135deg,var(--primary),var(--secondary))' },
+                { title: 'Geotechnical Monitoring for Metro Projects',  meta: 'May 5, 2026 • Safety',     excerpt: 'Essential instrumentation strategies for underground construction and urban infrastructure development in Indian metro cities.', gradient: 'linear-gradient(135deg,var(--green),var(--accent))' },
+            ];
+            container.innerHTML = defaults.map(d => buildBlogCard(d.title, d.meta, d.excerpt, '', d.gradient, '')).join('');
         }
+
+        // Blog modal open / close
+        function openBlogModal(title, meta, excerpt, imageURL, gradient, link) {
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-meta').textContent  = meta;
+            document.getElementById('modal-text').textContent  = excerpt;
+            const imgWrap = document.getElementById('modal-img-wrap');
+            imgWrap.innerHTML = imageURL
+                ? `<img src="${imageURL}" alt="${title}" class="blog-modal-img">`
+                : `<div class="blog-modal-img-gradient" style="background:${gradient};"></div>`;
+            const linkEl = document.getElementById('modal-link');
+            if (link && link !== '#' && link !== '') {
+                linkEl.href = link;
+                linkEl.style.display = 'inline-block';
+            } else {
+                linkEl.style.display = 'none';
+            }
+            document.getElementById('blog-modal').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeBlogModal(e) {
+            if (e && e.target !== document.getElementById('blog-modal')) return;
+            document.getElementById('blog-modal').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') {
+                document.getElementById('blog-modal').classList.remove('open');
+                document.body.style.overflow = '';
+            }
+        });
 
         // Load Blog posts from Google Sheets (BLOG tab)
         // Columns: Date | Category | Title | Excerpt | Link | ImageURL
@@ -1858,10 +2050,10 @@
                     return;
                 }
 
-                const gradients = [
-                    'linear-gradient(135deg, var(--accent), var(--purple))',
-                    'linear-gradient(135deg, var(--primary), var(--secondary))',
-                    'linear-gradient(135deg, var(--green), var(--accent))',
+                const blogGradients = [
+                    'linear-gradient(135deg,var(--accent),var(--purple))',
+                    'linear-gradient(135deg,var(--primary),var(--secondary))',
+                    'linear-gradient(135deg,var(--green),var(--accent))',
                 ];
 
                 const container = document.querySelector('#blog .blog-grid');
@@ -1869,21 +2061,11 @@
                 container.innerHTML = '';
 
                 validPosts.forEach((post, i) => {
-                    const bgStyle = post.ImageURL
-                        ? `background: url('${post.ImageURL}') center/cover;`
-                        : `background: ${gradients[i % gradients.length]};`;
-                    const linkAttr = post.Link && post.Link !== '#' ? `href="${post.Link}" target="_blank"` : `href="#"`;
-                    container.innerHTML += `
-                        <div class="blog-card">
-                            <div class="blog-image" style="${bgStyle}"></div>
-                            <div class="blog-content">
-                                <div class="blog-meta">${post.Date || ''} • ${post.Category || ''}</div>
-                                <h3>${post.Title}</h3>
-                                <p>${post.Excerpt || ''}</p>
-                                <a ${linkAttr} class="read-more">Read More →</a>
-                            </div>
-                        </div>
-                    `;
+                    const meta = [post.Date, post.Category].filter(Boolean).join(' • ');
+                    container.innerHTML += buildBlogCard(
+                        post.Title, meta, post.Excerpt || '',
+                        post.ImageURL || '', blogGradients[i % blogGradients.length], post.Link || ''
+                    );
                 });
             } catch (error) {
                 renderDefaultBlog();
