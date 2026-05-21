@@ -1778,20 +1778,62 @@
             }
         }
 
+        // Default static blog posts (shown when BLOG sheet tab doesn't exist or is empty)
+        function renderDefaultBlog() {
+            const container = document.querySelector('#blog .blog-grid');
+            if (!container) return;
+            container.innerHTML = `
+                <div class="blog-card">
+                    <div class="blog-image"></div>
+                    <div class="blog-content">
+                        <div class="blog-meta">May 15, 2026 • Technology</div>
+                        <h3>IoT in Structural Health Monitoring</h3>
+                        <p>Exploring how Internet of Things is revolutionizing real-time infrastructure monitoring and predictive maintenance.</p>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                </div>
+                <div class="blog-card">
+                    <div class="blog-image" style="background: linear-gradient(135deg, var(--primary), var(--secondary));"></div>
+                    <div class="blog-content">
+                        <div class="blog-meta">May 10, 2026 • Standards</div>
+                        <h3>Bridge Load Testing Guidelines in India</h3>
+                        <p>Understanding IRC standards and best practices for highway bridge safety assessment and certification.</p>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                </div>
+                <div class="blog-card">
+                    <div class="blog-image" style="background: linear-gradient(135deg, var(--green), var(--accent));"></div>
+                    <div class="blog-content">
+                        <div class="blog-meta">May 5, 2026 • Safety</div>
+                        <h3>Geotechnical Monitoring for Metro Projects</h3>
+                        <p>Essential instrumentation strategies for underground construction and urban infrastructure development.</p>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                </div>
+            `;
+        }
+
         // Load Blog posts from Google Sheets (BLOG tab)
         // Columns: Date | Category | Title | Excerpt | Link | ImageURL
         async function loadBlog() {
             try {
                 const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:csv&sheet=BLOG`;
                 const response = await fetch(url);
-                const csv = await response.text();
-                const posts = parseCSV(csv);
+                const text = await response.text();
 
-                const container = document.querySelector('#blog .blog-grid');
-                if (!container) return;
+                // If Google returns an error page (sheet tab doesn't exist), fall back
+                if (!response.ok || text.trim().startsWith('<') || text.trim() === '') {
+                    renderDefaultBlog();
+                    return;
+                }
 
-                const validPosts = posts.filter(p => p.Title);
-                if (validPosts.length === 0) return; // fall back to static HTML
+                const posts = parseCSV(text);
+                const validPosts = posts.filter(p => p.Title && p.Title.trim() !== '');
+
+                if (validPosts.length === 0) {
+                    renderDefaultBlog();
+                    return;
+                }
 
                 const gradients = [
                     'linear-gradient(135deg, var(--accent), var(--purple))',
@@ -1799,7 +1841,10 @@
                     'linear-gradient(135deg, var(--green), var(--accent))',
                 ];
 
+                const container = document.querySelector('#blog .blog-grid');
+                if (!container) return;
                 container.innerHTML = '';
+
                 validPosts.forEach((post, i) => {
                     const bgStyle = post.ImageURL
                         ? `background: url('${post.ImageURL}') center/cover;`
@@ -1818,7 +1863,7 @@
                     `;
                 });
             } catch (error) {
-                console.log('Using default blog posts:', error);
+                renderDefaultBlog();
             }
         }
 
