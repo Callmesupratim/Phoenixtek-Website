@@ -1495,23 +1495,46 @@
         
         const SPREADSHEET_ID = '14ijRlsRjYNBCmYrUZi6-ap-fnYXFjMBVa10AtXBDhuU';
         
-        // Helper function to parse CSV
+        // RFC 4180 compliant CSV parser — handles quoted fields with commas and newlines
         function parseCSV(csv) {
-            const lines = csv.split('\n');
-            const result = [];
-            const headers = lines[0].split(',').map(h => h.replace(/"/g, '').trim());
-            
-            for (let i = 1; i < lines.length; i++) {
-                if (!lines[i].trim()) continue;
-                const obj = {};
-                const currentLine = lines[i].split(',');
-                
-                for (let j = 0; j < headers.length; j++) {
-                    obj[headers[j]] = currentLine[j] ? currentLine[j].replace(/"/g, '').trim() : '';
+            const rows = [];
+            let i = 0;
+            const n = csv.length;
+
+            while (i < n) {
+                const row = [];
+                while (i < n) {
+                    let field = '';
+                    if (csv[i] === '"') {
+                        i++; // skip opening quote
+                        while (i < n) {
+                            if (csv[i] === '"') {
+                                if (i + 1 < n && csv[i + 1] === '"') {
+                                    field += '"'; i += 2; // escaped quote
+                                } else {
+                                    i++; break; // closing quote
+                                }
+                            } else {
+                                field += csv[i++];
+                            }
+                        }
+                    } else {
+                        while (i < n && csv[i] !== ',' && csv[i] !== '\n' && csv[i] !== '\r') {
+                            field += csv[i++];
+                        }
+                    }
+                    row.push(field.trim());
+                    if (i < n && csv[i] === ',') { i++; }
+                    else { if (i < n && csv[i] === '\r') i++; if (i < n && csv[i] === '\n') i++; break; }
                 }
-                result.push(obj);
+                if (row.length > 0 && !(row.length === 1 && row[0] === '')) rows.push(row);
             }
-            return result;
+
+            if (rows.length === 0) return [];
+            const headers = rows[0];
+            return rows.slice(1)
+                .filter(r => r.some(c => c !== ''))
+                .map(r => Object.fromEntries(headers.map((h, idx) => [h, r[idx] ?? ''])));
         }
 
         // Helper function to extract YouTube video ID
