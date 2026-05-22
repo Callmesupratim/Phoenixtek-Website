@@ -787,6 +787,26 @@
             white-space: pre-line;
         }
 
+        .blog-copy-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+            margin-right: 1rem;
+            padding: 0.75rem 1.6rem;
+            background: #f0f0f0;
+            color: var(--dark);
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .blog-copy-btn:hover { background: #e0e0e0; }
+        .blog-copy-btn.copied { background: #d4edda; color: #155724; }
+
         .blog-modal-close {
             position: absolute;
             top: 1.2rem;
@@ -1587,7 +1607,10 @@
                 <div class="blog-modal-meta" id="modal-meta"></div>
                 <h2 id="modal-title"></h2>
                 <div class="blog-modal-text" id="modal-text"></div>
-                <a id="modal-link" href="#" target="_blank" class="blog-modal-link" style="display:none;">Read Full Article →</a>
+                <div style="margin-top:2rem; display:flex; flex-wrap:wrap; gap:0.5rem; align-items:center;">
+                    <button class="blog-copy-btn" id="copy-link-btn" onclick="copyBlogLink()">🔗 Copy Link</button>
+                    <a id="modal-link" href="#" target="_blank" class="blog-modal-link" style="display:none;">Read Full Article →</a>
+                </div>
             </div>
         </div>
     </div>
@@ -2075,6 +2098,37 @@
             container.innerHTML = defaults.map(d => buildBlogCard(d.title, d.meta, d.excerpt, '', d.gradient, '')).join('');
         }
 
+        // Convert title to URL-safe slug
+        function slugify(text) {
+            return (text || '').toLowerCase()
+                .replace(/[^a-z0-9\s-]/g, '')
+                .trim()
+                .replace(/\s+/g, '-');
+        }
+
+        // Copy current blog link to clipboard
+        function copyBlogLink() {
+            const url = window.location.href;
+            navigator.clipboard.writeText(url).then(() => {
+                const btn = document.getElementById('copy-link-btn');
+                btn.textContent = '✅ Copied!';
+                btn.classList.add('copied');
+                setTimeout(() => { btn.textContent = '🔗 Copy Link'; btn.classList.remove('copied'); }, 2500);
+            });
+        }
+
+        // After blog loads, check URL hash and auto-open matching post
+        function checkBlogHash() {
+            const hash = window.location.hash;
+            if (!hash.startsWith('#blog-')) return;
+            const slug = hash.slice(6);
+            document.querySelectorAll('.blog-card').forEach(card => {
+                if (slugify(card.dataset.title) === slug) {
+                    setTimeout(() => card.click(), 300);
+                }
+            });
+        }
+
         // Blog modal open / close
         function openBlogModal(title, meta, excerpt, imageURL, gradient, link) {
             document.getElementById('modal-title').textContent = title;
@@ -2107,6 +2161,9 @@
             } else {
                 linkEl.style.display = 'none';
             }
+            // Update URL hash so this post has a shareable link
+            history.pushState(null, '', '#blog-' + slugify(title));
+
             document.getElementById('blog-modal').classList.add('open');
             document.body.style.overflow = 'hidden';
         }
@@ -2124,12 +2181,14 @@
             if (e && e.target !== document.getElementById('blog-modal')) return;
             document.getElementById('blog-modal').classList.remove('open');
             document.body.style.overflow = '';
+            history.pushState(null, '', window.location.pathname);
         }
 
         document.addEventListener('keydown', e => {
             if (e.key === 'Escape') {
                 document.getElementById('blog-modal').classList.remove('open');
                 document.body.style.overflow = '';
+                history.pushState(null, '', window.location.pathname);
             }
         });
 
@@ -2189,6 +2248,8 @@
                 loadContact(),
                 loadBlog(),
             ]);
+
+            checkBlogHash(); // auto-open post if URL contains #blog-slug
         });
     </script>
 </body>
