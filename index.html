@@ -3,7 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phoenixtek Solution - Geotechnical Instrumentation & Monitoring</title>
+    <title>Phoenixtek Solution - Geotechnical Instrumentation & Structural Health Monitoring | West Bengal, India</title>
+
+    <!-- SEO: Core -->
+    <meta name="description" content="Phoenixtek Solution provides expert Geotechnical Instrumentation, Structural Health Monitoring (SHM), bridge load testing, and metro rail monitoring services across India. Based in West Bengal.">
+    <meta name="keywords" content="geotechnical instrumentation, structural health monitoring, SHM, bridge load testing, metro rail monitoring, geotechnical services India, bridge monitoring West Bengal, instrumentation company India, Phoenixtek Solution">
+    <meta name="author" content="Phoenixtek Solution">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://YOUR-DOMAIN.com/">
+
+    <!-- SEO: Geo (Local Business) -->
+    <meta name="geo.region" content="IN-WB">
+    <meta name="geo.placename" content="Diamond Harbour, West Bengal, India">
+
+    <!-- SEO: Open Graph (WhatsApp, Facebook, LinkedIn previews) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Phoenixtek Solution - Geotechnical Instrumentation & Structural Health Monitoring">
+    <meta property="og:description" content="Expert geotechnical instrumentation and structural health monitoring services for bridges, metro rails, and infrastructure across India.">
+    <meta property="og:url" content="https://YOUR-DOMAIN.com/">
+    <meta property="og:image" content="https://YOUR-DOMAIN.com/playstore.png">
+    <meta property="og:locale" content="en_IN">
+    <meta property="og:site_name" content="Phoenixtek Solution">
+
+    <!-- SEO: Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Phoenixtek Solution - Geotechnical & Structural Monitoring">
+    <meta name="twitter:description" content="Expert geotechnical instrumentation and structural health monitoring services across India.">
+    <meta name="twitter:image" content="https://YOUR-DOMAIN.com/playstore.png">
+
+    <!-- SEO: Schema.org Local Business (Google Knowledge Panel) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "name": "Phoenixtek Solution",
+      "description": "Geotechnical instrumentation and structural health monitoring services for bridges, metro rails, and civil infrastructure.",
+      "url": "https://YOUR-DOMAIN.com",
+      "logo": "https://YOUR-DOMAIN.com/playstore.png",
+      "email": "phoenixteksoln@gmail.com",
+      "telephone": "+91-97341-15880",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Newtown",
+        "addressLocality": "Diamond Harbour",
+        "postalCode": "743331",
+        "addressRegion": "West Bengal",
+        "addressCountry": "IN"
+      },
+      "areaServed": "India",
+      "serviceType": ["Geotechnical Instrumentation", "Structural Health Monitoring", "Bridge Load Testing", "Metro Rail Monitoring"]
+    }
+    </script>
+
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-LQZZ7DFTHG"></script>
     <script>
@@ -2100,7 +2151,7 @@
 
         // Build a blog card — first image used as thumbnail, all images passed via data-image
         function buildBlogCard(title, meta, excerpt, imageURL, gradient, link) {
-            const images = imageURL ? imageURL.split(',').map(u => u.trim()).filter(Boolean) : [];
+            const images = imageURL ? imageURL.split(/[|,]/).map(u => u.trim()).filter(Boolean) : [];
             const thumb  = images[0] || '';
             const imgHtml = thumb
                 ? `<img src="${thumb}" alt="${he(title)}"><div class="blog-read-overlay"><span>Click to Read</span></div>`
@@ -2186,7 +2237,7 @@
             document.getElementById('modal-text').textContent  = excerpt;
 
             const imgWrap = document.getElementById('modal-img-wrap');
-            const images  = imageURL ? imageURL.split(',').map(u => u.trim()).filter(Boolean) : [];
+            const images  = imageURL ? imageURL.split(/[|,]/).map(u => u.trim()).filter(Boolean) : [];
 
             if (images.length === 0) {
                 imgWrap.innerHTML = `<div class="blog-modal-img-gradient" style="background:${gradient};"></div>`;
