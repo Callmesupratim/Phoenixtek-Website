@@ -18,7 +18,7 @@
     <meta name="keywords" content="geotechnical instrumentation, structural health monitoring, SHM, bridge load testing, metro rail monitoring, geotechnical services India, bridge monitoring West Bengal, instrumentation company India, Phoenixtek Solution">
     <meta name="author" content="Phoenixtek Solution">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://YOUR-DOMAIN.com/">
+    <link rel="canonical" href="https://phoenixtek.in/">
 
     <!-- SEO: Geo (Local Business) -->
     <meta name="geo.region" content="IN-WB">
@@ -28,8 +28,8 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="Phoenixtek Solution - Geotechnical Instrumentation & Structural Health Monitoring">
     <meta property="og:description" content="Expert geotechnical instrumentation and structural health monitoring services for bridges, metro rails, and infrastructure across India.">
-    <meta property="og:url" content="https://YOUR-DOMAIN.com/">
-    <meta property="og:image" content="https://YOUR-DOMAIN.com/logo.webp">
+    <meta property="og:url" content="https://phoenixtek.in/">
+    <meta property="og:image" content="https://phoenixtek.in/logo.webp">
     <meta property="og:locale" content="en_IN">
     <meta property="og:site_name" content="Phoenixtek Solution">
 
@@ -37,7 +37,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Phoenixtek Solution - Geotechnical & Structural Monitoring">
     <meta name="twitter:description" content="Expert geotechnical instrumentation and structural health monitoring services across India.">
-    <meta name="twitter:image" content="https://YOUR-DOMAIN.com/logo.webp">
+    <meta name="twitter:image" content="https://phoenixtek.in/logo.webp">
 
     <!-- SEO: Schema.org Local Business (Google Knowledge Panel) -->
     <script type="application/ld+json">
@@ -46,8 +46,8 @@
       "@type": "ProfessionalService",
       "name": "Phoenixtek Solution",
       "description": "Geotechnical instrumentation and structural health monitoring services for bridges, metro rails, and civil infrastructure.",
-      "url": "https://YOUR-DOMAIN.com",
-      "logo": "https://YOUR-DOMAIN.com/logo.webp",
+      "url": "https://phoenixtek.in",
+      "logo": "https://phoenixtek.in/logo.webp",
       "email": "phoenixteksoln@gmail.com",
       "telephone": "+91-97341-15880",
       "address": {
@@ -1684,7 +1684,7 @@
                         <div class="contact-icon">📧</div>
                         <div>
                             <strong>Email</strong><br>
-                            Phoenixeksolution@gmail.com
+                            phoenixteksoln@gmail.com
                         </div>
                     </div>
                     <div class="contact-item">
@@ -1752,9 +1752,8 @@
                 <p style="color: #888;">Expert geotechnical instrumentation and structural health monitoring services across India.</p>
                 <p style="color: #888; margin-top: 1rem; font-size: 0.9rem;">In partnership with <a href="http://www.alfresco-bestech.com/" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;font-weight:600;">Alfresco Construction Services Pvt. Ltd.</a></p>
                 <div class="social-links">
-                    <a href="https://www.linkedin.com/in/supratim-mondal9734115880/" target="_blank" rel="noopener" class="social-icon">Li</a>
-                    <a href="#" class="social-icon">f</a>
-                    <a href="mailto:Phoenixeksolution@gmail.com" class="social-icon">✉</a>
+                    <a href="https://www.linkedin.com/in/supratim-mondal9734115880/" target="_blank" rel="noopener" class="social-icon" aria-label="LinkedIn">in</a>
+                    <a href="mailto:phoenixteksoln@gmail.com" class="social-icon" aria-label="Email">✉</a>
                 </div>
             </div>
             <div class="footer-section">
@@ -1778,7 +1777,7 @@
             <div class="footer-section">
                 <h3>Contact</h3>
                 <ul>
-                    <li><a href="mailto:Phoenixeksolution@gmail.com">Phoenixeksolution@gmail.com</a></li>
+                    <li><a href="mailto:phoenixteksoln@gmail.com">phoenixteksoln@gmail.com</a></li>
                     <li><a href="tel:+919734115880">+91 97341 15880</a></li>
                     <li>Kolkata based</li>
                     <li>West Bengal, India</li>
@@ -1824,25 +1823,32 @@
     </a>
 
     <script>
+        // Delegated click for photo tiles (safe — no inline onclick)
+        document.addEventListener('click', function(e) {
+            const tile = e.target.closest('.media-item[data-photo-url]');
+            if (!tile) return;
+            openPhotoModal(tile.dataset.photoUrl, tile.dataset.photoCaption);
+        });
+
         // Photo lightbox
         function openPhotoModal(url, caption) {
             const modal = document.getElementById('photo-modal');
             document.getElementById('photo-modal-img').src = url;
             document.getElementById('photo-modal-caption').textContent = caption || '';
             modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
+            document.body.style.overflow = 'hidden'; document.documentElement.style.overflow = 'hidden';
         }
 
         function closePhotoModal(e) {
             if (e && e.target !== document.getElementById('photo-modal')) return;
             document.getElementById('photo-modal').style.display = 'none';
-            document.body.style.overflow = '';
+            document.body.style.overflow = ''; document.documentElement.style.overflow = '';
         }
 
         document.addEventListener('keydown', e => {
             if (e.key === 'Escape') {
                 document.getElementById('photo-modal').style.display = 'none';
-                document.body.style.overflow = '';
+                document.body.style.overflow = ''; document.documentElement.style.overflow = '';
             }
         });
 
@@ -2055,6 +2061,15 @@
             return raw.split(/[|,]/).map(u => normalizeImageURL(u.trim())).filter(Boolean);
         }
 
+        // Clear skeleton and optionally show an error message in a container
+        function clearSkeleton(selector, errorMsg) {
+            const el = document.querySelector(selector);
+            if (!el) return;
+            el.innerHTML = errorMsg
+                ? `<p style="color:#aaa;text-align:center;padding:2rem;grid-column:1/-1;">${errorMsg}</p>`
+                : '';
+        }
+
         // Load Projects from Google Sheets
         async function loadProjects() {
             try {
@@ -2093,8 +2108,8 @@
                                     </div>
                                 `).join('')}
                                 ${imageURLs.length > 1 ? `
-                                    <button class="slideshow-arrow prev" onclick="changeSlide(${projectIndex}, -1)">‹</button>
-                                    <button class="slideshow-arrow next" onclick="changeSlide(${projectIndex}, 1)">›</button>
+                                    <button class="slideshow-arrow prev" onclick="changeSlide(${projectIndex}, -1)" aria-label="Previous image">‹</button>
+                                    <button class="slideshow-arrow next" onclick="changeSlide(${projectIndex}, 1)" aria-label="Next image">›</button>
                                     <div class="slideshow-counter">
                                         <span id="counter-${projectIndex}">1</span> / ${imageURLs.length}
                                     </div>
@@ -2123,6 +2138,7 @@
                 window.slideshowIndexes = projects.map(() => 0);
                 
             } catch (error) {
+                clearSkeleton('#portfolio .portfolio-grid');
                 console.log('Using default projects:', error);
             }
         }
@@ -2131,10 +2147,14 @@
         function changeSlide(projectIndex, direction) {
             const slideshow = document.getElementById(`slideshow-${projectIndex}`);
             if (!slideshow) return;
-            
+
             const slides = slideshow.querySelectorAll('.slideshow-image');
             if (slides.length === 0) return;
-            
+
+            // Guard: ensure slideshowIndexes is initialised
+            if (!window.slideshowIndexes) window.slideshowIndexes = {};
+            if (window.slideshowIndexes[projectIndex] == null) window.slideshowIndexes[projectIndex] = 0;
+
             // Hide current slide
             slides[window.slideshowIndexes[projectIndex]].classList.remove('active');
             
@@ -2191,6 +2211,7 @@
                     }
                 });
             } catch (error) {
+                clearSkeleton('#services .services-grid');
                 console.log('Using default services:', error);
             }
         }
@@ -2226,6 +2247,7 @@
                     `;
                 });
             } catch (error) {
+                clearSkeleton('#videos .media-grid');
                 console.log('Using default videos:', error);
             }
         }
@@ -2249,14 +2271,22 @@
                     // Support comma-separated URLs (any format) — each becomes its own tile
                     const urls = normalizeURLList(photo.ImageURL);
                     urls.forEach(url => {
-                        container.innerHTML += `
-                            <div class="media-item" style="background: url('${url}') center/cover; cursor: pointer;" onclick="openPhotoModal('${url.replace(/'/g,"\\'")}', '${(photo.Caption||'').replace(/'/g,"\\'")}')">
-                                ${photo.Caption ? `<div style="position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.65);color:white;padding:0.5rem;text-align:center;font-size:0.9rem;">${photo.Caption}</div>` : ''}
-                            </div>
-                        `;
+                        const tile = document.createElement('div');
+                        tile.className = 'media-item';
+                        tile.style.cssText = `background: url('${CSS.escape ? url : url.replace(/'/g,"\\'")}') center/cover; cursor: pointer;`;
+                        tile.dataset.photoUrl     = url;
+                        tile.dataset.photoCaption = photo.Caption || '';
+                        if (photo.Caption) {
+                            const cap = document.createElement('div');
+                            cap.style.cssText = 'position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.65);color:white;padding:0.5rem;text-align:center;font-size:0.9rem;';
+                            cap.textContent = photo.Caption;
+                            tile.appendChild(cap);
+                        }
+                        container.appendChild(tile);
                     });
                 });
             } catch (error) {
+                clearSkeleton('#photos .media-grid');
                 console.log('Using default photos:', error);
             }
         }
@@ -2286,7 +2316,7 @@
                         <div class="contact-icon">📧</div>
                         <div>
                             <strong>Email</strong><br>
-                            ${contact.Email || 'Phoenixeksolution@gmail.com'}
+                            ${contact.Email || 'phoenixteksoln@gmail.com'}
                         </div>
                     </div>
                     <div class="contact-item">
@@ -2442,7 +2472,7 @@
             history.pushState(null, '', '#blog-' + slugify(title));
 
             document.getElementById('blog-modal').classList.add('open');
-            document.body.style.overflow = 'hidden';
+            document.body.style.overflow = 'hidden'; document.documentElement.style.overflow = 'hidden';
         }
 
         function changeBlogSlide(dir) {
@@ -2457,14 +2487,14 @@
         function closeBlogModal(e) {
             if (e && e.target !== document.getElementById('blog-modal')) return;
             document.getElementById('blog-modal').classList.remove('open');
-            document.body.style.overflow = '';
+            document.body.style.overflow = ''; document.documentElement.style.overflow = '';
             history.pushState(null, '', window.location.pathname);
         }
 
         document.addEventListener('keydown', e => {
             if (e.key === 'Escape') {
                 document.getElementById('blog-modal').classList.remove('open');
-                document.body.style.overflow = '';
+                document.body.style.overflow = ''; document.documentElement.style.overflow = '';
                 history.pushState(null, '', window.location.pathname);
             }
         });
