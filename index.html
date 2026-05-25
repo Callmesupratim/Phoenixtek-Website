@@ -2413,7 +2413,7 @@
             document.getElementById('modal-text').textContent  = excerpt;
 
             const imgWrap = document.getElementById('modal-img-wrap');
-            const images  = imageURL ? imageURL.split(/[|,]/).map(u => u.trim()).filter(Boolean) : [];
+            const images  = normalizeURLList(imageURL);
 
             if (images.length === 0) {
                 imgWrap.innerHTML = `<div class="blog-modal-img-gradient" style="background:${gradient};"></div>`;
