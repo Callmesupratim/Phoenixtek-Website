@@ -2005,9 +2005,54 @@
         // Helper function to extract YouTube video ID
         function getYouTubeID(url) {
             if (!url) return '';
-            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+            const regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|shorts\/|watch\?v=|&v=)([^#&?]*).*/;
             const match = url.match(regExp);
             return (match && match[2].length === 11) ? match[2] : '';
+        }
+
+        /**
+         * normalizeImageURL — paste ANY link and it just works.
+         *
+         * Supported input formats:
+         *  • Google Drive share link  https://drive.google.com/file/d/FILE_ID/view
+         *  • Google Drive open link   https://drive.google.com/open?id=FILE_ID
+         *  • Google Drive uc link     https://drive.google.com/uc?id=FILE_ID
+         *  • YouTube watch/short link → shows video thumbnail automatically
+         *  • youtu.be short link      → shows video thumbnail
+         *  • Any direct image URL     (Unsplash, Imgur, etc.) — returned as-is
+         */
+        function normalizeImageURL(url) {
+            if (!url) return '';
+            url = url.trim();
+
+            // Google Drive — file/d/ID/view style
+            let m = url.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/);
+            if (m) return `https://lh3.googleusercontent.com/d/${m[1]}`;
+
+            // Google Drive — open?id=ID style
+            m = url.match(/drive\.google\.com\/open\?id=([a-zA-Z0-9_-]+)/);
+            if (m) return `https://lh3.googleusercontent.com/d/${m[1]}`;
+
+            // Google Drive — uc?id=ID or uc?export=view&id=ID style
+            m = url.match(/drive\.google\.com\/uc\?.*[?&]id=([a-zA-Z0-9_-]+)/);
+            if (!m) m = url.match(/drive\.google\.com\/uc\?id=([a-zA-Z0-9_-]+)/);
+            if (m) return `https://lh3.googleusercontent.com/d/${m[1]}`;
+
+            // YouTube / youtu.be → use high-quality thumbnail as image
+            const ytID = getYouTubeID(url);
+            if (ytID) return `https://img.youtube.com/vi/${ytID}/hqdefault.jpg`;
+
+            // Everything else (Unsplash, direct URLs) — return as-is
+            return url;
+        }
+
+        /**
+         * normalizeURLList — split a comma/pipe-separated list of URLs,
+         * normalize each one, and return an array of ready-to-use URLs.
+         */
+        function normalizeURLList(raw) {
+            if (!raw) return [];
+            return raw.split(/[|,]/).map(u => normalizeImageURL(u.trim())).filter(Boolean);
         }
 
         // Load Projects from Google Sheets
@@ -2027,9 +2072,7 @@
                     if (!project.Name) return;
                     
                     // Split ImageURL by comma to support multiple images
-                    const imageURLs = project.ImageURL ? 
-                        project.ImageURL.split(',').map(url => url.trim()).filter(url => url) : 
-                        [];
+                    const imageURLs = normalizeURLList(project.ImageURL);
                     
                     const colors = [
                         'linear-gradient(135deg, #FF6B35, #9D4EDD)',
@@ -2203,8 +2246,8 @@
                 photos.forEach((photo, index) => {
                     if (!photo.ImageURL) return;
 
-                    // Support comma-separated URLs — each becomes its own tile
-                    const urls = photo.ImageURL.split(',').map(u => u.trim()).filter(Boolean);
+                    // Support comma-separated URLs (any format) — each becomes its own tile
+                    const urls = normalizeURLList(photo.ImageURL);
                     urls.forEach(url => {
                         container.innerHTML += `
                             <div class="media-item" style="background: url('${url}') center/cover; cursor: pointer;" onclick="openPhotoModal('${url.replace(/'/g,"\\'")}', '${(photo.Caption||'').replace(/'/g,"\\'")}')">
@@ -2284,7 +2327,7 @@
 
         // Build a blog card — first image used as thumbnail, all images passed via data-image
         function buildBlogCard(title, meta, excerpt, imageURL, gradient, link) {
-            const images = imageURL ? imageURL.split(/[|,]/).map(u => u.trim()).filter(Boolean) : [];
+            const images = normalizeURLList(imageURL);
             const thumb  = images[0] || '';
             const imgHtml = thumb
                 ? `<img src="${thumb}" alt="${he(title)}"><div class="blog-read-overlay"><span>Click to Read</span></div>`
