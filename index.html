@@ -29,7 +29,7 @@
     <meta property="og:title" content="Phoenixtek Solution - Geotechnical Instrumentation & Structural Health Monitoring">
     <meta property="og:description" content="Expert geotechnical instrumentation and structural health monitoring services for bridges, metro rails, and infrastructure across India.">
     <meta property="og:url" content="https://YOUR-DOMAIN.com/">
-    <meta property="og:image" content="https://YOUR-DOMAIN.com/playstore.png">
+    <meta property="og:image" content="https://YOUR-DOMAIN.com/logo.webp">
     <meta property="og:locale" content="en_IN">
     <meta property="og:site_name" content="Phoenixtek Solution">
 
@@ -37,7 +37,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Phoenixtek Solution - Geotechnical & Structural Monitoring">
     <meta name="twitter:description" content="Expert geotechnical instrumentation and structural health monitoring services across India.">
-    <meta name="twitter:image" content="https://YOUR-DOMAIN.com/playstore.png">
+    <meta name="twitter:image" content="https://YOUR-DOMAIN.com/logo.webp">
 
     <!-- SEO: Schema.org Local Business (Google Knowledge Panel) -->
     <script type="application/ld+json">
@@ -47,7 +47,7 @@
       "name": "Phoenixtek Solution",
       "description": "Geotechnical instrumentation and structural health monitoring services for bridges, metro rails, and civil infrastructure.",
       "url": "https://YOUR-DOMAIN.com",
-      "logo": "https://YOUR-DOMAIN.com/playstore.png",
+      "logo": "https://YOUR-DOMAIN.com/logo.webp",
       "email": "phoenixteksoln@gmail.com",
       "telephone": "+91-97341-15880",
       "address": {
@@ -164,6 +164,10 @@
             font-weight: 500;
             position: relative;
             transition: color 0.3s;
+            display: inline-flex;
+            align-items: center;
+            min-height: 48px;
+            padding: 0 4px;
         }
 
         nav a::after {
@@ -279,6 +283,8 @@
 
         .btn {
             padding: 1rem 2.5rem;
+            min-height: 48px;
+            min-width: 48px;
             border: none;
             border-radius: 50px;
             font-weight: 700;
@@ -723,6 +729,8 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
+            min-height: 48px;
+            padding: 0 4px;
         }
 
         /* Blog Modal */
@@ -1154,6 +1162,48 @@
             .section-title {
                 font-size: 2.5rem;
             }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .btn {
+                padding: 0.9rem 1.5rem;
+                font-size: 0.95rem;
+            }
+
+            .about-text h3 {
+                font-size: 1.3rem;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            section {
+                padding: 4rem 5%;
+            }
+
+            .portfolio-grid,
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
 
@@ -1303,7 +1353,7 @@
     <nav>
         <div class="container">
             <div class="logo-container">
-                <img src="playstore.png" alt="Phoenixtek Logo" class="logo-img">
+                <img src="logo.webp" alt="Phoenixtek Logo" class="logo-img" width="48" height="48" loading="eager">
                 <div class="logo">Phoenixtek</div>
             </div>
             <ul id="nav-links">
@@ -1362,45 +1412,120 @@
 
     <!-- About Section -->
     <section id="about">
-        <div class="about-content">
+        <h2 class="section-title">About Phoenixtek Solution</h2>
+        <p class="section-subtitle">Engineering trust, one measurement at a time — India's dedicated partner for geotechnical and structural safety.</p>
+
+        <div class="about-content" style="margin-top: 3rem;">
             <div class="about-text">
-                <h2>About Phoenixtek Solution</h2>
-                <p>In partnership with <a href="http://www.alfresco-bestech.com/" target="_blank" rel="noopener" style="color:var(--primary);font-weight:600;text-decoration:none;">Alfresco Construction Services Pvt. Ltd.</a>, Phoenixtek Solution is a leading provider of geotechnical instrumentation and structural health monitoring services in India.</p>
-                <p>Led by Supratim Mondal, our team of experienced geotechnical engineers specializes in delivering precise, reliable monitoring solutions for infrastructure projects of all scales. We combine cutting-edge technology with deep engineering expertise to ensure safety and performance.</p>
+                <h3 style="font-family:'Archivo Black',sans-serif; font-size:1.6rem; color:var(--dark); margin-bottom:1rem;">Who We Are</h3>
+                <p>In strategic partnership with <a href="http://www.alfresco-bestech.com/" target="_blank" rel="noopener" style="color:var(--primary);font-weight:600;text-decoration:none;">Alfresco Construction Services Pvt. Ltd.</a>, Phoenixtek Solution stands at the forefront of geotechnical instrumentation and structural health monitoring in India. We were established with a clear purpose: to bring world-class precision monitoring technology to Indian infrastructure — making every bridge, dam, tunnel, and high-rise safer for the people who depend on them.</p>
+                <p>Our story began with a simple but powerful belief held by our founder, <strong>Supratim Mondal</strong> — that robust infrastructure safety is not a luxury but a necessity. Backed by deep domain knowledge and hands-on field experience, we have grown into a trusted name across some of India's most demanding infrastructure projects, from the plains of Bengal to the high-altitude terrains of the Northeast.</p>
+                <p>What sets us apart is our commitment to the full monitoring lifecycle: from instrument selection and installation, through real-time data acquisition, to interpretation, reporting, and actionable recommendations. We don't just install sensors — we deliver clarity.</p>
+
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin: 2rem 0;">
+                    <div style="padding:1.5rem; background:linear-gradient(135deg,#FF6B3510,#00D9FF10); border-radius:16px; border-left:4px solid var(--primary);">
+                        <strong style="font-size:1rem; color:var(--dark); display:block; margin-bottom:0.5rem;">Our Mission</strong>
+                        <span style="font-size:0.95rem; color:#555; line-height:1.7;">To deliver precise, reliable geotechnical and structural monitoring solutions that protect lives, safeguard infrastructure, and support India's sustainable development goals.</span>
+                    </div>
+                    <div style="padding:1.5rem; background:linear-gradient(135deg,#00D9FF10,#FF6B3510); border-radius:16px; border-left:4px solid var(--accent);">
+                        <strong style="font-size:1rem; color:var(--dark); display:block; margin-bottom:0.5rem;">Our Vision</strong>
+                        <span style="font-size:0.95rem; color:#555; line-height:1.7;">To be India's most trusted infrastructure monitoring partner — empowering engineers and decision-makers with real-time, data-driven insights for safer, smarter construction.</span>
+                    </div>
+                </div>
+
                 <div class="values-list">
                     <div class="value-item">
                         <div class="value-icon">📊</div>
                         <div>
                             <strong>Precision Engineering</strong><br>
-                            <small>Advanced instrumentation and accurate data analysis</small>
+                            <small>Calibrated instruments and rigorous data validation at every step</small>
                         </div>
                     </div>
                     <div class="value-item">
-                        <div class="value-icon">🔧</div>
+                        <div class="value-icon">🛡️</div>
                         <div>
-                            <strong>Expert Solutions</strong><br>
-                            <small>Specialized in geotechnical and structural monitoring</small>
+                            <strong>Safety First, Always</strong><br>
+                            <small>Every decision we make is guided by the safety of structures and people</small>
                         </div>
                     </div>
                     <div class="value-item">
-                        <div class="value-icon">✅</div>
+                        <div class="value-icon">🔬</div>
                         <div>
-                            <strong>Reliable Service</strong><br>
-                            <small>24/7 support and real-time monitoring capabilities</small>
+                            <strong>Data-Driven Insights</strong><br>
+                            <small>Turning raw sensor data into clear, actionable engineering intelligence</small>
+                        </div>
+                    </div>
+                    <div class="value-item">
+                        <div class="value-icon">🤝</div>
+                        <div>
+                            <strong>Partnership & Trust</strong><br>
+                            <small>Long-term relationships built on transparency, integrity, and results</small>
+                        </div>
+                    </div>
+                    <div class="value-item">
+                        <div class="value-icon">🌏</div>
+                        <div>
+                            <strong>Pan-India Reach</strong><br>
+                            <small>Field-ready teams deployable across diverse geographies and climates</small>
                         </div>
                     </div>
                 </div>
             </div>
+
             <div class="about-visual">
+                <div style="border-radius:24px; overflow:hidden; box-shadow:0 20px 60px rgba(0,0,0,0.15); margin-bottom:2rem; position:relative;">
+                    <img src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?q=75&w=800&auto=format&fit=crop&fm=webp"
+                         srcset="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?q=75&w=480&auto=format&fit=crop&fm=webp 480w,
+                                 https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?q=75&w=800&auto=format&fit=crop&fm=webp 800w"
+                         sizes="(max-width: 768px) 100vw, 50vw"
+                         alt="Advanced technology powering Phoenixtek's monitoring solutions"
+                         loading="lazy" decoding="async"
+                         style="width:100%; height:260px; object-fit:cover; display:block;">
+                    <div style="position:absolute; inset:0; background:linear-gradient(135deg, rgba(255,107,53,0.55), rgba(0,217,255,0.35)); display:flex; align-items:flex-end; padding:1.5rem;">
+                        <p style="color:white; font-weight:600; font-size:1rem; margin:0; text-shadow:0 2px 8px rgba(0,0,0,0.4);">Cutting-edge technology meets field-proven engineering expertise.</p>
+                    </div>
+                </div>
                 <div class="visual-card">
-                    <h3 style="margin-bottom: 1.5rem;">Why Choose Us?</h3>
-                    <ul style="list-style: none; line-height: 2;">
-                        <li>✓ Certified geotechnical engineers</li>
-                        <li>✓ State-of-the-art instrumentation</li>
-                        <li>✓ Real-time monitoring systems</li>
-                        <li>✓ Comprehensive reporting & analysis</li>
-                        <li>✓ Pan-India service coverage</li>
+                    <h3 style="margin-bottom: 0.5rem;">Why Choose Us?</h3>
+                    <p style="color:#777; font-size:0.9rem; margin-bottom:1.5rem;">We bring together the right people, the right technology, and the right process.</p>
+                    <ul style="list-style: none; line-height: 1;">
+                        <li style="padding: 0.7rem 0; border-bottom: 1px solid #f0f0f0; display:flex; align-items:center; gap:0.8rem;"><span style="color:var(--primary); font-weight:700; font-size:1.1rem;">✓</span><span>Certified geotechnical &amp; structural engineers</span></li>
+                        <li style="padding: 0.7rem 0; border-bottom: 1px solid #f0f0f0; display:flex; align-items:center; gap:0.8rem;"><span style="color:var(--primary); font-weight:700; font-size:1.1rem;">✓</span><span>State-of-the-art sensors &amp; data loggers</span></li>
+                        <li style="padding: 0.7rem 0; border-bottom: 1px solid #f0f0f0; display:flex; align-items:center; gap:0.8rem;"><span style="color:var(--primary); font-weight:700; font-size:1.1rem;">✓</span><span>Real-time remote monitoring &amp; alerts</span></li>
+                        <li style="padding: 0.7rem 0; border-bottom: 1px solid #f0f0f0; display:flex; align-items:center; gap:0.8rem;"><span style="color:var(--primary); font-weight:700; font-size:1.1rem;">✓</span><span>Comprehensive reporting &amp; interpretation</span></li>
+                        <li style="padding: 0.7rem 0; border-bottom: 1px solid #f0f0f0; display:flex; align-items:center; gap:0.8rem;"><span style="color:var(--primary); font-weight:700; font-size:1.1rem;">✓</span><span>Full project lifecycle support</span></li>
+                        <li style="padding: 0.7rem 0; display:flex; align-items:center; gap:0.8rem;"><span style="color:var(--primary); font-weight:700; font-size:1.1rem;">✓</span><span>Compliance with IS, IRC &amp; international standards</span></li>
                     </ul>
+                    <div class="stats-grid" style="margin-top:2rem;">
+                        <div class="stat-item">
+                            <div class="stat-number">50+</div>
+                            <div class="stat-label">Projects Completed</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">10+</div>
+                            <div class="stat-label">Years of Expertise</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">15+</div>
+                            <div class="stat-label">States Served</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">100%</div>
+                            <div class="stat-label">Client Satisfaction</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="visual-card" style="margin-top:2rem; background:linear-gradient(135deg, var(--dark) 0%, #2d2d4e 100%); color:white;">
+                    <h3 style="margin-bottom:0.75rem; color:white;">Leadership</h3>
+                    <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
+                        <div style="width:60px; height:60px; border-radius:50%; background:linear-gradient(135deg,var(--primary),var(--accent)); display:flex; align-items:center; justify-content:center; font-size:1.5rem; flex-shrink:0;">👷</div>
+                        <div>
+                            <strong style="font-size:1.1rem; display:block;">Supratim Mondal</strong>
+                            <span style="font-size:0.85rem; color:#aaa;">Founder &amp; Chief Geotechnical Engineer</span>
+                        </div>
+                    </div>
+                    <p style="font-size:0.9rem; color:#ccc; line-height:1.7; margin:0;">A specialist in geotechnical instrumentation with extensive experience on national highways, metro rail, dam, and bridge projects. Supratim leads every engagement with a hands-on approach, ensuring technical rigour from site to report.</p>
                 </div>
             </div>
         </div>
@@ -2250,14 +2375,14 @@
             if (images.length === 0) {
                 imgWrap.innerHTML = `<div class="blog-modal-img-gradient" style="background:${gradient};"></div>`;
             } else if (images.length === 1) {
-                imgWrap.innerHTML = `<img src="${images[0]}" alt="${title}" class="blog-modal-img">`;
+                imgWrap.innerHTML = `<img src="${images[0]}" alt="${title}" class="blog-modal-img" loading="lazy" decoding="async">`;
             } else {
                 // Multi-image slideshow
                 window._bmsIdx   = 0;
                 window._bmsTotal = images.length;
                 imgWrap.innerHTML = `
                     <div class="bms-wrap">
-                        ${images.map((url, i) => `<img src="${url}" alt="${title}" class="bms-slide${i===0?' active':''}">`).join('')}
+                        ${images.map((url, i) => `<img src="${url}" alt="${title}" class="bms-slide${i===0?' active':''}" loading="lazy" decoding="async">`).join('')}
                         <button class="bms-btn bms-prev" onclick="changeBlogSlide(-1)">&#8249;</button>
                         <button class="bms-btn bms-next" onclick="changeBlogSlide(1)">&#8250;</button>
                         <div class="bms-counter"><span id="bms-cur">1</span> / ${images.length}</div>
