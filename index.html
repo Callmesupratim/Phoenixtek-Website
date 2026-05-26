@@ -1790,7 +1790,7 @@
             </div>
 
             <div class="download-card">
-                <div class="download-icon">💻</div>
+                <div class="download-icon"><img src="images/app-icon.webp" alt="Monitoring Software" style="width:60px;height:60px;object-fit:contain;border-radius:12px;"></div>
                 <h3>Monitoring Software</h3>
                 <p>Download our data acquisition and real-time monitoring software for use with Phoenixtek instrumentation systems.</p>
                 <div class="download-meta">💾 EXE / APK &nbsp;|&nbsp; ~50 MB</div>
@@ -2657,9 +2657,12 @@
                             ? `https://drive.usercontent.google.com/download?id=${m[1]}&export=download`
                             : rawURL;
                     }
+                    const iconHTML = (row.Icon || '').match(/^https?:|^images\//)
+                        ? `<img src="${row.Icon}" alt="${row.Title}" style="width:60px;height:60px;object-fit:contain;border-radius:12px;">`
+                        : (row.Icon || '📁');
                     container.innerHTML += `
                         <div class="download-card">
-                            <div class="download-icon">${row.Icon || '📁'}</div>
+                            <div class="download-icon">${iconHTML}</div>
                             <h3>${row.Title}</h3>
                             <p>${row.Description || ''}</p>
                             <div class="download-meta">📁 ${row.FileType || 'File'} &nbsp;|&nbsp; ${row.FileSize || ''}</div>
