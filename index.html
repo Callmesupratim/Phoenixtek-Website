@@ -2163,16 +2163,16 @@
 
             // Google Drive — file/d/ID/view style
             let m = url.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/);
-            if (m) return `https://lh3.googleusercontent.com/d/${m[1]}`;
+            if (m) return `https://drive.usercontent.google.com/download?id=${m[1]}&export=view`;
 
             // Google Drive — open?id=ID style
             m = url.match(/drive\.google\.com\/open\?id=([a-zA-Z0-9_-]+)/);
-            if (m) return `https://lh3.googleusercontent.com/d/${m[1]}`;
+            if (m) return `https://drive.usercontent.google.com/download?id=${m[1]}&export=view`;
 
             // Google Drive — uc?id=ID or uc?export=view&id=ID style
             m = url.match(/drive\.google\.com\/uc\?.*[?&]id=([a-zA-Z0-9_-]+)/);
             if (!m) m = url.match(/drive\.google\.com\/uc\?id=([a-zA-Z0-9_-]+)/);
-            if (m) return `https://lh3.googleusercontent.com/d/${m[1]}`;
+            if (m) return `https://drive.usercontent.google.com/download?id=${m[1]}&export=view`;
 
             // YouTube / youtu.be → use high-quality thumbnail as image
             const ytID = getYouTubeID(url);
