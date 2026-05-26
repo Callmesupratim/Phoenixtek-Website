@@ -2629,6 +2629,51 @@
             }
         });
 
+        // Load Downloads from Google Sheets (DOWNLOADS tab)
+        // Columns: Icon | Title | Description | FileType | FileSize | GoogleDriveURL
+        async function loadDownloads() {
+            try {
+                const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:csv&sheet=DOWNLOADS`;
+                const response = await fetch(url);
+                const text = await response.text();
+
+                if (!response.ok || text.trim().startsWith('<') || text.trim() === '') return;
+
+                const rows = parseCSV(text);
+                const valid = rows.filter(r => r.Title && r.Title.trim() !== '');
+                if (valid.length === 0) return;
+
+                const container = document.querySelector('#downloads .downloads-grid');
+                if (!container) return;
+                container.innerHTML = '';
+
+                valid.forEach(row => {
+                    const rawURL = (row.GoogleDriveURL || '').trim();
+                    const hasLink = rawURL !== '' && rawURL !== '#';
+                    let dlURL = '#';
+                    if (hasLink) {
+                        const m = rawURL.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/);
+                        dlURL = m
+                            ? `https://drive.usercontent.google.com/download?id=${m[1]}&export=download`
+                            : rawURL;
+                    }
+                    container.innerHTML += `
+                        <div class="download-card">
+                            <div class="download-icon">${row.Icon || '📁'}</div>
+                            <h3>${row.Title}</h3>
+                            <p>${row.Description || ''}</p>
+                            <div class="download-meta">📁 ${row.FileType || 'File'} &nbsp;|&nbsp; ${row.FileSize || ''}</div>
+                            <a href="${dlURL}" ${hasLink ? 'target="_blank" rel="noopener"' : ''}
+                               class="download-btn ${hasLink ? '' : 'coming-soon'}">
+                               ⬇ ${hasLink ? 'Download' : 'Coming Soon'}
+                            </a>
+                        </div>`;
+                });
+            } catch (err) {
+                console.log('Downloads sheet not found, using defaults:', err);
+            }
+        }
+
         // Load Blog posts from Google Sheets (BLOG tab)
         // Columns: Date | Category | Title | Excerpt | Link | ImageURL
         async function loadBlog() {
@@ -2684,6 +2729,7 @@
                 loadPhotos(),
                 loadContact(),
                 loadBlog(),
+                loadDownloads(),
             ]);
 
             checkBlogHash(); // auto-open post if URL contains #blog-slug
