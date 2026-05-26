@@ -2657,9 +2657,11 @@
                             ? `https://drive.usercontent.google.com/download?id=${m[1]}&export=download`
                             : rawURL;
                     }
-                    const iconHTML = (row.Icon || '').match(/^https?:|^images\//)
-                        ? `<img src="${row.Icon}" alt="${row.Title}" style="width:60px;height:60px;object-fit:contain;border-radius:12px;">`
-                        : (row.Icon || '📁');
+                    const rawIcon = (row.Icon || '').trim();
+                    const iconSrc = rawIcon.match(/^https?:|^images\//) ? normalizeImageURL(rawIcon) : '';
+                    const iconHTML = iconSrc
+                        ? `<img src="${iconSrc}" alt="${row.Title}" style="width:60px;height:60px;object-fit:contain;border-radius:12px;">`
+                        : (rawIcon || '📁');
                     container.innerHTML += `
                         <div class="download-card">
                             <div class="download-icon">${iconHTML}</div>
