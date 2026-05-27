@@ -2138,6 +2138,10 @@
             <span class="bot-chip">Contact Us</span>
             <span class="bot-chip">Get a Quote</span>
             <span class="bot-chip">About Phoenixtek</span>
+            <span class="bot-chip">Our Projects</span>
+            <span class="bot-chip">Downloads</span>
+            <span class="bot-chip">SHM</span>
+            <span class="bot-chip">IoT Monitoring</span>
         </div>
 
         <div class="bot-input-row">
@@ -3012,14 +3016,65 @@
             }
         ];
 
-        const BOT_FALLBACK = "🤔 I'm not sure about that, but our team can help!\n\n📱 <a href='https://wa.me/919734115880?text=Hello%20Phoenixtek!%20I%20have%20a%20question.' target='_blank'>WhatsApp us directly →</a><br>📧 <a href='mailto:phoenixteksoln@gmail.com'>phoenixteksoln@gmail.com</a>\n\nTry asking about: <i>services, contact, quote, projects, SHM, IoT</i>...";
+        // Extra Q&A topics
+        BOT_QA.push(
+            {
+                keys: ['instrument','equipment','device','sensor type','vibrating wire','strain gauge','load cell','tiltmeter','crackmeter','extensometer'],
+                answer: "🔧 <b>Instruments We Use:</b><br>• Vibrating Wire Piezometers<br>• Inclinometers & Tiltmeters<br>• Settlement Cells & Plates<br>• Strain Gauges & Load Cells<br>• Crackmeters & Jointmeters<br>• Seismographs & Accelerometers<br>• Data Loggers & Telemetry Units<br><br>All instruments are precision-calibrated before deployment!"
+            },
+            {
+                keys: ['timeline','how long','duration','time','days','weeks','months','delivery'],
+                answer: "⏱️ <b>Project Timelines:</b><br>• Site assessment & planning: <b>3–7 days</b><br>• Instrument installation: <b>1–4 weeks</b> (depends on scope)<br>• Data acquisition setup: <b>2–5 days</b><br>• Full monitoring handover: <b>4–8 weeks</b><br><br>We work efficiently to meet your project deadlines! 📅"
+            },
+            {
+                keys: ['payment','pay','advance','invoice','gst','tax','billing'],
+                answer: "💳 <b>Payment & Billing:</b><br>We provide professional GST invoices for all services.<br><br>Payment terms are discussed during project agreement — typically milestone-based for larger projects.<br><br>📱 <a href='https://wa.me/919734115880' target='_blank'>Contact us to discuss →</a>"
+            },
+            {
+                keys: ['warranty','guarantee','support','maintenance','after','amc','annual'],
+                answer: "🛡️ <b>Warranty & Support:</b><br>• All instruments come with <b>manufacturer warranty</b><br>• We offer <b>AMC (Annual Maintenance Contracts)</b> for ongoing monitoring<br>• Remote troubleshooting & on-site support available<br>• Calibration services provided<br><br>We're with you for the full project lifecycle! ✅"
+            },
+            {
+                keys: ['slope','landslide','retaining wall','embankment','cut slope','hill'],
+                answer: "⛰️ <b>Slope & Embankment Monitoring:</b><br>We monitor stability of:<br>• Road & highway cut slopes<br>• Natural hill slopes (landslide-prone zones)<br>• Embankments & earth dams<br>• Retaining walls<br><br>Using inclinometers, piezometers & GPS-based displacement sensors for early warning systems! 🚨"
+            },
+            {
+                keys: ['vibration','blast','quarry','construction noise','impact'],
+                answer: "💥 <b>Vibration Monitoring:</b><br>We provide blast & construction vibration monitoring to protect nearby structures.<br><br>• Real-time PPV (Peak Particle Velocity) measurement<br>• Compliance with IS 6922 standards<br>• Automated alerts when limits are exceeded<br>• Used near quarries, metro construction & blasting sites"
+            },
+            {
+                keys: ['solar','power','remote','off grid','battery','wireless power'],
+                answer: "☀️ <b>Remote & Solar-Powered Stations:</b><br>For remote project sites without power supply, we deploy:<br>• Solar-powered data acquisition units<br>• Battery backup systems<br>• GPRS/4G data transmission<br>• Fully autonomous monitoring stations<br><br>Data reaches you even from the most remote locations! 🌐"
+            },
+            {
+                keys: ['career','job','hiring','vacancy','intern','join','work with'],
+                answer: "👔 <b>Careers at Phoenixtek:</b><br>We're always looking for passionate engineers to join our team!<br><br>📧 Send your resume to: <a href='mailto:phoenixteksoln@gmail.com'>phoenixteksoln@gmail.com</a><br><br>Mention the role you're interested in. We'll get back to you! 🙌"
+            },
+            {
+                keys: ['review','rating','feedback','testimonial','client say','customer'],
+                answer: "⭐ <b>Client Satisfaction: 100%</b><br>We have successfully delivered <b>50+ projects</b> across India with zero major complaints.<br><br>Our clients include government agencies, infrastructure companies & private developers who trust us for critical monitoring work.<br><br>Want references? <a href='https://wa.me/919734115880' target='_blank'>Ask us directly →</a>"
+            }
+        );
+
+        const BOT_FALLBACK = "🤔 I'm not sure about that one!";
+        const BOT_HANDOFF  = "🙋 It seems I can't fully answer your question. Let me connect you with our team directly!\n\n📱 <a href='https://wa.me/919734115880?text=Hello%20Phoenixtek!%20I%20have%20a%20question.' target='_blank'>👉 WhatsApp our team now →</a><br>📧 <a href='mailto:phoenixteksoln@gmail.com'>phoenixteksoln@gmail.com</a>\n\nWe usually reply within a few hours! 😊";
+
+        let botMissCount = 0;
 
         function botFindAnswer(query) {
             const q = query.toLowerCase().trim();
             for (const item of BOT_QA) {
-                if (item.keys.some(k => q.includes(k))) return item.answer;
+                if (item.keys.some(k => q.includes(k))) {
+                    botMissCount = 0; // reset on successful match
+                    return item.answer;
+                }
             }
-            return BOT_FALLBACK;
+            botMissCount++;
+            if (botMissCount >= 2) {
+                botMissCount = 0;
+                return BOT_HANDOFF;
+            }
+            return BOT_FALLBACK + "\n\nTry asking about: <i>services, SHM, IoT, quote, projects, instruments, timeline...</i>";
         }
 
         function botAddMessage(text, sender) {
