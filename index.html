@@ -2929,132 +2929,169 @@
         }
 
         // ── PhoenixBot FAQ Engine ──────────────────────────────────────
+        // ── PhoenixBot Knowledge Base (generated from phoenixtek.in) ──
+        // Last updated: 2026-05-27 | Update weekly as content grows
         const BOT_QA = [
+            // ── Greetings ──
             {
-                keys: ['hello','hi','hey','namaste','hii','helo'],
-                answer: "👋 Hello! Welcome to Phoenixtek Solution! I'm PhoenixBot 🔥\nHow can I help you today? You can ask me about our services, projects, contact details, or anything else!"
+                keys: ['hello','hi','hey','namaste','hii','helo','good morning','good afternoon','good evening'],
+                answer: "👋 Hello! Welcome to <b>Phoenixtek Solution</b>! I'm PhoenixBot 🔥<br><br>I can help you with info about our services, projects, contact details & more. What would you like to know?"
+            },
+            // ── About the Company ──
+            {
+                keys: ['about','who are you','who is phoenixtek','what is phoenixtek','tell me about'],
+                answer: "🔥 <b>About Phoenixtek Solution</b><br><br>We are a specialist geotechnical instrumentation & structural health monitoring company based in <b>Kolkata, West Bengal</b>, founded by <b>Supratim Mondal</b>.<br><br>In strategic partnership with <b>Alfresco Construction Services Pvt. Ltd.</b>, we stand at the forefront of precision infrastructure monitoring in India — making every bridge, dam, tunnel & high-rise safer.<br><br>📊 <b>Our Track Record:</b><br>• 50+ Projects Completed<br>• 10+ Years of Expertise<br>• 15+ States Served<br>• 100% Client Satisfaction"
+            },
+            // ── Founder ──
+            {
+                keys: ['founder','supratim','supratim mondal','director','leadership','who started'],
+                answer: "👨‍💼 <b>Supratim Mondal</b><br><i>Founder & Chief Geotechnical Engineer</i><br><br>A specialist in geotechnical instrumentation with extensive hands-on experience on national highways, metro rail, dam, and bridge projects across India.<br><br>Supratim leads every engagement with a hands-on approach, ensuring technical rigour from site survey to final report.<br><br>🔗 <a href='https://www.linkedin.com/in/supratim-mondal9734115880/' target='_blank'>Connect on LinkedIn →</a>"
+            },
+            // ── Mission & Vision ──
+            {
+                keys: ['mission','vision','goal','purpose','why phoenixtek','what drives'],
+                answer: "🎯 <b>Our Mission</b><br>To deliver precise, reliable geotechnical and structural monitoring solutions that protect lives, safeguard infrastructure, and support India's sustainable development goals.<br><br>🌟 <b>Our Vision</b><br>To be India's most trusted infrastructure monitoring partner — empowering engineers and decision-makers with real-time, data-driven insights for safer, smarter construction."
+            },
+            // ── Partnership ──
+            {
+                keys: ['partner','alfresco','collaboration','association','tie up'],
+                answer: "🤝 <b>Our Partner</b><br>Phoenixtek Solution works in strategic partnership with <b>Alfresco Construction Services Pvt. Ltd.</b><br><br>This collaboration strengthens our delivery capacity for large-scale infrastructure projects across India.<br><br>🌐 <a href='http://www.alfresco-bestech.com/' target='_blank'>Visit Alfresco →</a>"
+            },
+            // ── All Services ──
+            {
+                keys: ['service','services','offer','provide','what do you do','what you do','specializ','capabilities'],
+                answer: "🏗️ <b>Our 6 Core Services:</b><br><br>1️⃣ <b>Geotechnical Instrumentation</b> – soil, rock & groundwater monitoring<br>2️⃣ <b>Structural Health Monitoring (SHM)</b> – bridges, dams, buildings<br>3️⃣ <b>Bridge Load Testing</b> – capacity & safety compliance<br>4️⃣ <b>Slope Stability Analysis</b> – landslide prevention<br>5️⃣ <b>Vibration & Settlement Monitoring</b> – construction sites & tunnels<br>6️⃣ <b>Road Profiling & Traffic Monitoring</b> – highway assessment<br><br>Ask me about any specific service!"
+            },
+            // ── Geotechnical Instrumentation ──
+            {
+                keys: ['geotechnical','geo tech','soil monitoring','groundwater','rock monitoring','piezometer','inclinometer','extensometer','borehole'],
+                answer: "🌍 <b>Geotechnical Instrumentation</b><br><br>Advanced monitoring of soil, rock, and groundwater behaviour using state-of-the-art sensors & data acquisition systems.<br><br>🔧 <b>What we monitor:</b><br>• Soil settlement & deformation<br>• Pore water pressure (piezometers)<br>• Slope inclination (inclinometers)<br>• Ground movement (extensometers)<br>• Groundwater levels<br><br>✅ Trusted on 50+ projects across 15+ states!"
+            },
+            // ── SHM ──
+            {
+                keys: ['shm','structural health','structural monitoring','structure monitor'],
+                answer: "🏛️ <b>Structural Health Monitoring (SHM)</b><br><br>Continuous assessment of structural integrity for buildings, bridges, dams & critical infrastructure using precision instruments.<br><br>✅ Real-time sensor data<br>✅ Automated alerts (SMS/Email)<br>✅ Cloud-based dashboards<br>✅ IS & IRC compliant reports<br><br>📱 <a href='https://wa.me/919734115880?text=Hello!%20I%20need%20SHM%20for%20my%20project.' target='_blank'>Enquire about SHM →</a>"
+            },
+            // ── Bridge Load Testing ──
+            {
+                keys: ['bridge load','load test','load testing','bridge test','bridge capacity','bridge safety'],
+                answer: "🌉 <b>Bridge Load Testing</b><br><br>Comprehensive load testing to evaluate bridge performance, structural capacity & safety compliance with Indian standards (IRC/BIS).<br><br>• Static & dynamic load testing<br>• Strain & deflection measurement<br>• Safety assessment reports<br>• Compliant with IRC 37 & IS standards<br><br>📱 <a href='https://wa.me/919734115880' target='_blank'>Request a load test quote →</a>"
+            },
+            // ── Slope Stability ──
+            {
+                keys: ['slope','slope stability','landslide','hill slope','embankment','retaining wall','cut slope'],
+                answer: "⛰️ <b>Slope Stability Analysis</b><br><br>Expert evaluation of slope conditions with advanced monitoring to prevent landslides and ensure safety in hilly terrain.<br><br>• Inclinometer-based movement tracking<br>• Piezometer-based pore pressure monitoring<br>• Early warning alert systems<br>• Applicable to highways, railways & natural slopes<br><br>We've monitored slopes from Bengal plains to Northeast highlands!"
+            },
+            // ── Vibration & Settlement ──
+            {
+                keys: ['vibration','settlement','blast','ground vibration','ppv','construction vibration','settlement monitoring'],
+                answer: "📳 <b>Vibration & Settlement Monitoring</b><br><br>Precise tracking of ground vibrations and settlement patterns for construction sites, tunnels & sensitive structures nearby.<br><br>• PPV (Peak Particle Velocity) measurement<br>• Compliance with IS 6922 standards<br>• Automated threshold alerts<br>• Settlement plate & cell monitoring<br>• Used near metro construction, blasting & excavations"
+            },
+            // ── Road Profiling ──
+            {
+                keys: ['road','road profil','traffic','highway','pavement','roughness','iri','road condition'],
+                answer: "🛣️ <b>Road Profiling & Traffic Monitoring</b><br><br>Automated road condition assessment & traffic analysis for highway maintenance & planning projects.<br><br>• Road roughness / IRI measurement<br>• Pavement condition surveys<br>• Traffic volume & speed analysis<br>• Data for NHAI & PWD project reports<br><br>📱 <a href='https://wa.me/919734115880' target='_blank'>Enquire now →</a>"
+            },
+            // ── Bridge / Metro / Dam (quick) ──
+            {
+                keys: ['bridge','metro','metro rail','railway','dam','reservoir','tunnel'],
+                answer: "🏗️ <b>Infrastructure Monitoring — Our Speciality!</b><br><br>We have successfully delivered:<br>• 🚇 <b>Metro Rail Monitoring</b> – real-time SHM for metro construction<br>• 🌉 <b>Highway Bridge Testing</b> – load testing & safety assessment<br>• 🌊 <b>Dam Instrumentation</b> – reservoir safety & performance<br>• 🚇 <b>Tunnel Monitoring</b> – deformation & settlement tracking<br><br>50+ projects | 15+ states | 10+ years experience"
+            },
+            // ── Contact ──
+            {
+                keys: ['contact','reach','reach us','phone','call','email','address','location','office','where are you','find you'],
+                answer: "📞 <b>Contact Phoenixtek Solution</b><br><br>• 📱 <b>Phone/WhatsApp:</b> <a href='https://wa.me/919734115880' target='_blank'>+91 97341 15880</a><br>• 📧 <b>Email:</b> <a href='mailto:phoenixteksoln@gmail.com'>phoenixteksoln@gmail.com</a><br>• 📍 <b>Location:</b> Kolkata, West Bengal, India<br>• 🌐 <b>Website:</b> <a href='https://phoenixtek.in' target='_blank'>phoenixtek.in</a><br>• 👤 <b>Contact:</b> Supratim Mondal<br><br>You can also fill the <a href='#contact'>Contact Form →</a> on our website!"
+            },
+            // ── WhatsApp ──
+            {
+                keys: ['whatsapp','wa','chat now','message us','text us'],
+                answer: "💬 <b>Chat with us on WhatsApp!</b><br><br><a href='https://wa.me/919734115880?text=Hello%20Phoenixtek!%20I%20have%20a%20project%20enquiry.' target='_blank'>👉 Click here to WhatsApp us →</a><br><br>We usually reply within a few hours! ⚡"
+            },
+            // ── Quote ──
+            {
+                keys: ['quote','price','cost','rate','charge','fee','budget','estimate','pricing','how much'],
+                answer: "💰 <b>Get a Free Custom Quote</b><br><br>Every project is unique — pricing depends on:<br>• Type & number of instruments<br>• Project scale & monitoring duration<br>• Site location & accessibility<br>• Reporting requirements<br><br>📱 <a href='https://wa.me/919734115880?text=Hello%20Phoenixtek!%20I%20would%20like%20a%20quote%20for%20my%20project.' target='_blank'>WhatsApp for a free quote →</a><br>📧 <a href='mailto:phoenixteksoln@gmail.com'>phoenixteksoln@gmail.com</a>"
+            },
+            // ── Projects & Portfolio ──
+            {
+                keys: ['project','projects','portfolio','case study','work done','past project','experience','complet'],
+                answer: "📁 <b>Our Featured Projects</b><br><br>• 🚇 Metro Rail Monitoring — real-time SHM for metro construction<br>• 🌉 Highway Bridge Testing — load testing of national highway bridges<br>• 🌊 Dam Instrumentation — water reservoir safety & performance<br>• ⛰️ Slope Stability Monitoring — landslide prevention systems<br><br>✅ 50+ projects delivered | 15+ states | 10+ years<br><br>👉 <a href='#portfolio'>View Portfolio →</a>"
+            },
+            // ── Instruments ──
+            {
+                keys: ['instrument','equipment','sensor','device','vibrating wire','strain gauge','load cell','tiltmeter','crackmeter','data logger','accelerometer'],
+                answer: "🔧 <b>Instruments We Use</b><br><br>• Vibrating Wire Piezometers<br>• Inclinometers & Tiltmeters<br>• Settlement Plates & Cells<br>• Strain Gauges & Load Cells<br>• Crackmeters & Jointmeters<br>• Seismographs & Accelerometers<br>• Automated Data Loggers<br>• GPRS/4G Telemetry Units<br><br>All instruments are precision-calibrated before every deployment! ✅"
+            },
+            // ── Timeline ──
+            {
+                keys: ['timeline','how long','duration','time to complet','days','weeks','months','delivery time','when'],
+                answer: "⏱️ <b>Typical Project Timelines</b><br><br>• Site assessment & planning: <b>3–7 days</b><br>• Instrument installation: <b>1–4 weeks</b><br>• Data acquisition system setup: <b>2–5 days</b><br>• Full handover & reporting: <b>4–8 weeks total</b><br><br>We work around your project schedule. Contact us to discuss your specific deadline! 📅"
+            },
+            // ── Standards & Compliance ──
+            {
+                keys: ['standard','compliance','certif','is code','irc','bis','cwc','nhai','iso','complian'],
+                answer: "✅ <b>Standards & Compliance</b><br><br>All our work follows:<br>• <b>BIS</b> — Bureau of Indian Standards<br>• <b>IRC</b> — Indian Roads Congress<br>• <b>CWC</b> — Central Water Commission<br>• <b>NHAI</b> — National Highway guidelines<br>• International geotechnical standards<br><br>Our reports are technically sound, regulatory compliant & accepted by government bodies!"
+            },
+            // ── Why Choose Us ──
+            {
+                keys: ['why choose','why phoenixtek','advantage','benefit','what makes you','different','unique','better'],
+                answer: "🏆 <b>Why Choose Phoenixtek Solution?</b><br><br>✓ Certified geotechnical & structural engineers<br>✓ State-of-the-art sensors & data loggers<br>✓ Real-time remote monitoring & alerts<br>✓ Comprehensive reporting & interpretation<br>✓ Full project lifecycle support<br>✓ IS, IRC & international standard compliance<br>✓ 50+ projects | 100% client satisfaction<br>✓ Strategic partnership with Alfresco Construction"
+            },
+            // ── AMC / Warranty / Support ──
+            {
+                keys: ['warranty','guarantee','amc','annual maintenance','support','after service','maintenance contract'],
+                answer: "🛡️ <b>Support & Maintenance</b><br><br>• Instruments come with <b>manufacturer warranty</b><br>• <b>AMC (Annual Maintenance Contracts)</b> available for long-term monitoring<br>• Remote diagnostics & on-site support<br>• Regular calibration services<br><br>We stay with you for the full project lifecycle! 📱 <a href='https://wa.me/919734115880' target='_blank'>Ask us →</a>"
+            },
+            // ── Payment / GST ──
+            {
+                keys: ['payment','pay','gst','invoice','billing','tax','advance','milestone'],
+                answer: "💳 <b>Payment & Billing</b><br><br>• We issue professional <b>GST invoices</b> for all services<br>• Payment terms are agreed during project scope discussion<br>• Larger projects typically follow a milestone-based payment schedule<br><br>📱 <a href='https://wa.me/919734115880' target='_blank'>Discuss billing with us →</a>"
+            },
+            // ── Downloads ──
+            {
+                keys: ['download','brochure','datasheet','catalogue','pdf','document','software','app','surveystar'],
+                answer: "📄 <b>Downloads</b><br><br>Available in our Downloads section:<br>• 📋 Company Brochure<br>• 📐 Technical Datasheets<br>• 📱 SurveyStar Field App (Android)<br>• 💻 Monitoring Software<br><br>👉 <a href='#downloads'>Go to Downloads →</a><br><br>Need something specific? <a href='mailto:phoenixteksoln@gmail.com'>Email us →</a>"
+            },
+            // ── SurveyStar App ──
+            {
+                keys: ['surveystar','survey star','field app','android app','mobile app','application'],
+                answer: "📱 <b>SurveyStar App</b><br><br>Our field data collection app for Android — built for geotechnical survey teams in the field.<br><br>👉 <a href='#downloads'>Download from our website →</a>"
+            },
+            // ── Remote / Solar / IoT ──
+            {
+                keys: ['remote','solar','iot','wireless','off grid','live data','real time','realtime','4g','gprs','cloud','telemetry'],
+                answer: "📡 <b>Remote & IoT Monitoring</b><br><br>For sites without consistent power or connectivity, we deploy:<br>• Solar-powered data acquisition units<br>• Battery backup systems<br>• GPRS/4G telemetry<br>• Cloud-based real-time dashboards<br>• SMS/Email automated alerts<br><br>Your data reaches you wherever you are — no site visits needed! 🌐"
+            },
+            // ── Careers ──
+            {
+                keys: ['career','job','hiring','vacancy','intern','join us','work with you','employment'],
+                answer: "👔 <b>Careers at Phoenixtek</b><br><br>We're always looking for passionate geotechnical & structural engineers to join our growing team!<br><br>📧 Send your resume to: <a href='mailto:phoenixteksoln@gmail.com'>phoenixteksoln@gmail.com</a><br><br>Mention the role and your area of expertise. We'll get back to you! 🙌"
+            },
+            // ── Coverage ──
+            {
+                keys: ['state','pan india','coverage','where do you work','which state','northeast','bengal','india wide'],
+                answer: "🗺️ <b>Pan-India Coverage</b><br><br>We've delivered projects in <b>15+ states</b> across India — from the plains of Bengal to the high-altitude terrains of the Northeast, coastal regions, and major metros.<br><br>📞 Contact us to confirm availability in your region: <a href='https://wa.me/919734115880' target='_blank'>+91 97341 15880</a>"
+            },
+            // ── Client satisfaction / Reviews ──
+            {
+                keys: ['review','rating','testimonial','client','customer','satisfied','feedback','trust'],
+                answer: "⭐ <b>100% Client Satisfaction</b><br><br>With 50+ successfully delivered projects, our clients — including government agencies, infrastructure developers & private firms — trust us for India's most critical monitoring work.<br><br>We believe in long-term partnerships built on transparency, integrity & results.<br><br>Want references? <a href='https://wa.me/919734115880' target='_blank'>Ask us directly →</a>"
+            },
+            // ── Values ──
+            {
+                keys: ['value','principle','culture','integrity','precision','safety'],
+                answer: "💡 <b>Our Core Values</b><br><br>📊 <b>Precision Engineering</b> — calibrated instruments & rigorous data validation<br>🛡️ <b>Safety First</b> — every decision guided by structural & people safety<br>🔬 <b>Data-Driven Insights</b> — raw data turned into actionable engineering intelligence<br>🤝 <b>Partnership & Trust</b> — transparency, integrity & long-term relationships<br>🌏 <b>Pan-India Reach</b> — field-ready teams across diverse geographies"
+            },
+            // ── Positive closings ──
+            {
+                keys: ['thank','thanks','great','awesome','helpful','good','perfect','nice','excellent','wonderful'],
+                answer: "😊 You're welcome! Happy to help.<br><br>Is there anything else you'd like to know? Or reach us directly:<br>📱 <a href='https://wa.me/919734115880' target='_blank'>WhatsApp: +91 97341 15880</a>"
             },
             {
-                keys: ['service','offer','provide','do','specializ','what you do'],
-                answer: "🏗️ <b>Our Core Services:</b><br>• <b>Geotechnical Instrumentation</b> – soil & foundation monitoring<br>• <b>Structural Health Monitoring (SHM)</b> – real-time structure analysis<br>• <b>IoT-Based Monitoring</b> – smart sensor networks<br>• <b>24/7 Live Data Acquisition</b> – continuous field data<br>• <b>Cloud-Based Analytics</b> – data visualization & reports<br><br>Want details on any specific service?"
-            },
-            {
-                keys: ['shm','structural health','structural monitoring'],
-                answer: "🏛️ <b>Structural Health Monitoring (SHM)</b><br>We deploy advanced sensor arrays to continuously monitor bridges, dams, tunnels, high-rise buildings & heritage structures.<br><br>✅ Real-time alerts<br>✅ IoT-connected sensors<br>✅ Cloud dashboards<br>✅ IS/IRC compliant reporting<br><br>Interested? <a href='https://wa.me/919734115880' target='_blank'>Chat with our team →</a>"
-            },
-            {
-                keys: ['geotechnical','soil','foundation','borehole','piezometer','inclinometer','settlement'],
-                answer: "🌍 <b>Geotechnical Instrumentation</b><br>We provide precision instruments for:<br>• Settlement monitoring<br>• Slope stability analysis<br>• Pore water pressure measurement<br>• Inclinometer & extensometer installation<br>• Vibration monitoring<br><br>50+ projects completed across 15+ states!"
-            },
-            {
-                keys: ['iot','sensor','wireless','remote','real time','realtime','live data'],
-                answer: "📡 <b>IoT-Based Monitoring</b><br>Our smart IoT systems connect all your instruments wirelessly:<br>• Remote data access from anywhere<br>• 24/7 automated alerts via SMS/Email<br>• Cloud dashboard with live graphs<br>• Solar-powered remote stations<br><br>No need to visit the site — data comes to you! 🚀"
-            },
-            {
-                keys: ['contact','reach','phone','call','email','address','location','office','where'],
-                answer: "📞 <b>Contact Phoenixtek Solution:</b><br>• 📱 WhatsApp: <a href='https://wa.me/919734115880' target='_blank'>+91 97341 15880</a><br>• 📧 Email: <a href='mailto:phoenixteksoln@gmail.com'>phoenixteksoln@gmail.com</a><br>• 🌐 Website: <a href='https://phoenixtek.in' target='_blank'>phoenixtek.in</a><br><br>We're happy to help! 😊"
-            },
-            {
-                keys: ['whatsapp','chat','message','text','wa'],
-                answer: "💬 You can reach us directly on WhatsApp:<br><a href='https://wa.me/919734115880' target='_blank'>👉 Click here to WhatsApp us</a><br><br>We usually reply within a few hours!"
-            },
-            {
-                keys: ['quote','price','cost','rate','charge','fee','budget','estimate'],
-                answer: "💰 <b>Get a Custom Quote</b><br>Every project is unique, so pricing depends on:<br>• Type of instruments needed<br>• Project scale & duration<br>• Location & accessibility<br><br>📱 <a href='https://wa.me/919734115880?text=Hello%20Phoenixtek!%20I%20would%20like%20a%20quote%20for%20my%20project.' target='_blank'>WhatsApp us for a free quote →</a>"
-            },
-            {
-                keys: ['about','who','phoenixtek','company','founded','founder','supratim'],
-                answer: "🔥 <b>About Phoenixtek Solution</b><br>We are a specialized geotechnical instrumentation company founded by <b>Supratim Mondal</b>.<br><br>Our mission: deliver cutting-edge monitoring solutions for India's critical infrastructure.<br><br>📊 <b>Our Track Record:</b><br>• 50+ Projects Completed<br>• 10+ Years of Experience<br>• 15+ States Covered<br>• 100% Client Satisfaction"
-            },
-            {
-                keys: ['project','experience','work','done','complet','portfolio'],
-                answer: "📁 <b>Our Project Portfolio:</b><br>We've successfully completed <b>50+ projects</b> across <b>15+ states</b> in India including:<br>• Dam safety monitoring<br>• Bridge health monitoring<br>• Metro & tunnel instrumentation<br>• Highway slope monitoring<br>• Building settlement monitoring<br><br>View our portfolio on the website! 🏗️"
-            },
-            {
-                keys: ['state','location','where do you work','pan india','india','coverage'],
-                answer: "🗺️ <b>Pan-India Coverage</b><br>Phoenixtek Solution works across <b>15+ states</b> in India. We have experience in projects across diverse geographies — from hilly terrains to coastal areas.<br><br>📞 Contact us to check availability in your region!"
-            },
-            {
-                keys: ['brochure','download','datasheet','catalogue','pdf','document'],
-                answer: "📄 <b>Downloads</b><br>You can download our company brochure, technical datasheets & software from the <b>Downloads section</b> on our website.<br><br>👉 <a href='#downloads'>Go to Downloads →</a><br><br>Need something specific? Email us at <a href='mailto:phoenixteksoln@gmail.com'>phoenixteksoln@gmail.com</a>"
-            },
-            {
-                keys: ['software','app','surveystar','survey star','application'],
-                answer: "📱 <b>SurveyStar App</b><br>We offer the <b>SurveyStar</b> field data collection app for Android — designed for geotechnical survey teams.<br><br>Download it from the <b>Downloads section</b> on our website! 👉 <a href='#downloads'>Downloads →</a>"
-            },
-            {
-                keys: ['dam','reservoir','water','hydro'],
-                answer: "🌊 <b>Dam & Reservoir Monitoring</b><br>We specialize in comprehensive dam safety instrumentation including:<br>• Piezometers & seepage monitoring<br>• Settlement & deformation sensors<br>• Strong motion instruments<br>• Automated data acquisition systems<br><br>Compliant with CWC & BIS standards!"
-            },
-            {
-                keys: ['bridge','highway','road','tunnel','metro','railway'],
-                answer: "🌉 <b>Infrastructure Monitoring</b><br>We provide SHM solutions for:<br>• Bridges & flyovers<br>• Highways & road cuts<br>• Tunnels & underground structures<br>• Metro rail & railway structures<br><br>Real-time monitoring keeps your infrastructure safe! 🛡️"
-            },
-            {
-                keys: ['building','high rise','highrise','skyscraper','construction'],
-                answer: "🏢 <b>Building & Construction Monitoring</b><br>We monitor:<br>• High-rise building settlement<br>• Vibration impact on adjacent structures<br>• Deep excavation & retaining walls<br>• Foundation performance<br><br>Protect your investment with real-time data!"
-            },
-            {
-                keys: ['cloud','data','dashboard','report','analytics','visualization'],
-                answer: "☁️ <b>Cloud-Based Analytics</b><br>Our platform provides:<br>• Live data dashboards accessible anywhere<br>• Automated alert system (SMS/Email)<br>• Historical trend analysis<br>• Downloadable reports (PDF/Excel)<br>• Multi-site monitoring from one portal"
-            },
-            {
-                keys: ['team','engineer','staff','expert','professional'],
-                answer: "👨‍💼 <b>Our Expert Team</b><br>Led by <b>Supratim Mondal</b> (Founder & Director), our team consists of experienced geotechnical & structural engineers with 10+ years of field expertise.<br><br>We handle everything from instrument selection to installation, calibration & reporting!"
-            },
-            {
-                keys: ['certif','standard','compliance','is code','irc','bis','iso'],
-                answer: "✅ <b>Standards & Compliance</b><br>Our work follows:<br>• BIS (Bureau of Indian Standards)<br>• IRC (Indian Roads Congress)<br>• CWC (Central Water Commission)<br>• International geotechnical standards<br><br>All our reports are technically sound and regulatory compliant."
-            },
-            {
-                keys: ['thank','thanks','great','awesome','good','nice','perfect','helpful'],
-                answer: "😊 You're welcome! I'm glad I could help.\n\nIs there anything else you'd like to know about Phoenixtek Solution? Or feel free to <a href='https://wa.me/919734115880' target='_blank'>WhatsApp us directly</a> for more details!"
-            },
-            {
-                keys: ['bye','goodbye','see you','ok thanks','okay thanks','that all','thats all'],
-                answer: "👋 Thanks for chatting with PhoenixBot! Have a great day!\n\nFeel free to come back anytime. You can also reach us at:<br>📱 <a href='https://wa.me/919734115880' target='_blank'>WhatsApp: +91 97341 15880</a>"
+                keys: ['bye','goodbye','see you','that all','thats all','ok thanks','okay thanks','no thanks','done'],
+                answer: "👋 Thanks for chatting with PhoenixBot! Have a great day!<br><br>Come back anytime — or reach us at:<br>📱 <a href='https://wa.me/919734115880' target='_blank'>+91 97341 15880</a> | 📧 <a href='mailto:phoenixteksoln@gmail.com'>phoenixteksoln@gmail.com</a>"
             }
         ];
-
-        // Extra Q&A topics
-        BOT_QA.push(
-            {
-                keys: ['instrument','equipment','device','sensor type','vibrating wire','strain gauge','load cell','tiltmeter','crackmeter','extensometer'],
-                answer: "🔧 <b>Instruments We Use:</b><br>• Vibrating Wire Piezometers<br>• Inclinometers & Tiltmeters<br>• Settlement Cells & Plates<br>• Strain Gauges & Load Cells<br>• Crackmeters & Jointmeters<br>• Seismographs & Accelerometers<br>• Data Loggers & Telemetry Units<br><br>All instruments are precision-calibrated before deployment!"
-            },
-            {
-                keys: ['timeline','how long','duration','time','days','weeks','months','delivery'],
-                answer: "⏱️ <b>Project Timelines:</b><br>• Site assessment & planning: <b>3–7 days</b><br>• Instrument installation: <b>1–4 weeks</b> (depends on scope)<br>• Data acquisition setup: <b>2–5 days</b><br>• Full monitoring handover: <b>4–8 weeks</b><br><br>We work efficiently to meet your project deadlines! 📅"
-            },
-            {
-                keys: ['payment','pay','advance','invoice','gst','tax','billing'],
-                answer: "💳 <b>Payment & Billing:</b><br>We provide professional GST invoices for all services.<br><br>Payment terms are discussed during project agreement — typically milestone-based for larger projects.<br><br>📱 <a href='https://wa.me/919734115880' target='_blank'>Contact us to discuss →</a>"
-            },
-            {
-                keys: ['warranty','guarantee','support','maintenance','after','amc','annual'],
-                answer: "🛡️ <b>Warranty & Support:</b><br>• All instruments come with <b>manufacturer warranty</b><br>• We offer <b>AMC (Annual Maintenance Contracts)</b> for ongoing monitoring<br>• Remote troubleshooting & on-site support available<br>• Calibration services provided<br><br>We're with you for the full project lifecycle! ✅"
-            },
-            {
-                keys: ['slope','landslide','retaining wall','embankment','cut slope','hill'],
-                answer: "⛰️ <b>Slope & Embankment Monitoring:</b><br>We monitor stability of:<br>• Road & highway cut slopes<br>• Natural hill slopes (landslide-prone zones)<br>• Embankments & earth dams<br>• Retaining walls<br><br>Using inclinometers, piezometers & GPS-based displacement sensors for early warning systems! 🚨"
-            },
-            {
-                keys: ['vibration','blast','quarry','construction noise','impact'],
-                answer: "💥 <b>Vibration Monitoring:</b><br>We provide blast & construction vibration monitoring to protect nearby structures.<br><br>• Real-time PPV (Peak Particle Velocity) measurement<br>• Compliance with IS 6922 standards<br>• Automated alerts when limits are exceeded<br>• Used near quarries, metro construction & blasting sites"
-            },
-            {
-                keys: ['solar','power','remote','off grid','battery','wireless power'],
-                answer: "☀️ <b>Remote & Solar-Powered Stations:</b><br>For remote project sites without power supply, we deploy:<br>• Solar-powered data acquisition units<br>• Battery backup systems<br>• GPRS/4G data transmission<br>• Fully autonomous monitoring stations<br><br>Data reaches you even from the most remote locations! 🌐"
-            },
-            {
-                keys: ['career','job','hiring','vacancy','intern','join','work with'],
-                answer: "👔 <b>Careers at Phoenixtek:</b><br>We're always looking for passionate engineers to join our team!<br><br>📧 Send your resume to: <a href='mailto:phoenixteksoln@gmail.com'>phoenixteksoln@gmail.com</a><br><br>Mention the role you're interested in. We'll get back to you! 🙌"
-            },
-            {
-                keys: ['review','rating','feedback','testimonial','client say','customer'],
-                answer: "⭐ <b>Client Satisfaction: 100%</b><br>We have successfully delivered <b>50+ projects</b> across India with zero major complaints.<br><br>Our clients include government agencies, infrastructure companies & private developers who trust us for critical monitoring work.<br><br>Want references? <a href='https://wa.me/919734115880' target='_blank'>Ask us directly →</a>"
-            }
-        );
 
         const BOT_FALLBACK = "🤔 I'm not sure about that one!";
         const BOT_HANDOFF  = "🙋 It seems I can't fully answer your question. Let me connect you with our team directly!\n\n📱 <a href='https://wa.me/919734115880?text=Hello%20Phoenixtek!%20I%20have%20a%20question.' target='_blank'>👉 WhatsApp our team now →</a><br>📧 <a href='mailto:phoenixteksoln@gmail.com'>phoenixteksoln@gmail.com</a>\n\nWe usually reply within a few hours! 😊";
