@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SurveyStar — GPS Road Survey App for Field Engineers</title>
-  <meta name="description" content="SurveyStar is a GPS-based road survey app for field engineers. Records IRI, GPS coordinates, and real-time road condition data — built for highway and infrastructure survey teams.">
+  <meta name="description" content="SurveyStar is a GPS-based road survey app for field engineers. Records chainage, geo-tagged photos, video with GPS subtitles, and voice-dictated notes — built for highway and infrastructure survey teams.">
   <style>
     *, *::before, *::after { box-sizing: border-box; }
     body {
@@ -58,6 +58,7 @@
       max-width: 640px;
       margin: 0 auto 2rem;
     }
+    .badges { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
     .badge {
       display: inline-block;
       background: rgba(0,217,255,0.12);
@@ -68,9 +69,14 @@
       font-size: 0.85rem;
       font-weight: 600;
     }
+    .badge.green {
+      background: rgba(0,255,136,0.1);
+      border-color: rgba(0,255,136,0.3);
+      color: #00ff88;
+    }
 
     .section {
-      max-width: 820px;
+      max-width: 860px;
       margin: 0 auto;
       padding: 3.5rem 5%;
     }
@@ -84,30 +90,30 @@
 
     .features {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.25rem;
       margin-top: 1.5rem;
     }
     .feature-card {
       background: #f4fbf7;
       border: 1px solid #d4edda;
       border-radius: 16px;
-      padding: 1.5rem;
+      padding: 1.25rem 1.5rem;
     }
-    .feature-card .icon { font-size: 2rem; margin-bottom: 0.75rem; }
-    .feature-card h3 { font-size: 1rem; font-weight: 700; margin: 0 0 0.5rem; color: #111; }
-    .feature-card p { font-size: 0.9rem; color: #555; margin: 0; }
+    .feature-card .icon { font-size: 1.75rem; margin-bottom: 0.6rem; }
+    .feature-card h3 { font-size: 0.95rem; font-weight: 700; margin: 0 0 0.4rem; color: #111; }
+    .feature-card p { font-size: 0.88rem; color: #555; margin: 0; }
 
-    .use-case {
+    .highlight-block {
       background: #f0f9f4;
       border-left: 4px solid #00b341;
       border-radius: 0 12px 12px 0;
       padding: 2rem;
       margin: 2rem 0;
     }
-    .use-case h2 { color: #1a1a2e; font-size: 1.3rem; margin: 0 0 0.75rem; }
-    .use-case ul { margin: 0.5rem 0 0; padding-left: 1.25rem; color: #333; }
-    .use-case ul li { margin-bottom: 0.5rem; }
+    .highlight-block h2 { color: #1a1a2e; font-size: 1.3rem; margin: 0 0 0.75rem; }
+    .highlight-block ul { margin: 0.5rem 0 0; padding-left: 1.25rem; color: #333; }
+    .highlight-block ul li { margin-bottom: 0.5rem; }
 
     .specs-table {
       width: 100%;
@@ -137,17 +143,48 @@
     }
     .cta h2 { font-size: 1.6rem; margin: 0 0 0.5rem; color: #111; }
     .cta p { color: #666; margin: 0 0 1.5rem; }
-    .cta-btn {
-      display: inline-block;
-      background: linear-gradient(135deg, #00b341, #00d957);
-      color: white;
-      font-weight: 700;
-      font-size: 1rem;
-      padding: 0.85rem 2.2rem;
-      border-radius: 50px;
-      text-decoration: none;
+    .cta-download {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin: 0.5rem 0 1rem;
     }
-    .cta-btn:hover { text-decoration: none; opacity: 0.92; }
+    .play-badge-link { display: inline-block; }
+    .play-badge {
+      height: 72px;
+      width: auto;
+      display: block;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.15));
+      transition: transform 0.2s;
+    }
+    .play-badge:hover { transform: translateY(-2px); }
+    .qr-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .qr-img {
+      width: 110px;
+      height: 110px;
+      border-radius: 12px;
+      border: 3px solid #d4edda;
+      display: block;
+    }
+    .qr-label {
+      font-size: 0.75rem;
+      color: #888;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+    .cta-note {
+      font-size: 0.8rem;
+      color: #999;
+      margin: 0.5rem 0 0;
+    }
 
     .support-strip {
       background: #1A1A2E;
@@ -166,6 +203,10 @@
       font-size: 0.85rem;
     }
     footer a { color: #888; }
+
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 2.2rem; }
+    }
   </style>
 </head>
 <body>
@@ -179,49 +220,74 @@
   <div class="hero">
     <img src="images/surveystar-icon.webp" alt="SurveyStar Icon">
     <h1>SurveyStar</h1>
-    <p>A GPS-based road survey app for field engineers — records IRI, coordinates, and real-time road condition data on the go.</p>
-    <span class="badge">📱 Available for Android</span>
+    <p>A complete road survey app for field engineers — GPS chainage tracking, geo-tagged media, voice notes, and cloud sync. Works fully offline.</p>
+    <div class="badges">
+      <span class="badge">📱 Android 8.0+</span>
+      <span class="badge green">☁️ Cloud Backup</span>
+      <span class="badge green">🔌 Offline-First</span>
+    </div>
   </div>
 
   <div class="section">
     <h2>What is SurveyStar?</h2>
-    <p>SurveyStar is an Android application developed by <strong>Phoenixtek Solution</strong> for highway and infrastructure survey teams. It enables field engineers to collect road condition data directly from their mobile device — no bulky equipment required.</p>
-    <p>The app records IRI (International Roughness Index), GPS coordinates, speed, and real-time road surface condition data as you drive, making large-scale road surveys faster, more accurate, and paperless.</p>
+    <p>SurveyStar is an Android application developed by <strong>Phoenixtek Solution</strong> for highway engineers, road survey consultants, and government field teams. It replaces paper-based survey workflows with a fast, GPS-driven mobile experience — from chainage logging to geo-tagged photos and voice-dictated notes.</p>
+    <p>Everything works offline. Survey data syncs to the cloud automatically when a connection is available, and restores on new devices automatically.</p>
 
     <div class="features">
       <div class="feature-card">
         <div class="icon">📍</div>
-        <h3>GPS Tracking</h3>
-        <p>Automatic GPS coordinate logging tied to every data point — precise location at every measurement.</p>
+        <h3>GPS Chainage Tracking</h3>
+        <p>Real-time chainage computed via Haversine formula. Supports increasing and decreasing direction. Set start chainage per session; resume from last point.</p>
       </div>
       <div class="feature-card">
-        <div class="icon">📊</div>
-        <h3>IRI Measurement</h3>
-        <p>Records International Roughness Index (IRI) using the phone's accelerometer — no external sensors needed.</p>
+        <div class="icon">📸</div>
+        <h3>Geo-Tagged Photos</h3>
+        <p>Full-resolution photos watermarked with timestamp, GPS coordinates, chainage, category tags, and your brand — automatically.</p>
       </div>
       <div class="feature-card">
-        <div class="icon">🛣️</div>
-        <h3>Road Condition Data</h3>
-        <p>Capture potholes, cracks, surface distress, and condition ratings in real time as you survey.</p>
+        <div class="icon">🎥</div>
+        <h3>GPS Video + Subtitles</h3>
+        <p>Record video with a per-second GPS subtitle (SRT) track embedded. Add voice narration — synced transcript included.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🎙️</div>
+        <h3>Voice Notes (Offline)</h3>
+        <p>Dictate log-point notes hands-free in English, Hindi, or Bengali — using fully on-device voice recognition. No internet needed.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">☁️</div>
+        <h3>Cloud Sync & Backup</h3>
+        <p>Projects and log points sync to Firestore automatically. Media syncs to Google Drive or NAS. Restores on reinstall or a new device.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">📋</div>
+        <h3>Structured Log Points</h3>
+        <p>Log survey points with name, 8 condition categories, free-text notes, GPS coordinates, and chainage stamp — all in one tap.</p>
       </div>
       <div class="feature-card">
         <div class="icon">📤</div>
-        <h3>Data Export</h3>
-        <p>Export survey data in structured formats for reporting, GIS mapping, and project documentation.</p>
+        <h3>CSV Export</h3>
+        <p>Export survey logs as CSV — ready for Excel, GIS tools, and project reporting.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🔆</div>
+        <h3>Smart Screen & UX</h3>
+        <p>Screen stays awake during tracking. Dims after 30s idle, wakes on touch. Project dashboard with KPIs. Material light/dark theme.</p>
       </div>
     </div>
   </div>
 
   <div class="section">
-    <div class="use-case">
+    <div class="highlight-block">
       <h2>🏗️ Built for infrastructure professionals</h2>
       <p>SurveyStar is purpose-built for the day-to-day work of highway engineers, road survey consultants, and government field teams:</p>
       <ul>
-        <li>National highway condition assessments</li>
-        <li>State road and rural road surveys</li>
-        <li>Pre and post-construction road quality checks</li>
-        <li>Pavement management system (PMS) data collection</li>
-        <li>Annual road maintenance planning surveys</li>
+        <li>National highway and state road condition assessments</li>
+        <li>Rural road surveys under PMGSY and similar schemes</li>
+        <li>Pre and post-construction road quality inspections</li>
+        <li>Pavement Management System (PMS) data collection</li>
+        <li>Annual maintenance planning surveys</li>
+        <li>Defect documentation with GPS-tagged photo evidence</li>
       </ul>
     </div>
 
@@ -232,10 +298,13 @@
       </thead>
       <tbody>
         <tr><td>Platform</td><td>Android 8.0 and above</td></tr>
-        <tr><td>Sensors used</td><td>GPS, Accelerometer, Gyroscope</td></tr>
-        <tr><td>Data recorded</td><td>IRI, GPS coordinates, speed, road condition rating</td></tr>
-        <tr><td>Export format</td><td>CSV / Excel compatible</td></tr>
-        <tr><td>Connectivity</td><td>Works offline — no internet required during survey</td></tr>
+        <tr><td>Connectivity</td><td>Fully offline — syncs when connected</td></tr>
+        <tr><td>GPS</td><td>Live chainage (Haversine), coordinates, speed, accuracy, lock status</td></tr>
+        <tr><td>Media</td><td>Geo-tagged photos, GPS-subtitle video, voice-narrated video</td></tr>
+        <tr><td>Voice recognition</td><td>On-device, offline — English, Hindi, Bengali</td></tr>
+        <tr><td>Cloud backend</td><td>Firestore (Offline-first, auto-sync), Google Drive / NAS media</td></tr>
+        <tr><td>Authentication</td><td>Google Sign-In, per-user data isolation</td></tr>
+        <tr><td>Export</td><td>CSV / Excel compatible</td></tr>
         <tr><td>Developer</td><td>Phoenixtek Solution, Kolkata, India</td></tr>
       </tbody>
     </table>
@@ -243,11 +312,21 @@
 
   <div class="cta">
     <h2>Get SurveyStar</h2>
-    <p>Available on Google Play Store. Free to download for Android devices.</p>
-    <a href="https://play.google.com/store/apps/details?id=com.phoenixtek.surveystar" class="cta-btn" target="_blank" rel="noopener">
-      ▶ Get it on Google Play
-    </a>
-    <p style="margin-top:1.5rem;font-size:0.85rem;color:#888;">Not on Play Store yet? <a href="mailto:phoenixteksoln@gmail.com">Contact us for direct APK download →</a></p>
+    <p>Free to download for Android 8.0+ devices.</p>
+    <div class="cta-download">
+      <a href="https://play.google.com/store/apps/details?id=com.phoenixtek.surveystar" target="_blank" rel="noopener" class="play-badge-link">
+        <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
+             alt="Get it on Google Play"
+             class="play-badge">
+      </a>
+      <div class="qr-block">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=130x130&margin=6&data=https://play.google.com/store/apps/details?id=com.phoenixtek.surveystar"
+             alt="QR code — scan to download SurveyStar"
+             class="qr-img">
+        <span class="qr-label">Scan to download</span>
+      </div>
+    </div>
+    <p class="cta-note">Works on Android 8.0 and above &nbsp;·&nbsp; No subscription &nbsp;·&nbsp; Offline-first</p>
   </div>
 
   <div class="support-strip">
