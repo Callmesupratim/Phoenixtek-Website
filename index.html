@@ -1638,6 +1638,19 @@
       </div>
       <div id="doodle-ball">⚽</div>
       <div id="doodle-fifa-badge">🏆 FIFA World Cup 2026</div>
+      <!-- Match countdown panel -->
+      <div id="doodle-match">
+        <div class="dm-label">⚡ NEXT MATCH</div>
+        <div class="dm-fixture">
+          <span class="dm-flag" id="dm-f1"></span>
+          <span class="dm-tname" id="dm-t1">---</span>
+          <span class="dm-vs">VS</span>
+          <span class="dm-tname" id="dm-t2">---</span>
+          <span class="dm-flag" id="dm-f2"></span>
+        </div>
+        <div class="dm-meta" id="dm-meta">---</div>
+        <div class="dm-countdown" id="dm-countdown">--:--:--</div>
+      </div>
       <button id="doodle-skip" onclick="closeDoodle()">Skip ›</button>
     </div>
 
@@ -1753,7 +1766,71 @@
       }
       #doodle-skip:hover { background: rgba(255,255,255,0.15); color: white; }
 
-      #doodle-ball { display: none; } /* drawn on canvas instead */
+      #doodle-ball { display: none; }
+
+      /* ── Match countdown panel ── */
+      #doodle-match {
+        position: absolute;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0,5,30,0.82);
+        border: 1px solid rgba(255,215,0,0.32);
+        border-radius: 18px;
+        padding: 0.8rem 2rem 0.9rem;
+        text-align: center;
+        min-width: 290px;
+        backdrop-filter: blur(12px);
+        z-index: 10;
+        opacity: 0;
+        animation: fade-badge 0.5s ease 2s forwards;
+        pointer-events: none;
+        display: none;
+      }
+      .dm-label {
+        font-size: 0.65rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        color: #FFD700;
+        text-transform: uppercase;
+        margin-bottom: 0.4rem;
+      }
+      .dm-fixture {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+        margin-bottom: 0.2rem;
+      }
+      .dm-flag { font-size: 1.4rem; line-height: 1; }
+      .dm-tname {
+        font-family: 'Archivo Black', 'Arial Black', sans-serif;
+        font-size: 1.05rem;
+        font-weight: 900;
+        color: #fff;
+        letter-spacing: 0.04em;
+      }
+      .dm-vs {
+        font-size: 0.65rem;
+        font-weight: 700;
+        color: rgba(255,255,255,0.4);
+        letter-spacing: 0.12em;
+        padding: 0 0.25rem;
+      }
+      .dm-meta {
+        font-size: 0.68rem;
+        color: rgba(255,255,255,0.45);
+        margin-bottom: 0.3rem;
+        letter-spacing: 0.04em;
+      }
+      .dm-countdown {
+        font-family: 'Courier New', monospace;
+        font-size: 1.55rem;
+        font-weight: 700;
+        color: #00D9FF;
+        letter-spacing: 0.06em;
+        text-shadow: 0 0 20px rgba(0,217,255,0.6);
+      }
 
       #doodle-fifa-badge {
         position: absolute;
@@ -1780,16 +1857,18 @@
 
     <script>
       (function() {
-        var overlay = document.getElementById('doodle-overlay');
-        var canvas  = document.getElementById('doodle-canvas');
-        var center  = document.getElementById('doodle-center');
-        var ctx     = canvas.getContext('2d');
+        var overlay  = document.getElementById('doodle-overlay');
+        var canvas   = document.getElementById('doodle-canvas');
+        var center   = document.getElementById('doodle-center');
+        var ctx      = canvas.getContext('2d');
         var W, H, animId, embers = [], startTime = null, done = false;
+        var matchInterval;
 
-        /* ── define closeDoodle first so all references below work ── */
+        /* ── closeDoodle must be declared first (hoisted) ── */
         function closeDoodle() {
           if (done) return;
           done = true;
+          clearInterval(matchInterval);
           overlay.classList.add('fade-out');
           cancelAnimationFrame(animId);
           setTimeout(function() {
@@ -1805,6 +1884,73 @@
         }
         resize();
         window.addEventListener('resize', resize);
+
+        /* ── FIFA 2026 match schedule (UTC timestamps) ── */
+        var MATCHES = [
+          { t1:'BRA', f1:'🇧🇷', t2:'CRC', f2:'🇨🇷', label:'Group D · Jun 15', ts:Date.UTC(2026,5,15,20,0) },
+          { t1:'FRA', f1:'🇫🇷', t2:'MAR', f2:'🇲🇦', label:'Group E · Jun 15', ts:Date.UTC(2026,5,15,23,0) },
+          { t1:'ARG', f1:'🇦🇷', t2:'CAN', f2:'🇨🇦', label:'Group A · Jun 16', ts:Date.UTC(2026,5,16,17,0) },
+          { t1:'ENG', f1:'🏴', t2:'IRN', f2:'🇮🇷',   label:'Group B · Jun 16', ts:Date.UTC(2026,5,16,20,0) },
+          { t1:'GER', f1:'🇩🇪', t2:'JPN', f2:'🇯🇵', label:'Group C · Jun 16', ts:Date.UTC(2026,5,16,23,0) },
+          { t1:'ESP', f1:'🇪🇸', t2:'NED', f2:'🇳🇱', label:'Group F · Jun 17', ts:Date.UTC(2026,5,17,20,0) },
+          { t1:'POR', f1:'🇵🇹', t2:'USA', f2:'🇺🇸', label:'Group G · Jun 18', ts:Date.UTC(2026,5,18,20,0) },
+          { t1:'MEX', f1:'🇲🇽', t2:'COL', f2:'🇨🇴', label:'Group H · Jun 18', ts:Date.UTC(2026,5,18,23,0) },
+          { t1:'KOR', f1:'🇰🇷', t2:'AUS', f2:'🇦🇺', label:'Group I · Jun 19', ts:Date.UTC(2026,5,19,17,0) },
+          { t1:'ARG', f1:'🇦🇷', t2:'MEX', f2:'🇲🇽', label:'Group A · Jun 22', ts:Date.UTC(2026,5,22,20,0) },
+          { t1:'BRA', f1:'🇧🇷', t2:'ENG', f2:'🏴',   label:'Group D · Jun 23', ts:Date.UTC(2026,5,23,20,0) },
+          { t1:'FRA', f1:'🇫🇷', t2:'GER', f2:'🇩🇪', label:'Group E · Jun 24', ts:Date.UTC(2026,5,24,23,0) },
+          { t1:'ESP', f1:'🇪🇸', t2:'POR', f2:'🇵🇹', label:'Group F · Jun 25', ts:Date.UTC(2026,5,25,20,0) },
+          { t1:'ARG', f1:'🇦🇷', t2:'AUS', f2:'🇦🇺', label:'Group A · Jun 29', ts:Date.UTC(2026,5,29,20,0) },
+          { t1:'BRA', f1:'🇧🇷', t2:'MEX', f2:'🇲🇽', label:'Group D · Jun 30', ts:Date.UTC(2026,5,30,20,0) },
+          { t1:'TBD', f1:'⚽',  t2:'TBD', f2:'⚽',   label:'Round of 32 · Jul 3',    ts:Date.UTC(2026,6,3,20,0)  },
+          { t1:'TBD', f1:'⚽',  t2:'TBD', f2:'⚽',   label:'Round of 16 · Jul 7',    ts:Date.UTC(2026,6,7,20,0)  },
+          { t1:'TBD', f1:'⚽',  t2:'TBD', f2:'⚽',   label:'Quarter Final · Jul 13', ts:Date.UTC(2026,6,13,20,0) },
+          { t1:'TBD', f1:'⚽',  t2:'TBD', f2:'⚽',   label:'Semi Final · Jul 17',    ts:Date.UTC(2026,6,17,20,0) },
+          { t1:'TBD', f1:'🏆',  t2:'TBD', f2:'🏆',  label:'FINAL · Jul 19',         ts:Date.UTC(2026,6,19,20,0) }
+        ];
+
+        function getNextMatch() {
+          var now = Date.now();
+          for (var i = 0; i < MATCHES.length; i++) {
+            if (MATCHES[i].ts > now) return MATCHES[i];
+          }
+          return null;
+        }
+
+        function startMatchPanel() {
+          var matchEl = document.getElementById('doodle-match');
+          var next = getNextMatch();
+          if (!next) return;
+          matchEl.style.display = 'block';
+          document.getElementById('dm-f1').textContent = next.f1;
+          document.getElementById('dm-t1').textContent = next.t1;
+          document.getElementById('dm-t2').textContent = next.t2;
+          document.getElementById('dm-f2').textContent = next.f2;
+          document.getElementById('dm-meta').textContent = next.label;
+          function pad(n) { return n < 10 ? '0' + n : '' + n; }
+          function tick() {
+            var diff = next.ts - Date.now();
+            if (diff < 0) diff = 0;
+            var el = document.getElementById('dm-countdown');
+            if (!el) return;
+            if (diff === 0) {
+              el.textContent = 'LIVE NOW!';
+              el.style.color = '#FF4466';
+              el.style.textShadow = '0 0 20px rgba(255,68,102,0.7)';
+            } else {
+              var totalSec = Math.floor(diff / 1000);
+              var d = Math.floor(totalSec / 86400);
+              var h = Math.floor((totalSec % 86400) / 3600);
+              var m = Math.floor((totalSec % 3600) / 60);
+              var s = totalSec % 60;
+              el.textContent = d > 0
+                ? d + 'd ' + pad(h) + ':' + pad(m) + ':' + pad(s)
+                : pad(h) + ':' + pad(m) + ':' + pad(s);
+            }
+          }
+          tick();
+          matchInterval = setInterval(tick, 1000);
+        }
 
         /* ── Ember particle ── */
         function Ember(cx) {
@@ -1843,6 +1989,62 @@
           ctx.restore();
         };
 
+        /* ── Blast particles (burst on ball bounce + player kick) ── */
+        var blasts = [];
+        var BLAST_COLS = ['#FFD700','#FF6B35','#00D9FF','#FFFFFF','#FF4466','#00FF88','#FF69B4'];
+
+        function spawnBlast(x, y, impact) {
+          var count = Math.floor(8 + impact * 22);
+          for (var i = 0; i < count; i++) {
+            var angle = Math.random() * Math.PI * 2;
+            var speed = (Math.random() * 3.5 + 1.5) * (0.4 + impact);
+            blasts.push({
+              x: x, y: y,
+              vx: Math.cos(angle) * speed,
+              vy: Math.sin(angle) * speed - 1.5,
+              r: Math.random() * 5 + 2,
+              a: 1,
+              col: BLAST_COLS[Math.floor(Math.random() * BLAST_COLS.length)],
+              star: Math.random() > 0.5
+            });
+          }
+        }
+
+        function drawStar(cx, cy, r, inner) {
+          ctx.beginPath();
+          for (var i = 0; i < 8; i++) {
+            var rad = (i % 2 === 0) ? r : inner;
+            var ang = (i / 8) * Math.PI * 2 - Math.PI / 2;
+            if (i === 0) ctx.moveTo(cx + rad * Math.cos(ang), cy + rad * Math.sin(ang));
+            else         ctx.lineTo(cx + rad * Math.cos(ang), cy + rad * Math.sin(ang));
+          }
+          ctx.closePath();
+          ctx.fill();
+        }
+
+        function updateBlasts() {
+          for (var i = blasts.length - 1; i >= 0; i--) {
+            var b = blasts[i];
+            b.x += b.vx; b.y += b.vy; b.vy += 0.12;
+            b.a -= 0.032; b.r *= 0.97;
+            if (b.a <= 0) blasts.splice(i, 1);
+          }
+        }
+
+        function drawBlasts() {
+          for (var i = 0; i < blasts.length; i++) {
+            var b = blasts[i];
+            ctx.save();
+            ctx.globalAlpha = Math.max(0, b.a);
+            ctx.fillStyle   = b.col;
+            ctx.shadowColor = b.col;
+            ctx.shadowBlur  = 10;
+            if (b.star) drawStar(b.x, b.y, b.r, b.r * 0.42);
+            else { ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2); ctx.fill(); }
+            ctx.restore();
+          }
+        }
+
         /* ── Ball physics (canvas-drawn) ── */
         var ball = {
           active: false, done: false,
@@ -1870,7 +2072,6 @@
           ball.y  += ball.vy;
           ball.angle += ball.vx * 0.10;
 
-          /* squash recovery */
           if (ball.sqTimer > 0) {
             ball.sqTimer--;
             var t = ball.sqTimer / 10;
@@ -1878,7 +2079,6 @@
             ball.sqY = 1 + (ball.sqY - 1) * t;
           } else { ball.sqX = 1; ball.sqY = 1; }
 
-          /* bounce */
           if (ball.y + ball.radius >= ball.groundY) {
             ball.y = ball.groundY - ball.radius;
             if (Math.abs(ball.vy) > 2) {
@@ -1887,8 +2087,8 @@
               ball.sqY = 1 - impact * 0.38;
               ball.sqTimer = 10;
               ball.vy *= -ball.restitution;
-              /* shoot: slight vx boost on each bounce */
               ball.vx *= 1.08;
+              spawnBlast(ball.x, ball.groundY, impact);
             } else {
               ball.vy = 0;
               ball.y  = ball.groundY - ball.radius;
@@ -1903,10 +2103,9 @@
           var fadeIn = Math.min(1, (ball.x + 80) / 60);
           if (fadeIn <= 0) return;
 
-          /* ground shadow — shrinks as ball rises */
-          var dist       = Math.max(0, ball.groundY - ball.y - ball.radius);
+          var dist        = Math.max(0, ball.groundY - ball.y - ball.radius);
           var shadowAlpha = Math.max(0, (0.45 - dist / 180)) * fadeIn;
-          var shadowW    = ball.radius * Math.max(0.15, 1 - dist / 260);
+          var shadowW     = ball.radius * Math.max(0.15, 1 - dist / 260);
           if (shadowAlpha > 0) {
             ctx.save();
             ctx.globalAlpha = shadowAlpha;
@@ -1917,18 +2116,92 @@
             ctx.restore();
           }
 
-          /* ball */
           ctx.save();
           ctx.globalAlpha  = fadeIn;
           ctx.translate(ball.x, ball.y);
           ctx.rotate(ball.angle);
           ctx.scale(ball.sqX, ball.sqY);
-          ctx.shadowColor  = 'rgba(255,200,50,0.35)';
-          ctx.shadowBlur   = 12;
+          ctx.shadowColor  = 'rgba(255,200,50,0.5)';
+          ctx.shadowBlur   = 18;
           ctx.font         = (ball.radius * 2) + 'px serif';
           ctx.textAlign    = 'center';
           ctx.textBaseline = 'middle';
           ctx.fillText('⚽', 0, 0);
+          ctx.restore();
+        }
+
+        /* ── Player skill silhouette ── */
+        var plyr = { frame: 0, phase: 0, phaseTick: 0 };
+        var PHASE_DUR = [80, 18, 22, 35]; /* idle, windup, kick, celebrate */
+
+        function drawPlayer() {
+          if (!isWC) return;
+          plyr.frame++;
+          plyr.phaseTick++;
+          if (plyr.phaseTick >= PHASE_DUR[plyr.phase]) {
+            plyr.phase = (plyr.phase + 1) % 4;
+            plyr.phaseTick = 0;
+          }
+
+          var px   = W * 0.80;
+          var py   = ball.groundY;
+          var sc   = Math.min(W, H) / 580;
+          var hR   = 11 * sc;
+          var bL   = 28 * sc;
+          var lL   = 24 * sc;
+          var aL   = 18 * sc;
+          var hY   = py - lL - bL - hR;
+          var hipY = hY + hR * 2 + bL;
+
+          ctx.save();
+          ctx.strokeStyle = 'rgba(255,255,255,0.88)';
+          ctx.lineWidth   = Math.max(2, 3 * sc);
+          ctx.lineCap     = 'round';
+          ctx.lineJoin    = 'round';
+          ctx.shadowColor = 'rgba(255,215,0,0.5)';
+          ctx.shadowBlur  = 14;
+
+          /* head */
+          ctx.beginPath(); ctx.arc(px, hY, hR, 0, Math.PI * 2); ctx.stroke();
+          /* body */
+          ctx.beginPath(); ctx.moveTo(px, hY + hR); ctx.lineTo(px, hipY); ctx.stroke();
+
+          var phase = plyr.phase;
+          var t = plyr.phaseTick / Math.max(1, PHASE_DUR[phase]);
+          var shoulderY = hY + hR + bL * 0.3;
+
+          /* arms */
+          if (phase === 3) {
+            ctx.beginPath(); ctx.moveTo(px, shoulderY); ctx.lineTo(px - aL * 1.1, hY - aL * 0.4); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(px, shoulderY); ctx.lineTo(px + aL * 1.1, hY - aL * 0.4); ctx.stroke();
+          } else if (phase === 2) {
+            ctx.beginPath(); ctx.moveTo(px, shoulderY); ctx.lineTo(px - aL * 1.1, hipY - bL * 0.3); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(px, shoulderY); ctx.lineTo(px + aL * 0.4, shoulderY - bL * 0.2); ctx.stroke();
+          } else {
+            var sw = Math.sin(plyr.frame * 0.06) * 0.25;
+            ctx.beginPath(); ctx.moveTo(px, shoulderY); ctx.lineTo(px - aL * (0.7 + sw), hipY - bL * 0.2); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(px, shoulderY); ctx.lineTo(px + aL * (0.7 - sw), hipY - bL * 0.2); ctx.stroke();
+          }
+
+          /* legs */
+          if (phase === 2) {
+            /* bicycle kick: leg sweeps forward */
+            var kExt = lL * 1.5 * Math.sin(t * Math.PI);
+            ctx.beginPath(); ctx.moveTo(px, hipY); ctx.lineTo(px - lL * 0.25, hipY + lL * 0.65); ctx.lineTo(px - lL * 0.1, py); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(px, hipY); ctx.lineTo(px - kExt * 0.65, hipY - kExt * 0.5); ctx.stroke();
+            if (plyr.phaseTick === 11) spawnBlast(px - lL * 0.6, hipY - lL * 0.45, 0.6);
+          } else if (phase === 1) {
+            ctx.beginPath(); ctx.moveTo(px, hipY); ctx.lineTo(px - lL * 0.2, hipY + lL * 0.7); ctx.lineTo(px - lL * 0.05, py); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(px, hipY); ctx.lineTo(px + lL * 0.4, hipY + lL * 0.5); ctx.lineTo(px + lL * 0.25, py); ctx.stroke();
+          } else {
+            var bob = Math.sin(plyr.frame * 0.08);
+            ctx.beginPath(); ctx.moveTo(px, hipY); ctx.lineTo(px - lL * 0.28, hipY + lL * 0.6 + bob * 3); ctx.lineTo(px - lL * 0.12, py + bob * 1.5); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(px, hipY); ctx.lineTo(px + lL * 0.28, hipY + lL * 0.6 - bob * 3); ctx.lineTo(px + lL * 0.12, py - bob * 1.5); ctx.stroke();
+          }
+
+          /* celebration confetti */
+          if (phase === 3 && plyr.phaseTick === 1) spawnBlast(px, hY - hR * 2, 0.7);
+
           ctx.restore();
         }
 
@@ -1940,14 +2213,12 @@
         function drawBase() {
           ctx.clearRect(0, 0, W, H);
           if (!isWC) {
-            /* no video — draw full dark background */
             var grad = ctx.createRadialGradient(W/2, H*0.55, 40, W/2, H*0.55, W*0.7);
             grad.addColorStop(0, 'rgba(40,8,0,0.6)');
             grad.addColorStop(1, 'rgba(0,0,0,0)');
             ctx.fillStyle = grad;
             ctx.fillRect(0, 0, W, H);
           }
-          /* fire glow below logo — always */
           var glow = ctx.createRadialGradient(W/2, H*0.7, 0, W/2, H*0.7, 200);
           glow.addColorStop(0,   'rgba(255,80,10,0.45)');
           glow.addColorStop(0.5, 'rgba(255,40,0,0.15)');
@@ -1963,6 +2234,9 @@
           embers.forEach(function(e) { e.update(); e.draw(); });
           updateBall();
           drawBall();
+          updateBlasts();
+          drawBlasts();
+          drawPlayer();
           if (!done && elapsed > 3200) closeDoodle();
           if (!done) animId = requestAnimationFrame(loop);
         }
@@ -1976,12 +2250,11 @@
         var vid  = document.getElementById('doodle-video');
 
         if (isWC) {
-          /* fade in video once it starts playing */
           vid.addEventListener('canplay', function() { vid.style.opacity = '1'; });
-          /* close when video ends */
           vid.addEventListener('ended', closeDoodle);
           vid.play().catch(function() {});
           initBall();
+          startMatchPanel();
         } else {
           vid.style.display = 'none';
           document.getElementById('doodle-fifa-badge').style.display = 'none';
