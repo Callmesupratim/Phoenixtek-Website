@@ -1885,28 +1885,118 @@
         resize();
         window.addEventListener('resize', resize);
 
-        /* ── FIFA 2026 match schedule (UTC timestamps) ── */
+        /* ── FIFA 2026 match schedule — real IST times from official PDF ── */
         var MATCHES = [
-          { t1:'BRA', f1:'🇧🇷', t2:'CRC', f2:'🇨🇷', label:'Group D · Jun 15', ts:Date.UTC(2026,5,15,20,0) },
-          { t1:'FRA', f1:'🇫🇷', t2:'MAR', f2:'🇲🇦', label:'Group E · Jun 15', ts:Date.UTC(2026,5,15,23,0) },
-          { t1:'ARG', f1:'🇦🇷', t2:'CAN', f2:'🇨🇦', label:'Group A · Jun 16', ts:Date.UTC(2026,5,16,17,0) },
-          { t1:'ENG', f1:'🏴', t2:'IRN', f2:'🇮🇷',   label:'Group B · Jun 16', ts:Date.UTC(2026,5,16,20,0) },
-          { t1:'GER', f1:'🇩🇪', t2:'JPN', f2:'🇯🇵', label:'Group C · Jun 16', ts:Date.UTC(2026,5,16,23,0) },
-          { t1:'ESP', f1:'🇪🇸', t2:'NED', f2:'🇳🇱', label:'Group F · Jun 17', ts:Date.UTC(2026,5,17,20,0) },
-          { t1:'POR', f1:'🇵🇹', t2:'USA', f2:'🇺🇸', label:'Group G · Jun 18', ts:Date.UTC(2026,5,18,20,0) },
-          { t1:'MEX', f1:'🇲🇽', t2:'COL', f2:'🇨🇴', label:'Group H · Jun 18', ts:Date.UTC(2026,5,18,23,0) },
-          { t1:'KOR', f1:'🇰🇷', t2:'AUS', f2:'🇦🇺', label:'Group I · Jun 19', ts:Date.UTC(2026,5,19,17,0) },
-          { t1:'ARG', f1:'🇦🇷', t2:'MEX', f2:'🇲🇽', label:'Group A · Jun 22', ts:Date.UTC(2026,5,22,20,0) },
-          { t1:'BRA', f1:'🇧🇷', t2:'ENG', f2:'🏴',   label:'Group D · Jun 23', ts:Date.UTC(2026,5,23,20,0) },
-          { t1:'FRA', f1:'🇫🇷', t2:'GER', f2:'🇩🇪', label:'Group E · Jun 24', ts:Date.UTC(2026,5,24,23,0) },
-          { t1:'ESP', f1:'🇪🇸', t2:'POR', f2:'🇵🇹', label:'Group F · Jun 25', ts:Date.UTC(2026,5,25,20,0) },
-          { t1:'ARG', f1:'🇦🇷', t2:'AUS', f2:'🇦🇺', label:'Group A · Jun 29', ts:Date.UTC(2026,5,29,20,0) },
-          { t1:'BRA', f1:'🇧🇷', t2:'MEX', f2:'🇲🇽', label:'Group D · Jun 30', ts:Date.UTC(2026,5,30,20,0) },
-          { t1:'TBD', f1:'⚽',  t2:'TBD', f2:'⚽',   label:'Round of 32 · Jul 3',    ts:Date.UTC(2026,6,3,20,0)  },
-          { t1:'TBD', f1:'⚽',  t2:'TBD', f2:'⚽',   label:'Round of 16 · Jul 7',    ts:Date.UTC(2026,6,7,20,0)  },
-          { t1:'TBD', f1:'⚽',  t2:'TBD', f2:'⚽',   label:'Quarter Final · Jul 13', ts:Date.UTC(2026,6,13,20,0) },
-          { t1:'TBD', f1:'⚽',  t2:'TBD', f2:'⚽',   label:'Semi Final · Jul 17',    ts:Date.UTC(2026,6,17,20,0) },
-          { t1:'TBD', f1:'🏆',  t2:'TBD', f2:'🏆',  label:'FINAL · Jul 19',         ts:Date.UTC(2026,6,19,20,0) }
+          /* GROUP STAGE */
+          { t1:'MEX', f1:'🇲🇽', t2:'RSA', f2:'🇿🇦', label:'Group A · Jun 12, 12:30 AM IST', ts:Date.UTC(2026,5,11,19,0) },
+          { t1:'KOR', f1:'🇰🇷', t2:'CZE', f2:'🇨🇿', label:'Group A · Jun 12, 7:30 AM IST',  ts:Date.UTC(2026,5,12,2,0)  },
+          { t1:'CAN', f1:'🇨🇦', t2:'BIH', f2:'🇧🇦', label:'Group B · Jun 13, 12:30 AM IST', ts:Date.UTC(2026,5,12,19,0) },
+          { t1:'USA', f1:'🇺🇸', t2:'PAR', f2:'🇵🇾', label:'Group D · Jun 13, 6:30 AM IST',  ts:Date.UTC(2026,5,13,1,0)  },
+          { t1:'QAT', f1:'🇶🇦', t2:'SUI', f2:'🇨🇭', label:'Group B · Jun 14, 12:30 AM IST', ts:Date.UTC(2026,5,13,19,0) },
+          { t1:'BRA', f1:'🇧🇷', t2:'MAR', f2:'🇲🇦', label:'Group C · Jun 14, 3:30 AM IST',  ts:Date.UTC(2026,5,13,22,0) },
+          { t1:'HAI', f1:'🇭🇹', t2:'SCO', f2:'🏴',   label:'Group C · Jun 14, 6:30 AM IST',  ts:Date.UTC(2026,5,14,1,0)  },
+          { t1:'AUS', f1:'🇦🇺', t2:'TUR', f2:'🇹🇷', label:'Group D · Jun 14, 9:29 AM IST',  ts:Date.UTC(2026,5,14,4,0)  },
+          { t1:'GER', f1:'🇩🇪', t2:'CUW', f2:'🇨🇼', label:'Group E · Jun 14, 10:30 PM IST', ts:Date.UTC(2026,5,14,17,0) },
+          { t1:'NED', f1:'🇳🇱', t2:'JPN', f2:'🇯🇵', label:'Group F · Jun 15, 1:30 AM IST',  ts:Date.UTC(2026,5,14,20,0) },
+          { t1:'CIV', f1:'🇨🇮', t2:'ECU', f2:'🇪🇨', label:'Group E · Jun 15, 4:30 AM IST',  ts:Date.UTC(2026,5,14,23,0) },
+          { t1:'SWE', f1:'🇸🇪', t2:'TUN', f2:'🇹🇳', label:'Group F · Jun 15, 7:30 AM IST',  ts:Date.UTC(2026,5,15,2,0)  },
+          { t1:'ESP', f1:'🇪🇸', t2:'CPV', f2:'🇨🇻', label:'Group H · Jun 15, 9:30 PM IST',  ts:Date.UTC(2026,5,15,16,0) },
+          { t1:'BEL', f1:'🇧🇪', t2:'EGY', f2:'🇪🇬', label:'Group G · Jun 16, 12:30 AM IST', ts:Date.UTC(2026,5,15,19,0) },
+          { t1:'KSA', f1:'🇸🇦', t2:'URU', f2:'🇺🇾', label:'Group H · Jun 16, 3:30 AM IST',  ts:Date.UTC(2026,5,15,22,0) },
+          { t1:'IRN', f1:'🇮🇷', t2:'NZL', f2:'🇳🇿', label:'Group G · Jun 16, 6:30 AM IST',  ts:Date.UTC(2026,5,16,1,0)  },
+          { t1:'FRA', f1:'🇫🇷', t2:'SEN', f2:'🇸🇳', label:'Group I · Jun 17, 12:30 AM IST', ts:Date.UTC(2026,5,16,19,0) },
+          { t1:'IRQ', f1:'🇮🇶', t2:'NOR', f2:'🇳🇴', label:'Group I · Jun 17, 3:30 AM IST',  ts:Date.UTC(2026,5,16,22,0) },
+          { t1:'ARG', f1:'🇦🇷', t2:'ALG', f2:'🇩🇿', label:'Group J · Jun 17, 6:30 AM IST',  ts:Date.UTC(2026,5,17,1,0)  },
+          { t1:'AUT', f1:'🇦🇹', t2:'JOR', f2:'🇯🇴', label:'Group J · Jun 17, 9:29 AM IST',  ts:Date.UTC(2026,5,17,4,0)  },
+          { t1:'POR', f1:'🇵🇹', t2:'COD', f2:'🇨🇩', label:'Group K · Jun 17, 10:30 PM IST', ts:Date.UTC(2026,5,17,17,0) },
+          { t1:'ENG', f1:'🏴',   t2:'CRO', f2:'🇭🇷', label:'Group L · Jun 18, 1:30 AM IST',  ts:Date.UTC(2026,5,17,20,0) },
+          { t1:'GHA', f1:'🇬🇭', t2:'PAN', f2:'🇵🇦', label:'Group L · Jun 18, 4:30 AM IST',  ts:Date.UTC(2026,5,17,23,0) },
+          { t1:'UZB', f1:'🇺🇿', t2:'COL', f2:'🇨🇴', label:'Group K · Jun 18, 7:30 AM IST',  ts:Date.UTC(2026,5,18,2,0)  },
+          { t1:'CZE', f1:'🇨🇿', t2:'RSA', f2:'🇿🇦', label:'Group A · Jun 18, 9:30 PM IST',  ts:Date.UTC(2026,5,18,16,0) },
+          { t1:'SUI', f1:'🇨🇭', t2:'BIH', f2:'🇧🇦', label:'Group B · Jun 19, 12:30 AM IST', ts:Date.UTC(2026,5,18,19,0) },
+          { t1:'CAN', f1:'🇨🇦', t2:'QAT', f2:'🇶🇦', label:'Group B · Jun 19, 3:30 AM IST',  ts:Date.UTC(2026,5,18,22,0) },
+          { t1:'MEX', f1:'🇲🇽', t2:'KOR', f2:'🇰🇷', label:'Group A · Jun 19, 6:30 AM IST',  ts:Date.UTC(2026,5,19,1,0)  },
+          { t1:'USA', f1:'🇺🇸', t2:'AUS', f2:'🇦🇺', label:'Group D · Jun 20, 12:30 AM IST', ts:Date.UTC(2026,5,19,19,0) },
+          { t1:'SCO', f1:'🏴',   t2:'MAR', f2:'🇲🇦', label:'Group C · Jun 20, 3:30 AM IST',  ts:Date.UTC(2026,5,19,22,0) },
+          { t1:'BRA', f1:'🇧🇷', t2:'HAI', f2:'🇭🇹', label:'Group C · Jun 20, 6:30 AM IST',  ts:Date.UTC(2026,5,20,1,0)  },
+          { t1:'TUR', f1:'🇹🇷', t2:'PAR', f2:'🇵🇾', label:'Group D · Jun 20, 9:29 AM IST',  ts:Date.UTC(2026,5,20,4,0)  },
+          { t1:'NED', f1:'🇳🇱', t2:'SWE', f2:'🇸🇪', label:'Group F · Jun 20, 10:30 PM IST', ts:Date.UTC(2026,5,20,17,0) },
+          { t1:'GER', f1:'🇩🇪', t2:'CIV', f2:'🇨🇮', label:'Group E · Jun 21, 1:30 AM IST',  ts:Date.UTC(2026,5,20,20,0) },
+          { t1:'ECU', f1:'🇪🇨', t2:'CUW', f2:'🇨🇼', label:'Group E · Jun 21, 5:30 AM IST',  ts:Date.UTC(2026,5,21,0,0)  },
+          { t1:'TUN', f1:'🇹🇳', t2:'JPN', f2:'🇯🇵', label:'Group F · Jun 21, 9:29 AM IST',  ts:Date.UTC(2026,5,21,4,0)  },
+          { t1:'ESP', f1:'🇪🇸', t2:'KSA', f2:'🇸🇦', label:'Group H · Jun 21, 9:30 PM IST',  ts:Date.UTC(2026,5,21,16,0) },
+          { t1:'BEL', f1:'🇧🇪', t2:'IRN', f2:'🇮🇷', label:'Group G · Jun 22, 12:30 AM IST', ts:Date.UTC(2026,5,21,19,0) },
+          { t1:'URU', f1:'🇺🇾', t2:'CPV', f2:'🇨🇻', label:'Group H · Jun 22, 3:30 AM IST',  ts:Date.UTC(2026,5,21,22,0) },
+          { t1:'NZL', f1:'🇳🇿', t2:'EGY', f2:'🇪🇬', label:'Group G · Jun 22, 6:30 AM IST',  ts:Date.UTC(2026,5,22,1,0)  },
+          { t1:'ARG', f1:'🇦🇷', t2:'AUT', f2:'🇦🇹', label:'Group J · Jun 22, 10:30 PM IST', ts:Date.UTC(2026,5,22,17,0) },
+          { t1:'FRA', f1:'🇫🇷', t2:'IRQ', f2:'🇮🇶', label:'Group I · Jun 23, 2:30 AM IST',  ts:Date.UTC(2026,5,22,21,0) },
+          { t1:'NOR', f1:'🇳🇴', t2:'SEN', f2:'🇸🇳', label:'Group I · Jun 23, 5:30 AM IST',  ts:Date.UTC(2026,5,23,0,0)  },
+          { t1:'JOR', f1:'🇯🇴', t2:'ALG', f2:'🇩🇿', label:'Group J · Jun 23, 8:30 AM IST',  ts:Date.UTC(2026,5,23,3,0)  },
+          { t1:'POR', f1:'🇵🇹', t2:'UZB', f2:'🇺🇿', label:'Group K · Jun 23, 10:30 PM IST', ts:Date.UTC(2026,5,23,17,0) },
+          { t1:'ENG', f1:'🏴',   t2:'GHA', f2:'🇬🇭', label:'Group L · Jun 24, 1:30 AM IST',  ts:Date.UTC(2026,5,23,20,0) },
+          { t1:'PAN', f1:'🇵🇦', t2:'CRO', f2:'🇭🇷', label:'Group L · Jun 24, 4:30 AM IST',  ts:Date.UTC(2026,5,23,23,0) },
+          { t1:'COL', f1:'🇨🇴', t2:'COD', f2:'🇨🇩', label:'Group K · Jun 24, 7:30 AM IST',  ts:Date.UTC(2026,5,24,2,0)  },
+          { t1:'SUI', f1:'🇨🇭', t2:'CAN', f2:'🇨🇦', label:'Group B · Jun 25, 12:30 AM IST', ts:Date.UTC(2026,5,24,19,0) },
+          { t1:'BIH', f1:'🇧🇦', t2:'QAT', f2:'🇶🇦', label:'Group B · Jun 25, 12:30 AM IST', ts:Date.UTC(2026,5,24,19,1) },
+          { t1:'SCO', f1:'🏴',   t2:'BRA', f2:'🇧🇷', label:'Group C · Jun 25, 3:30 AM IST',  ts:Date.UTC(2026,5,24,22,0) },
+          { t1:'MAR', f1:'🇲🇦', t2:'HAI', f2:'🇭🇹', label:'Group C · Jun 25, 3:30 AM IST',  ts:Date.UTC(2026,5,24,22,1) },
+          { t1:'CZE', f1:'🇨🇿', t2:'MEX', f2:'🇲🇽', label:'Group A · Jun 25, 6:30 AM IST',  ts:Date.UTC(2026,5,25,1,0)  },
+          { t1:'RSA', f1:'🇿🇦', t2:'KOR', f2:'🇰🇷', label:'Group A · Jun 25, 6:30 AM IST',  ts:Date.UTC(2026,5,25,1,1)  },
+          { t1:'CUW', f1:'🇨🇼', t2:'CIV', f2:'🇨🇮', label:'Group E · Jun 26, 1:30 AM IST',  ts:Date.UTC(2026,5,25,20,0) },
+          { t1:'ECU', f1:'🇪🇨', t2:'GER', f2:'🇩🇪', label:'Group E · Jun 26, 1:30 AM IST',  ts:Date.UTC(2026,5,25,20,1) },
+          { t1:'JPN', f1:'🇯🇵', t2:'SWE', f2:'🇸🇪', label:'Group F · Jun 26, 4:30 AM IST',  ts:Date.UTC(2026,5,25,23,0) },
+          { t1:'TUN', f1:'🇹🇳', t2:'NED', f2:'🇳🇱', label:'Group F · Jun 26, 4:30 AM IST',  ts:Date.UTC(2026,5,25,23,1) },
+          { t1:'TUR', f1:'🇹🇷', t2:'USA', f2:'🇺🇸', label:'Group D · Jun 26, 7:30 AM IST',  ts:Date.UTC(2026,5,26,2,0)  },
+          { t1:'PAR', f1:'🇵🇾', t2:'AUS', f2:'🇦🇺', label:'Group D · Jun 26, 7:30 AM IST',  ts:Date.UTC(2026,5,26,2,1)  },
+          { t1:'NOR', f1:'🇳🇴', t2:'FRA', f2:'🇫🇷', label:'Group I · Jun 27, 12:30 AM IST', ts:Date.UTC(2026,5,26,19,0) },
+          { t1:'SEN', f1:'🇸🇳', t2:'IRQ', f2:'🇮🇶', label:'Group I · Jun 27, 12:30 AM IST', ts:Date.UTC(2026,5,26,19,1) },
+          { t1:'CPV', f1:'🇨🇻', t2:'KSA', f2:'🇸🇦', label:'Group H · Jun 27, 5:30 AM IST',  ts:Date.UTC(2026,5,27,0,0)  },
+          { t1:'URU', f1:'🇺🇾', t2:'ESP', f2:'🇪🇸', label:'Group H · Jun 27, 5:30 AM IST',  ts:Date.UTC(2026,5,27,0,1)  },
+          { t1:'EGY', f1:'🇪🇬', t2:'IRN', f2:'🇮🇷', label:'Group G · Jun 27, 8:30 AM IST',  ts:Date.UTC(2026,5,27,3,0)  },
+          { t1:'NZL', f1:'🇳🇿', t2:'BEL', f2:'🇧🇪', label:'Group G · Jun 27, 8:30 AM IST',  ts:Date.UTC(2026,5,27,3,1)  },
+          { t1:'PAN', f1:'🇵🇦', t2:'ENG', f2:'🏴',   label:'Group L · Jun 28, 2:30 AM IST',  ts:Date.UTC(2026,5,27,21,0) },
+          { t1:'CRO', f1:'🇭🇷', t2:'GHA', f2:'🇬🇭', label:'Group L · Jun 28, 2:30 AM IST',  ts:Date.UTC(2026,5,27,21,1) },
+          { t1:'COL', f1:'🇨🇴', t2:'POR', f2:'🇵🇹', label:'Group K · Jun 28, 5:00 AM IST',  ts:Date.UTC(2026,5,27,23,30)},
+          { t1:'COD', f1:'🇨🇩', t2:'UZB', f2:'🇺🇿', label:'Group K · Jun 28, 5:00 AM IST',  ts:Date.UTC(2026,5,27,23,31)},
+          { t1:'ALG', f1:'🇩🇿', t2:'AUT', f2:'🇦🇹', label:'Group J · Jun 28, 7:30 AM IST',  ts:Date.UTC(2026,5,28,2,0)  },
+          { t1:'JOR', f1:'🇯🇴', t2:'ARG', f2:'🇦🇷', label:'Group J · Jun 28, 7:30 AM IST',  ts:Date.UTC(2026,5,28,2,1)  },
+          /* ROUND OF 32 (teams TBD) */
+          { t1:'TBD', f1:'⚽', t2:'TBD', f2:'⚽', label:'Round of 32 · Jun 29, 12:30 AM IST', ts:Date.UTC(2026,5,28,19,0)  },
+          { t1:'TBD', f1:'⚽', t2:'TBD', f2:'⚽', label:'Round of 32 · Jun 29, 10:30 PM IST', ts:Date.UTC(2026,5,29,17,0)  },
+          { t1:'TBD', f1:'⚽', t2:'TBD', f2:'⚽', label:'Round of 32 · Jun 30, 2:00 AM IST',  ts:Date.UTC(2026,5,29,20,30) },
+          { t1:'TBD', f1:'⚽', t2:'TBD', f2:'⚽', label:'Round of 32 · Jun 30, 6:30 AM IST',  ts:Date.UTC(2026,5,30,1,0)   },
+          { t1:'TBD', f1:'⚽', t2:'TBD', f2:'⚽', label:'Round of 32 · Jun 30, 11:30 PM IST', ts:Date.UTC(2026,5,30,18,0)  },
+          { t1:'TBD', f1:'⚽', t2:'TBD', f2:'⚽', label:'Round of 32 · Jul 1, 2:30 AM IST',   ts:Date.UTC(2026,5,30,21,0)  },
+          { t1:'TBD', f1:'⚽', t2:'TBD', f2:'⚽', label:'Round of 32 · Jul 1, 6:30 AM IST',   ts:Date.UTC(2026,6,1,1,0)    },
+          { t1:'TBD', f1:'⚽', t2:'TBD', f2:'⚽', label:'Round of 32 · Jul 1, 9:30 PM IST',   ts:Date.UTC(2026,6,1,16,0)   },
+          { t1:'TBD', f1:'⚽', t2:'TBD', f2:'⚽', label:'Round of 32 · Jul 2, 1:30 AM IST',   ts:Date.UTC(2026,6,1,20,0)   },
+          { t1:'TBD', f1:'⚽', t2:'TBD', f2:'⚽', label:'Round of 32 · Jul 2, 5:30 AM IST',   ts:Date.UTC(2026,6,2,0,0)    },
+          { t1:'TBD', f1:'⚽', t2:'TBD', f2:'⚽', label:'Round of 32 · Jul 3, 12:30 AM IST',  ts:Date.UTC(2026,6,2,19,0)   },
+          { t1:'TBD', f1:'⚽', t2:'TBD', f2:'⚽', label:'Round of 32 · Jul 3, 4:30 AM IST',   ts:Date.UTC(2026,6,2,23,0)   },
+          { t1:'TBD', f1:'⚽', t2:'TBD', f2:'⚽', label:'Round of 32 · Jul 3, 8:30 AM IST',   ts:Date.UTC(2026,6,3,3,0)    },
+          { t1:'TBD', f1:'⚽', t2:'TBD', f2:'⚽', label:'Round of 32 · Jul 3, 11:30 PM IST',  ts:Date.UTC(2026,6,3,18,0)   },
+          { t1:'TBD', f1:'⚽', t2:'TBD', f2:'⚽', label:'Round of 32 · Jul 4, 3:30 AM IST',   ts:Date.UTC(2026,6,3,22,0)   },
+          { t1:'TBD', f1:'⚽', t2:'TBD', f2:'⚽', label:'Round of 32 · Jul 4, 7:00 AM IST',   ts:Date.UTC(2026,6,4,1,30)   },
+          /* ROUND OF 16 */
+          { t1:'TBD', f1:'⚽', t2:'TBD', f2:'⚽', label:'Round of 16 · Jul 4, 10:30 PM IST',  ts:Date.UTC(2026,6,4,17,0)   },
+          { t1:'TBD', f1:'⚽', t2:'TBD', f2:'⚽', label:'Round of 16 · Jul 5, 2:30 AM IST',   ts:Date.UTC(2026,6,4,21,0)   },
+          { t1:'TBD', f1:'⚽', t2:'TBD', f2:'⚽', label:'Round of 16 · Jul 6, 1:30 AM IST',   ts:Date.UTC(2026,6,5,20,0)   },
+          { t1:'TBD', f1:'⚽', t2:'TBD', f2:'⚽', label:'Round of 16 · Jul 6, 5:30 AM IST',   ts:Date.UTC(2026,6,6,0,0)    },
+          { t1:'TBD', f1:'⚽', t2:'TBD', f2:'⚽', label:'Round of 16 · Jul 7, 12:30 AM IST',  ts:Date.UTC(2026,6,6,19,0)   },
+          { t1:'TBD', f1:'⚽', t2:'TBD', f2:'⚽', label:'Round of 16 · Jul 7, 5:30 AM IST',   ts:Date.UTC(2026,6,7,0,0)    },
+          { t1:'TBD', f1:'⚽', t2:'TBD', f2:'⚽', label:'Round of 16 · Jul 7, 9:30 PM IST',   ts:Date.UTC(2026,6,7,16,0)   },
+          { t1:'TBD', f1:'⚽', t2:'TBD', f2:'⚽', label:'Round of 16 · Jul 8, 1:30 AM IST',   ts:Date.UTC(2026,6,7,20,0)   },
+          /* QUARTERFINALS */
+          { t1:'TBD', f1:'⚽', t2:'TBD', f2:'⚽', label:'Quarter Final · Jul 10, 1:30 AM IST', ts:Date.UTC(2026,6,9,20,0)  },
+          { t1:'TBD', f1:'⚽', t2:'TBD', f2:'⚽', label:'Quarter Final · Jul 11, 12:30 AM IST',ts:Date.UTC(2026,6,10,19,0) },
+          { t1:'TBD', f1:'⚽', t2:'TBD', f2:'⚽', label:'Quarter Final · Jul 12, 2:30 AM IST', ts:Date.UTC(2026,6,11,21,0) },
+          { t1:'TBD', f1:'⚽', t2:'TBD', f2:'⚽', label:'Quarter Final · Jul 12, 6:30 AM IST', ts:Date.UTC(2026,6,12,1,0)  },
+          /* SEMIFINALS */
+          { t1:'TBD', f1:'⚽', t2:'TBD', f2:'⚽', label:'Semi Final · Jul 15, 12:30 AM IST',   ts:Date.UTC(2026,6,14,19,0) },
+          { t1:'TBD', f1:'⚽', t2:'TBD', f2:'⚽', label:'Semi Final · Jul 16, 12:30 AM IST',   ts:Date.UTC(2026,6,15,19,0) },
+          /* THIRD PLACE + FINAL */
+          { t1:'TBD', f1:'🥉', t2:'TBD', f2:'🥉', label:'3rd Place · Jul 19, 2:30 AM IST',    ts:Date.UTC(2026,6,18,21,0) },
+          { t1:'TBD', f1:'🏆', t2:'TBD', f2:'🏆', label:'🏆 FINAL · Jul 20, 12:30 AM IST',    ts:Date.UTC(2026,6,19,19,0) }
         ];
 
         function getNextMatch() {
@@ -2237,7 +2327,7 @@
           updateBlasts();
           drawBlasts();
           drawPlayer();
-          if (!done && elapsed > 3200) closeDoodle();
+          if (!done && elapsed > 10000) closeDoodle();
           if (!done) animId = requestAnimationFrame(loop);
         }
 
@@ -2246,7 +2336,7 @@
 
         /* FIFA World Cup 2026: Jun 11 – Jul 19 only */
         var now = new Date();
-        var isWC = now >= new Date(2026,5,11) && now <= new Date(2026,6,19,23,59,59);
+        var isWC = now >= new Date(2026,5,11) && now <= new Date(2026,6,20,23,59,59);
         var vid  = document.getElementById('doodle-video');
 
         if (isWC) {
