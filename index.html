@@ -1640,11 +1640,11 @@
       <div id="doodle-fifa-badge">🏆 FIFA World Cup 2026</div>
       <!-- Match countdown panel -->
       <div id="doodle-match">
-        <div class="dm-label">⚡ NEXT MATCH</div>
+        <div class="dm-label" id="dm-label">⚡ NEXT MATCH</div>
         <div class="dm-fixture">
           <span class="dm-flag" id="dm-f1"></span>
           <span class="dm-tname" id="dm-t1">---</span>
-          <span class="dm-vs">VS</span>
+          <span class="dm-vs" id="dm-vs">VS</span>
           <span class="dm-tname" id="dm-t2">---</span>
           <span class="dm-flag" id="dm-f2"></span>
         </div>
@@ -1795,6 +1795,15 @@
         text-transform: uppercase;
         margin-bottom: 0.4rem;
       }
+      #doodle-match.live {
+        border-color: rgba(255,68,102,0.6);
+        animation: live-pulse 1.3s ease-in-out infinite;
+      }
+      #doodle-match.live .dm-label { color: #FF4466; }
+      @keyframes live-pulse {
+        0%,100% { box-shadow: 0 0 0 0 rgba(255,68,102,0.0); }
+        50%     { box-shadow: 0 0 22px 2px rgba(255,68,102,0.35); }
+      }
       .dm-fixture {
         display: flex;
         align-items: center;
@@ -1862,13 +1871,15 @@
         var center   = document.getElementById('doodle-center');
         var ctx      = canvas.getContext('2d');
         var W, H, animId, embers = [], startTime = null, done = false;
-        var matchInterval;
+        var matchInterval, liveTimer, rotateTimer;
 
         /* ── closeDoodle must be declared first (hoisted) ── */
         function closeDoodle() {
           if (done) return;
           done = true;
           clearInterval(matchInterval);
+          clearInterval(liveTimer);
+          clearInterval(rotateTimer);
           overlay.classList.add('fade-out');
           cancelAnimationFrame(animId);
           setTimeout(function() {
@@ -2007,39 +2018,120 @@
           return null;
         }
 
-        function startMatchPanel() {
+        /* flag lookup built from the schedule (FIFA 3-letter codes) */
+        var FLAGS = {};
+        MATCHES.forEach(function(m) { FLAGS[m.t1] = m.f1; FLAGS[m.t2] = m.f2; });
+
+        var panelMode = 'none'; /* 'countdown' | 'live' */
+        var liveEvents = [], liveIdx = 0;
+        var ESPN_URL = 'https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard';
+
+        function pad(n) { return n < 10 ? '0' + n : '' + n; }
+
+        /* ── Countdown to next scheduled match ── */
+        function startCountdown() {
           var matchEl = document.getElementById('doodle-match');
           var next = getNextMatch();
-          if (!next) return;
+          if (!next) { matchEl.style.display = 'none'; return; }
+          panelMode = 'countdown';
+          matchEl.classList.remove('live');
           matchEl.style.display = 'block';
+          document.getElementById('dm-label').textContent = '⚡ NEXT MATCH';
           document.getElementById('dm-f1').textContent = next.f1;
           document.getElementById('dm-t1').textContent = next.t1;
+          document.getElementById('dm-vs').textContent  = 'VS';
           document.getElementById('dm-t2').textContent = next.t2;
           document.getElementById('dm-f2').textContent = next.f2;
           document.getElementById('dm-meta').textContent = next.label;
-          function pad(n) { return n < 10 ? '0' + n : '' + n; }
+          var cd = document.getElementById('dm-countdown');
+          cd.style.color = '#00D9FF';
+          cd.style.textShadow = '0 0 20px rgba(0,217,255,0.6)';
           function tick() {
             var diff = next.ts - Date.now();
             if (diff < 0) diff = 0;
             var el = document.getElementById('dm-countdown');
             if (!el) return;
             if (diff === 0) {
-              el.textContent = 'LIVE NOW!';
+              el.textContent = 'KICK OFF!';
               el.style.color = '#FF4466';
-              el.style.textShadow = '0 0 20px rgba(255,68,102,0.7)';
             } else {
-              var totalSec = Math.floor(diff / 1000);
-              var d = Math.floor(totalSec / 86400);
-              var h = Math.floor((totalSec % 86400) / 3600);
-              var m = Math.floor((totalSec % 3600) / 60);
-              var s = totalSec % 60;
+              var t = Math.floor(diff / 1000);
+              var d = Math.floor(t / 86400);
+              var h = Math.floor((t % 86400) / 3600);
+              var m = Math.floor((t % 3600) / 60);
+              var s = t % 60;
               el.textContent = d > 0
                 ? d + 'd ' + pad(h) + ':' + pad(m) + ':' + pad(s)
                 : pad(h) + ':' + pad(m) + ':' + pad(s);
             }
           }
+          clearInterval(matchInterval);
           tick();
           matchInterval = setInterval(tick, 1000);
+        }
+
+        /* ── Render a live match (from ESPN feed) ── */
+        function renderLive() {
+          if (!liveEvents.length) return;
+          liveIdx = liveIdx % liveEvents.length;
+          var ev = liveEvents[liveIdx];
+          var c  = ev.competitions[0];
+          var home = c.competitors[0], away = c.competitors[1];
+          for (var i = 0; i < c.competitors.length; i++) {
+            if (c.competitors[i].homeAway === 'home') home = c.competitors[i];
+            if (c.competitors[i].homeAway === 'away') away = c.competitors[i];
+          }
+          var ha = home.team.abbreviation, aa = away.team.abbreviation;
+          var matchEl = document.getElementById('doodle-match');
+          matchEl.classList.add('live');
+          matchEl.style.display = 'block';
+          document.getElementById('dm-label').textContent =
+            '🔴 LIVE · ' + (ev.status.type.shortDetail || '') +
+            (liveEvents.length > 1 ? '  (' + (liveIdx + 1) + '/' + liveEvents.length + ')' : '');
+          document.getElementById('dm-f1').textContent = FLAGS[ha] || '⚽';
+          document.getElementById('dm-t1').textContent = ha;
+          document.getElementById('dm-vs').textContent  = '·';
+          document.getElementById('dm-t2').textContent = aa;
+          document.getElementById('dm-f2').textContent = FLAGS[aa] || '⚽';
+          document.getElementById('dm-meta').textContent = 'FIFA World Cup 2026';
+          var cd = document.getElementById('dm-countdown');
+          cd.textContent = home.score + ' – ' + away.score;
+          cd.style.color = '#FFD700';
+          cd.style.textShadow = '0 0 22px rgba(255,215,0,0.7)';
+        }
+
+        /* ── Poll ESPN for live scores; fall back to countdown ── */
+        function refreshLive() {
+          fetch(ESPN_URL, { cache: 'no-store' })
+            .then(function(r) { return r.ok ? r.json() : null; })
+            .then(function(d) {
+              if (!d || !d.events) return;
+              liveEvents = d.events.filter(function(e) {
+                return e.status && e.status.type && e.status.type.state === 'in';
+              });
+              if (liveEvents.length) {
+                if (panelMode !== 'live') {
+                  clearInterval(matchInterval);
+                  panelMode = 'live';
+                  liveIdx = 0;
+                  clearInterval(rotateTimer);
+                  rotateTimer = setInterval(function() {
+                    if (liveEvents.length > 1) { liveIdx++; renderLive(); }
+                  }, 4000);
+                }
+                renderLive();
+              } else if (panelMode !== 'countdown') {
+                clearInterval(rotateTimer);
+                startCountdown();
+              }
+            })
+            .catch(function() { /* network/CORS error — keep countdown */ });
+        }
+
+        function startMatchPanel() {
+          startCountdown();      /* show instantly, no network wait */
+          refreshLive();         /* then try live scores */
+          liveTimer = setInterval(refreshLive, 20000);
         }
 
         /* ── Ember particle ── */
