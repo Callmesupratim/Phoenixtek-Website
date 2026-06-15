@@ -1752,24 +1752,7 @@
       }
       #doodle-skip:hover { background: rgba(255,255,255,0.15); color: white; }
 
-      #doodle-ball {
-        position: absolute;
-        bottom: 22%;
-        left: 0;
-        font-size: 3.2rem;
-        line-height: 1;
-        opacity: 0;
-        animation: roll-across 2.6s ease-in-out 0.7s forwards;
-        z-index: 5;
-        pointer-events: none;
-        filter: drop-shadow(0 4px 12px rgba(0,0,0,0.6));
-      }
-      @keyframes roll-across {
-        0%   { transform: translateX(-80px) rotate(0deg);     opacity: 0; }
-        8%   { opacity: 1; }
-        92%  { opacity: 1; }
-        100% { transform: translateX(calc(100vw + 80px)) rotate(1080deg); opacity: 0; }
-      }
+      #doodle-ball { display: none; } /* drawn on canvas instead */
 
       #doodle-fifa-badge {
         position: absolute;
@@ -1859,6 +1842,95 @@
           ctx.restore();
         };
 
+        /* ── Ball physics (canvas-drawn) ── */
+        var ball = {
+          active: false, done: false,
+          x: 0, y: 0, vx: 0, vy: 0,
+          angle: 0, radius: 22,
+          sqX: 1, sqY: 1, sqTimer: 0,
+          groundY: 0, restitution: 0.52, gravity: 0.55
+        };
+
+        function initBall() {
+          ball.groundY  = H * 0.80;
+          ball.x        = W * 0.08;
+          ball.y        = -ball.radius - 10;
+          ball.vx       = W / (2.6 * 60);
+          ball.vy       = 0;
+          ball.angle    = 0;
+          ball.sqX = ball.sqY = 1; ball.sqTimer = 0;
+          ball.active   = true; ball.done = false;
+        }
+
+        function updateBall() {
+          if (!ball.active || ball.done) return;
+          ball.x  += ball.vx;
+          ball.vy += ball.gravity;
+          ball.y  += ball.vy;
+          ball.angle += ball.vx * 0.10;
+
+          /* squash recovery */
+          if (ball.sqTimer > 0) {
+            ball.sqTimer--;
+            var t = ball.sqTimer / 10;
+            ball.sqX = 1 + (ball.sqX - 1) * t;
+            ball.sqY = 1 + (ball.sqY - 1) * t;
+          } else { ball.sqX = 1; ball.sqY = 1; }
+
+          /* bounce */
+          if (ball.y + ball.radius >= ball.groundY) {
+            ball.y = ball.groundY - ball.radius;
+            if (Math.abs(ball.vy) > 2) {
+              var impact = Math.min(1, Math.abs(ball.vy) / 18);
+              ball.sqX = 1 + impact * 0.55;
+              ball.sqY = 1 - impact * 0.38;
+              ball.sqTimer = 10;
+              ball.vy *= -ball.restitution;
+              /* shoot: slight vx boost on each bounce */
+              ball.vx *= 1.08;
+            } else {
+              ball.vy = 0;
+              ball.y  = ball.groundY - ball.radius;
+            }
+          }
+
+          if (ball.x > W + 80) ball.done = true;
+        }
+
+        function drawBall() {
+          if (!ball.active || ball.done) return;
+          var fadeIn = Math.min(1, (ball.x + 80) / 60);
+          if (fadeIn <= 0) return;
+
+          /* ground shadow — shrinks as ball rises */
+          var dist       = Math.max(0, ball.groundY - ball.y - ball.radius);
+          var shadowAlpha = Math.max(0, (0.45 - dist / 180)) * fadeIn;
+          var shadowW    = ball.radius * Math.max(0.15, 1 - dist / 260);
+          if (shadowAlpha > 0) {
+            ctx.save();
+            ctx.globalAlpha = shadowAlpha;
+            ctx.fillStyle   = 'rgba(0,0,0,0.7)';
+            ctx.beginPath();
+            ctx.ellipse(ball.x, ball.groundY + 4, shadowW * 1.4, shadowW * 0.38, 0, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+          }
+
+          /* ball */
+          ctx.save();
+          ctx.globalAlpha  = fadeIn;
+          ctx.translate(ball.x, ball.y);
+          ctx.rotate(ball.angle);
+          ctx.scale(ball.sqX, ball.sqY);
+          ctx.shadowColor  = 'rgba(255,200,50,0.35)';
+          ctx.shadowBlur   = 12;
+          ctx.font         = (ball.radius * 2) + 'px serif';
+          ctx.textAlign    = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText('⚽', 0, 0);
+          ctx.restore();
+        }
+
         function init() {
           var cx = W / 2;
           for (var i = 0; i < 120; i++) embers.push(new Ember(cx));
@@ -1884,6 +1956,8 @@
           var elapsed = ts - startTime;
           drawBase();
           embers.forEach(function(e) { e.update(); e.draw(); });
+          updateBall();
+          drawBall();
           if (!done && elapsed > 3200) closeDoodle();
           if (!done) animId = requestAnimationFrame(loop);
         }
@@ -1893,13 +1967,14 @@
 
         /* FIFA World Cup 2026: Jun 11 – Jul 19 only */
         var now = new Date();
-        if (now < new Date(2026,5,11) || now > new Date(2026,6,19,23,59,59)) {
-          document.getElementById('doodle-ball').style.display = 'none';
+        var isWC = now >= new Date(2026,5,11) && now <= new Date(2026,6,19,23,59,59);
+        if (!isWC) {
           document.getElementById('doodle-fifa-badge').style.display = 'none';
         }
 
         document.body.style.overflow = 'hidden';
         init();
+        if (isWC) initBall();
         animId = requestAnimationFrame(loop);
       })();
     </script>
