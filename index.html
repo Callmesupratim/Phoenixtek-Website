@@ -1783,11 +1783,24 @@
 
     <script>
       (function() {
-        const overlay  = document.getElementById('doodle-overlay');
-        const canvas   = document.getElementById('doodle-canvas');
-        const center   = document.getElementById('doodle-center');
-        const ctx      = canvas.getContext('2d');
-        let   W, H, animId, embers = [], startTime = null, done = false;
+        var overlay = document.getElementById('doodle-overlay');
+        var canvas  = document.getElementById('doodle-canvas');
+        var center  = document.getElementById('doodle-center');
+        var ctx     = canvas.getContext('2d');
+        var W, H, animId, embers = [], startTime = null, done = false;
+
+        /* ── define closeDoodle first so all references below work ── */
+        function closeDoodle() {
+          if (done) return;
+          done = true;
+          overlay.classList.add('fade-out');
+          cancelAnimationFrame(animId);
+          setTimeout(function() {
+            overlay.style.display = 'none';
+            document.body.style.overflow = '';
+          }, 750);
+        }
+        window.closeDoodle = closeDoodle;
 
         function resize() {
           W = canvas.width  = window.innerWidth;
@@ -1811,7 +1824,7 @@
             this.col = 'hsl(' + hue + ',100%,' + lum + '%)';
           };
           this.reset();
-          this.y = H * 0.68 - Math.random() * 80; /* stagger start heights */
+          this.y = H * 0.68 - Math.random() * 80;
         }
         Ember.prototype.update = function() {
           this.x  += this.vx + Math.sin(Date.now() * 0.002 + this.y) * 0.3;
@@ -1839,19 +1852,16 @@
         }
 
         function drawBase() {
-          /* dark background with subtle vignette */
           ctx.clearRect(0, 0, W, H);
           var grad = ctx.createRadialGradient(W/2, H*0.55, 40, W/2, H*0.55, W*0.7);
           grad.addColorStop(0, 'rgba(40,8,0,0.6)');
           grad.addColorStop(1, 'rgba(0,0,0,0)');
           ctx.fillStyle = grad;
           ctx.fillRect(0, 0, W, H);
-
-          /* ground glow */
           var glow = ctx.createRadialGradient(W/2, H*0.7, 0, W/2, H*0.7, 200);
-          glow.addColorStop(0, 'rgba(255,80,10,0.45)');
-          glow.addColorStop(0.5,'rgba(255,40,0,0.15)');
-          glow.addColorStop(1, 'rgba(0,0,0,0)');
+          glow.addColorStop(0,   'rgba(255,80,10,0.45)');
+          glow.addColorStop(0.5, 'rgba(255,40,0,0.15)');
+          glow.addColorStop(1,   'rgba(0,0,0,0)');
           ctx.fillStyle = glow;
           ctx.fillRect(0, 0, W, H);
         }
@@ -1859,46 +1869,25 @@
         function loop(ts) {
           if (!startTime) startTime = ts;
           var elapsed = ts - startTime;
-
           drawBase();
-          var cx = W / 2;
-          embers.forEach(function(e){ e.update(); e.draw(); });
-
-          /* auto-close at 3.2s */
+          embers.forEach(function(e) { e.update(); e.draw(); });
           if (!done && elapsed > 3200) closeDoodle();
-          animId = requestAnimationFrame(loop);
+          if (!done) animId = requestAnimationFrame(loop);
         }
 
-        /* trigger logo rise after 400ms */
-        setTimeout(function(){ center.classList.add('risen'); }, 400);
-
         overlay.addEventListener('click', closeDoodle);
+        setTimeout(function() { center.classList.add('risen'); }, 400);
 
-        init();
-        animId = requestAnimationFrame(loop);
-
-        window.closeDoodle = function() {
-          if (done) return;
-          done = true;
-          overlay.classList.add('fade-out');
-          cancelAnimationFrame(animId);
-          setTimeout(function(){
-            overlay.style.display = 'none';
-            document.body.style.overflow = '';
-          }, 750);
-        };
-
-        /* FIFA World Cup 2026 — show ball only during tournament (Jun 11 – Jul 19) */
+        /* FIFA World Cup 2026: Jun 11 – Jul 19 only */
         var now = new Date();
-        var wcStart = new Date(2026, 5, 11);
-        var wcEnd   = new Date(2026, 6, 19, 23, 59, 59);
-        if (now < wcStart || now > wcEnd) {
+        if (now < new Date(2026,5,11) || now > new Date(2026,6,19,23,59,59)) {
           document.getElementById('doodle-ball').style.display = 'none';
           document.getElementById('doodle-fifa-badge').style.display = 'none';
         }
 
-        /* lock scroll while doodle shows */
         document.body.style.overflow = 'hidden';
+        init();
+        animId = requestAnimationFrame(loop);
       })();
     </script>
 
