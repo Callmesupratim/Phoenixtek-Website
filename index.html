@@ -2085,6 +2085,7 @@
           var matchEl = document.getElementById('doodle-match');
           matchEl.classList.add('live');
           matchEl.style.display = 'block';
+          matchEl.style.opacity = '1'; /* .live animation overrides fade-in, so force visible */
           document.getElementById('dm-label').textContent =
             '🔴 LIVE · ' + (ev.status.type.shortDetail || '') +
             (liveEvents.length > 1 ? '  (' + (liveIdx + 1) + '/' + liveEvents.length + ')' : '');
