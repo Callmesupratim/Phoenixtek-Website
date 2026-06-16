@@ -1872,6 +1872,7 @@
         var ctx      = canvas.getContext('2d');
         var W, H, animId, embers = [], startTime = null, done = false;
         var matchInterval, liveTimer, rotateTimer;
+        var ballTrail = [];
 
         /* ── closeDoodle must be declared first (hoisted) ── */
         function closeDoodle() {
@@ -2094,7 +2095,8 @@
           document.getElementById('dm-vs').textContent  = '·';
           document.getElementById('dm-t2').textContent = aa;
           document.getElementById('dm-f2').textContent = FLAGS[aa] || '⚽';
-          document.getElementById('dm-meta').textContent = 'FIFA World Cup 2026';
+          document.getElementById('dm-meta').textContent =
+            (c.venue && c.venue.fullName) ? c.venue.fullName : 'FIFA World Cup 2026';
           var cd = document.getElementById('dm-countdown');
           cd.textContent = home.score + ' – ' + away.score;
           cd.style.color = '#FFD700';
@@ -2253,6 +2255,8 @@
           ball.x  += ball.vx;
           ball.vy += ball.gravity;
           ball.y  += ball.vy;
+          ballTrail.push({x: ball.x, y: ball.y});
+          if (ballTrail.length > 14) ballTrail.shift();
           ball.angle += ball.vx * 0.10;
 
           if (ball.sqTimer > 0) {
@@ -2401,6 +2405,24 @@
             grad.addColorStop(1, 'rgba(0,0,0,0)');
             ctx.fillStyle = grad;
             ctx.fillRect(0, 0, W, H);
+          } else {
+            /* stadium floodlight cones from upper corners */
+            var lpts = [{x: W*0.03, y: 0}, {x: W*0.97, y: 0}];
+            var botX  = [W*0.38, W*0.62];
+            for (var li = 0; li < 2; li++) {
+              ctx.save();
+              ctx.beginPath();
+              ctx.moveTo(lpts[li].x, lpts[li].y);
+              ctx.lineTo(botX[li] - W*0.28, H);
+              ctx.lineTo(botX[li] + W*0.28, H);
+              ctx.closePath();
+              var llg = ctx.createLinearGradient(lpts[li].x, 0, botX[li], H * 0.7);
+              llg.addColorStop(0, 'rgba(255,248,220,0.09)');
+              llg.addColorStop(1, 'rgba(255,248,220,0.0)');
+              ctx.fillStyle = llg;
+              ctx.fill();
+              ctx.restore();
+            }
           }
           var glow = ctx.createRadialGradient(W/2, H*0.7, 0, W/2, H*0.7, 200);
           glow.addColorStop(0,   'rgba(255,80,10,0.45)');
@@ -2410,12 +2432,80 @@
           ctx.fillRect(0, 0, W, H);
         }
 
+        /* ── Grass ground strip with field stripes ── */
+        function drawGrass() {
+          if (!ball.active) return;
+          var gy = ball.groundY;
+          var grad = ctx.createLinearGradient(0, gy, 0, H);
+          grad.addColorStop(0,    'rgba(0,100,28,0.75)');
+          grad.addColorStop(0.18, 'rgba(0,75,20,0.9)');
+          grad.addColorStop(1,    'rgba(0,25,8,0.98)');
+          ctx.fillStyle = grad;
+          ctx.fillRect(0, gy, W, H - gy);
+          /* alternating field stripes */
+          var sw = W / 10;
+          for (var s = 0; s < 10; s += 2) {
+            ctx.fillStyle = 'rgba(0,160,45,0.06)';
+            ctx.fillRect(s * sw, gy, sw, H - gy);
+          }
+          /* glowing edge line */
+          var lg = ctx.createLinearGradient(0, gy, W, gy);
+          lg.addColorStop(0,    'rgba(60,220,80,0)');
+          lg.addColorStop(0.12, 'rgba(60,220,80,0.55)');
+          lg.addColorStop(0.88, 'rgba(60,220,80,0.55)');
+          lg.addColorStop(1,    'rgba(60,220,80,0)');
+          ctx.fillStyle = lg;
+          ctx.fillRect(0, gy - 1, W, 3);
+        }
+
+        /* ── Animated crowd silhouette wave ── */
+        function drawCrowd() {
+          if (!ball.active) return;
+          var gy = ball.groundY;
+          var t = Date.now() * 0.0009;
+          ctx.save();
+          ctx.fillStyle = 'rgba(0,5,2,0.88)';
+          ctx.beginPath();
+          ctx.moveTo(0, H);
+          ctx.lineTo(0, gy + 2);
+          var steps = 80;
+          for (var i = 0; i <= steps; i++) {
+            var xp = (i / steps) * W;
+            var yp = gy + 2 + Math.sin(t + i * 0.55) * 9 + Math.sin(t * 0.7 + i * 0.88) * 5;
+            ctx.lineTo(xp, yp);
+          }
+          ctx.lineTo(W, H);
+          ctx.closePath();
+          ctx.fill();
+          ctx.restore();
+        }
+
+        /* ── Ball motion trail ── */
+        function drawBallTrail() {
+          if (!ball.active || ball.done || ballTrail.length < 2) return;
+          for (var i = 0; i < ballTrail.length; i++) {
+            var frac = i / ballTrail.length;
+            ctx.save();
+            ctx.globalAlpha = frac * 0.28;
+            ctx.fillStyle   = '#FFD700';
+            ctx.shadowColor = '#FF6B35';
+            ctx.shadowBlur  = 16;
+            ctx.beginPath();
+            ctx.arc(ballTrail[i].x, ballTrail[i].y, ball.radius * 0.65 * frac, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+          }
+        }
+
         function loop(ts) {
           if (!startTime) startTime = ts;
           var elapsed = ts - startTime;
           drawBase();
+          drawGrass();
+          drawCrowd();
           embers.forEach(function(e) { e.update(); e.draw(); });
           updateBall();
+          drawBallTrail();
           drawBall();
           updateBlasts();
           drawBlasts();
