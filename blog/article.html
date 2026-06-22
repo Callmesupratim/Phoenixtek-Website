@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="page-title">Loading article… | Phoenixtek Solution</title>
+
+<link rel="icon" type="image/x-icon" href="../favicon.ico">
+<meta name="robots" content="index, follow">
+
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #FF6B35;
+    --secondary: #F7931E;
+    --accent: #00D9FF;
+    --dark: #1A1A2E;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family:'DM Sans', sans-serif;
+    color:#2a2a3d;
+    background:#FFFBF5;
+    line-height:1.8;
+  }
+  a { color:var(--primary); }
+
+  .top-bar {
+    padding:1.2rem 5%;
+    display:flex;
+    align-items:center;
+    gap:0.75rem;
+    background:rgba(255,255,255,0.95);
+    backdrop-filter:blur(10px);
+    position:sticky;
+    top:0;
+    z-index:10;
+    box-shadow:0 2px 20px rgba(0,0,0,0.05);
+  }
+  .top-bar img { width:38px; height:38px; object-fit:contain; }
+  .top-bar .brand {
+    font-family:'Archivo Black', sans-serif;
+    font-size:1.2rem;
+    background:linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+  }
+  .top-bar .back {
+    margin-left:auto;
+    font-weight:700;
+    font-size:0.9rem;
+    text-decoration:none;
+    color:var(--dark);
+  }
+
+  .hero {
+    max-width:880px;
+    margin:0 auto;
+    padding:3.5rem 5% 1.5rem;
+  }
+  .hero .meta {
+    font-size:0.85rem;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:#999;
+    margin-bottom:1rem;
+  }
+  .hero h1 {
+    font-family:'Archivo Black', sans-serif;
+    font-size:clamp(1.7rem, 4vw, 2.5rem);
+    line-height:1.3;
+    color:var(--dark);
+    margin-bottom:1.6rem;
+  }
+  .hero-image {
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 20px 50px rgba(0,0,0,0.18);
+  }
+  .hero-image img { width:100%; display:block; }
+  .hero-gradient {
+    width:100%;
+    height:280px;
+    border-radius:20px;
+    background:linear-gradient(135deg, var(--accent), #9D4EDD);
+  }
+
+  article {
+    max-width:760px;
+    margin:0 auto;
+    padding:1rem 5% 3rem;
+    font-size:1.08rem;
+    color:#3a3a4d;
+  }
+  #article-text p {
+    white-space:pre-line;
+    margin-bottom:1.5rem;
+  }
+
+  .gallery {
+    max-width:880px;
+    margin:0 auto;
+    padding:0 5% 2rem;
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+    gap:1rem;
+  }
+  .gallery img {
+    width:100%;
+    height:180px;
+    object-fit:cover;
+    border-radius:14px;
+    box-shadow:0 8px 24px rgba(0,0,0,0.12);
+  }
+
+  .state-msg {
+    max-width:600px;
+    margin:5rem auto;
+    text-align:center;
+    color:#888;
+    padding:0 5%;
+  }
+  .state-msg a { font-weight:700; }
+
+  .cta-box {
+    max-width:760px;
+    margin:0 auto 4rem;
+    padding:2rem 5%;
+  }
+  .cta-card {
+    background:linear-gradient(135deg, var(--dark), #2A2A40);
+    color:white;
+    border-radius:20px;
+    padding:2.2rem;
+    text-align:center;
+  }
+  .cta-card a {
+    display:inline-block;
+    margin-top:1rem;
+    padding:0.8rem 2rem;
+    background:linear-gradient(135deg, var(--primary), var(--secondary));
+    color:white;
+    border-radius:50px;
+    font-weight:700;
+    text-decoration:none;
+  }
+
+  footer {
+    background:#0F0F1E;
+    color:#999;
+    text-align:center;
+    padding:2.5rem 5%;
+    font-size:0.9rem;
+  }
+  footer a { color:var(--accent); text-decoration:none; }
+
+  .skeleton-line {
+    background:linear-gradient(90deg,#f0eee8 25%,#e8e4dc 50%,#f0eee8 75%);
+    background-size:200% 100%;
+    animation:shimmer 1.5s infinite;
+    border-radius:8px;
+    height:1.2rem;
+    margin-bottom:1rem;
+  }
+  @keyframes shimmer { 0%{background-position:-200% 0;} 100%{background-position:200% 0;} }
+
+  @media (max-width:600px) {
+    .hero { padding-top:2.5rem; }
+    article { font-size:1rem; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="top-bar">
+    <img src="../logo.webp" alt="Phoenixtek">
+    <span class="brand">Phoenixtek</span>
+    <a href="../index.html#blog" class="back">← All Articles</a>
+  </div>
+
+  <div id="content">
+    <div class="hero">
+      <div class="skeleton-line" style="width:40%;"></div>
+      <div class="skeleton-line" style="height:2.4rem;width:90%;margin-top:0.5rem;"></div>
+      <div class="skeleton-line" style="height:2.4rem;width:60%;"></div>
+    </div>
+  </div>
+
+  <div class="cta-box">
+    <div class="cta-card">
+      <h3 style="font-family:'Archivo Black',sans-serif;">Want the same precision in your infrastructure monitoring?</h3>
+      <p style="color:#ccc;margin-top:0.5rem;">Phoenixtek Solution brings the same engineering discipline to geotechnical instrumentation and structural health monitoring.</p>
+      <a href="../index.html#contact">Get in touch</a>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 Phoenixtek Solution. All rights reserved.</p>
+    <p style="margin-top:0.5rem;"><a href="../index.html">phoenixtek.in</a></p>
+  </footer>
+
+<script>
+  const SPREADSHEET_ID = '14ijRlsRjYNBCmYrUZi6-ap-fnYXFjMBVa10AtXBDhuU';
+
+  // RFC 4180 compliant CSV parser — handles quoted fields with commas and newlines
+  function parseCSV(csv) {
+    const rows = [];
+    let i = 0;
+    const n = csv.length;
+    while (i < n) {
+      const row = [];
+      while (i < n) {
+        let field = '';
+        if (csv[i] === '"') {
+          i++;
+          while (i < n) {
+            if (csv[i] === '"') {
+              if (i + 1 < n && csv[i + 1] === '"') { field += '"'; i += 2; }
+              else { i++; break; }
+            } else { field += csv[i++]; }
+          }
+        } else {
+          while (i < n && csv[i] !== ',' && csv[i] !== '\n' && csv[i] !== '\r') field += csv[i++];
+        }
+        row.push(field.trim());
+        if (i < n && csv[i] === ',') { i++; }
+        else { if (i < n && csv[i] === '\r') i++; if (i < n && csv[i] === '\n') i++; break; }
+      }
+      if (row.length > 0 && !(row.length === 1 && row[0] === '')) rows.push(row);
+    }
+    if (rows.length === 0) return [];
+    const headers = rows[0];
+    return rows.slice(1)
+      .filter(r => r.some(c => c !== ''))
+      .map(r => Object.fromEntries(headers.map((h, idx) => [h, r[idx] ?? ''])));
+  }
+
+  function slugify(text) {
+    return (text || '').toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, '')
+      .trim()
+      .replace(/\s+/g, '-');
+  }
+
+  function he(str) {
+    return (str || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function normalizeURLList(raw) {
+    if (!raw) return [];
+    return raw.split(/[|,]/).map(u => u.trim()).filter(Boolean);
+  }
+
+  function showError(msg) {
+    document.getElementById('content').innerHTML =
+      `<div class="state-msg"><p>${msg}</p><p style="margin-top:1rem;"><a href="../index.html#blog">← Back to all articles</a></p></div>`;
+  }
+
+  async function loadArticle() {
+    const slug = decodeURIComponent(window.location.hash.replace(/^#/, ''));
+    if (!slug) { showError('No article specified.'); return; }
+
+    try {
+      const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:csv&sheet=BLOG`;
+      const response = await fetch(url, { cache: 'no-store' });
+      const text = await response.text();
+      if (!response.ok || text.trim().startsWith('<') || text.trim() === '') {
+        showError('Could not load articles right now. Please try again later.');
+        return;
+      }
+
+      const posts = parseCSV(text).filter(p => p.Title && p.Title.trim() !== '');
+      const post = posts.find(p => slugify(p.Title) === slug);
+
+      if (!post) {
+        showError('Article not found. It may have been moved or renamed.');
+        return;
+      }
+
+      const title = post.Title;
+      const meta  = [post.Date, post.Category].filter(Boolean).join(' • ');
+      const images = normalizeURLList(post.ImageURL);
+      const paragraphs = (post.Excerpt || '').split(/\n\s*\n/).filter(p => p.trim() !== '');
+
+      document.getElementById('page-title').textContent = `${title} | Phoenixtek Solution`;
+
+      const heroHtml = images.length
+        ? `<div class="hero-image"><img src="${he(images[0])}" alt="${he(title)}"></div>`
+        : `<div class="hero-gradient"></div>`;
+
+      document.getElementById('content').innerHTML = `
+        <div class="hero">
+          <div class="meta">${he(meta)}</div>
+          <h1>${he(title)}</h1>
+          ${heroHtml}
+        </div>
+        <article>
+          <div id="article-text">
+            ${paragraphs.map(p => `<p>${he(p)}</p>`).join('')}
+          </div>
+        </article>
+        ${images.length > 1 ? `
+        <div class="gallery">
+          ${images.slice(1).map(src => `<img src="${he(src)}" alt="${he(title)}" loading="lazy">`).join('')}
+        </div>` : ''}
+      `;
+    } catch (err) {
+      showError('Something went wrong loading this article.');
+    }
+  }
+
+  loadArticle();
+</script>
+
+</body>
+</html>
