@@ -1,0 +1,61 @@
+<svg viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t d">
+  <title id="t">Mailmind cover</title>
+  <desc id="d">Mailmind — a privacy-first AI email client for desktop.</desc>
+  <rect width="1200" height="630" fill="#0f172a"/>
+  <!-- subtle grid -->
+  <g stroke="#1e293b" stroke-width="1">
+    <line x1="0" y1="157" x2="1200" y2="157"/>
+    <line x1="0" y1="315" x2="1200" y2="315"/>
+    <line x1="0" y1="472" x2="1200" y2="472"/>
+    <line x1="300" y1="0" x2="300" y2="630"/>
+    <line x1="600" y1="0" x2="600" y2="630"/>
+    <line x1="900" y1="0" x2="900" y2="630"/>
+  </g>
+
+  <!-- envelope mark -->
+  <g transform="translate(96,150)">
+    <rect x="0" y="0" width="150" height="110" rx="14" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+    <path d="M10 14 L75 64 L140 14" fill="none" stroke="#34d399" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="120" cy="86" r="16" fill="#0f172a" stroke="#818cf8" stroke-width="4"/>
+    <path d="M114 86 l5 5 l9 -11" fill="none" stroke="#818cf8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- wordmark -->
+  <text x="96" y="340" font-family="Segoe UI, Arial, sans-serif" font-size="92" font-weight="800" letter-spacing="4" fill="#e2e8f0">MAILMIND</text>
+  <text x="100" y="392" font-family="Segoe UI, Arial, sans-serif" font-size="27" font-weight="500" fill="#94a3b8">A privacy-first AI email client, built on Electron</text>
+
+  <!-- tag chips -->
+  <g font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="600">
+    <g transform="translate(100,440)">
+      <rect width="178" height="46" rx="23" fill="#13322a" stroke="#34d399" stroke-width="1.5"/>
+      <text x="89" y="30" text-anchor="middle" fill="#34d399">Gmail · Outlook · IMAP</text>
+    </g>
+    <g transform="translate(294,440)">
+      <rect width="168" height="46" rx="23" fill="#1c1f3d" stroke="#818cf8" stroke-width="1.5"/>
+      <text x="84" y="30" text-anchor="middle" fill="#a5b4fc">Bring-your-own AI</text>
+    </g>
+    <g transform="translate(478,440)">
+      <rect width="196" height="46" rx="23" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+      <text x="98" y="30" text-anchor="middle" fill="#cbd5e1">AES-256 encrypted at rest</text>
+    </g>
+  </g>
+
+  <!-- right-side stack illustration -->
+  <g transform="translate(770,150)">
+    <rect x="0" y="0" width="340" height="64" rx="12" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+    <circle cx="34" cy="32" r="14" fill="#34d399"/>
+    <rect x="62" y="20" width="150" height="10" rx="5" fill="#475569"/>
+    <rect x="62" y="38" width="220" height="8" rx="4" fill="#334155"/>
+
+    <rect x="0" y="80" width="340" height="64" rx="12" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+    <circle cx="34" cy="112" r="14" fill="#818cf8"/>
+    <rect x="62" y="100" width="120" height="10" rx="5" fill="#475569"/>
+    <rect x="62" y="118" width="240" height="8" rx="4" fill="#334155"/>
+
+    <rect x="0" y="160" width="340" height="64" rx="12" fill="#13322a" stroke="#34d399" stroke-width="1.5"/>
+    <path d="M26 192 a14 14 0 1 0 0.01 0" fill="none" stroke="#34d399" stroke-width="3"/>
+    <text x="22" y="197" font-family="Segoe UI, Arial" font-size="16" fill="#34d399">✨</text>
+    <rect x="62" y="180" width="100" height="10" rx="5" fill="#34d399" opacity="0.7"/>
+    <rect x="62" y="198" width="200" height="8" rx="4" fill="#2f5e4f"/>
+  </g>
+</svg>

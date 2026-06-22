@@ -1,0 +1,63 @@
+<svg viewBox="0 0 960 600" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t d">
+  <title id="t">Mailmind architecture</title>
+  <desc id="d">Electron shell spawns a local Express server; the renderer talks only to the local API; the server holds all secrets and talks to providers.</desc>
+  <rect width="960" height="600" fill="#0f172a"/>
+  <text x="40" y="48" font-family="Segoe UI, Arial" font-size="26" font-weight="800" letter-spacing="2" fill="#e2e8f0">MAILMIND · ARCHITECTURE</text>
+  <text x="40" y="76" font-family="Segoe UI, Arial" font-size="15" fill="#94a3b8">Three layers, one secret boundary</text>
+
+  <!-- Electron shell container -->
+  <rect x="40" y="100" width="880" height="200" rx="16" fill="#111c30" stroke="#334155" stroke-width="1.5"/>
+  <text x="60" y="128" font-family="Segoe UI, Arial" font-size="14" font-weight="700" fill="#64748b">ELECTRON PROCESS  ·  main.js</text>
+
+  <!-- renderer -->
+  <rect x="64" y="146" width="380" height="130" rx="12" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+  <text x="84" y="176" font-family="Segoe UI, Arial" font-size="18" font-weight="700" fill="#e2e8f0">Renderer (BrowserWindow)</text>
+  <text x="84" y="202" font-family="Segoe UI, Arial" font-size="14" fill="#94a3b8">public/index.html — vanilla JS UI</text>
+  <text x="84" y="224" font-family="Segoe UI, Arial" font-size="14" fill="#94a3b8">state in localStorage · no build step</text>
+  <text x="84" y="252" font-family="Segoe UI, Arial" font-size="13" fill="#64748b">sees only /api JSON — never secrets</text>
+
+  <!-- main responsibilities -->
+  <rect x="540" y="146" width="356" height="130" rx="12" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+  <text x="560" y="176" font-family="Segoe UI, Arial" font-size="18" font-weight="700" fill="#e2e8f0">Shell duties</text>
+  <text x="560" y="202" font-family="Segoe UI, Arial" font-size="14" fill="#94a3b8">tray · background poll · notifications</text>
+  <text x="560" y="224" font-family="Segoe UI, Arial" font-size="14" fill="#94a3b8">auto-updater · per-machine secret</text>
+  <text x="560" y="252" font-family="Segoe UI, Arial" font-size="14" fill="#94a3b8">spawns the local server</text>
+
+  <!-- IPC arrow renderer<->main -->
+  <line x1="444" y1="211" x2="540" y2="211" stroke="#475569" stroke-width="2" stroke-dasharray="5 4"/>
+  <text x="492" y="203" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#64748b">IPC</text>
+
+  <!-- local server -->
+  <rect x="64" y="340" width="488" height="210" rx="16" fill="#13251f" stroke="#34d399" stroke-width="1.8"/>
+  <text x="84" y="368" font-family="Segoe UI, Arial" font-size="14" font-weight="700" fill="#34d399">LOCAL EXPRESS SERVER  ·  127.0.0.1:3000</text>
+  <text x="84" y="398" font-family="Segoe UI, Arial" font-size="17" font-weight="700" fill="#e2e8f0">server/index.js</text>
+  <text x="84" y="424" font-family="Segoe UI, Arial" font-size="14" fill="#a7f3d0">Gmail · Microsoft Graph · IMAP/SMTP</text>
+  <text x="84" y="446" font-family="Segoe UI, Arial" font-size="14" fill="#a7f3d0">AI endpoints (resolveKey priority)</text>
+  <rect x="84" y="466" width="200" height="64" rx="10" fill="#0f172a" stroke="#334155"/>
+  <text x="100" y="492" font-family="Segoe UI, Arial" font-size="14" font-weight="700" fill="#e2e8f0">SQLite · db.js</text>
+  <text x="100" y="514" font-family="Segoe UI, Arial" font-size="12.5" fill="#94a3b8">AES-256-GCM secrets</text>
+  <rect x="300" y="466" width="232" height="64" rx="10" fill="#0f172a" stroke="#334155"/>
+  <text x="316" y="492" font-family="Segoe UI, Arial" font-size="14" font-weight="700" fill="#e2e8f0">ai_cache (7-day TTL)</text>
+  <text x="316" y="514" font-family="Segoe UI, Arial" font-size="12.5" fill="#94a3b8">instant re-opens, no re-bill</text>
+
+  <!-- arrow renderer -> server (fetch) -->
+  <line x1="254" y1="276" x2="254" y2="340" stroke="#34d399" stroke-width="2.5" marker-end="url(#ag)"/>
+  <text x="264" y="312" font-family="Segoe UI, Arial" font-size="12" fill="#34d399">fetch /api</text>
+
+  <!-- providers -->
+  <rect x="600" y="340" width="296" height="210" rx="16" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+  <text x="620" y="368" font-family="Segoe UI, Arial" font-size="14" font-weight="700" fill="#64748b">EXTERNAL PROVIDERS</text>
+  <g font-family="Segoe UI, Arial" font-size="15" fill="#cbd5e1">
+    <rect x="620" y="384" width="256" height="34" rx="8" fill="#0f172a"/><text x="636" y="406">Google Gmail API</text>
+    <rect x="620" y="426" width="256" height="34" rx="8" fill="#0f172a"/><text x="636" y="448">Microsoft Graph</text>
+    <rect x="620" y="468" width="256" height="34" rx="8" fill="#0f172a"/><text x="636" y="490">IMAP / SMTP servers</text>
+    <rect x="620" y="510" width="256" height="30" rx="8" fill="#1c1f3d"/><text x="636" y="531" fill="#a5b4fc">AI: Groq/OpenAI/Anthropic/…</text>
+  </g>
+  <line x1="552" y1="445" x2="600" y2="445" stroke="#475569" stroke-width="2.5" marker-end="url(#ag)"/>
+
+  <defs>
+    <marker id="ag" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0 0 L9 4.5 L0 9 z" fill="#34d399"/>
+    </marker>
+  </defs>
+</svg>

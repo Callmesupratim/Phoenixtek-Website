@@ -1,0 +1,59 @@
+<svg viewBox="0 0 960 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t d">
+  <title id="t">Mailmind security model</title>
+  <desc id="d">Secrets are AES-256-GCM encrypted with a key derived from a per-machine secret on desktop or SESSION_SECRET on the web deployment.</desc>
+  <rect width="960" height="560" fill="#0f172a"/>
+  <text x="40" y="48" font-family="Segoe UI, Arial" font-size="26" font-weight="800" letter-spacing="2" fill="#e2e8f0">SECURITY &amp; ENCRYPTION</text>
+  <text x="40" y="76" font-family="Segoe UI, Arial" font-size="15" fill="#94a3b8">Every credential is encrypted before it touches disk</text>
+
+  <!-- secrets in -->
+  <rect x="40" y="116" width="250" height="150" rx="14" fill="#1e293b" stroke="#fbbf24" stroke-width="1.5"/>
+  <text x="60" y="144" font-family="Segoe UI, Arial" font-size="14" font-weight="700" fill="#fbbf24">PLAINTEXT SECRETS</text>
+  <g font-family="Segoe UI, Arial" font-size="14" fill="#cbd5e1">
+    <text x="60" y="174">OAuth refresh tokens</text>
+    <text x="60" y="200">IMAP / SMTP passwords</text>
+    <text x="60" y="226">Your AI API keys</text>
+  </g>
+  <text x="60" y="254" font-family="Segoe UI, Arial" font-size="12" fill="#64748b">never written as-is</text>
+
+  <!-- cipher -->
+  <rect x="355" y="126" width="250" height="130" rx="14" fill="#13251f" stroke="#34d399" stroke-width="1.8"/>
+  <text x="480" y="170" text-anchor="middle" font-family="Segoe UI, Arial" font-size="18" font-weight="800" fill="#34d399">AES-256-GCM</text>
+  <text x="480" y="198" text-anchor="middle" font-family="Segoe UI, Arial" font-size="13.5" fill="#a7f3d0">key = scrypt(secret)</text>
+  <text x="480" y="220" text-anchor="middle" font-family="Segoe UI, Arial" font-size="13.5" fill="#a7f3d0">iv ‖ tag ‖ ciphertext</text>
+
+  <!-- store -->
+  <rect x="670" y="126" width="250" height="130" rx="14" fill="#111c30" stroke="#334155" stroke-width="1.5"/>
+  <text x="795" y="170" text-anchor="middle" font-family="Segoe UI, Arial" font-size="16" font-weight="700" fill="#e2e8f0">data.db</text>
+  <text x="795" y="196" text-anchor="middle" font-family="Segoe UI, Arial" font-size="13" fill="#94a3b8">SQLite, encrypted blob</text>
+  <text x="795" y="218" text-anchor="middle" font-family="Segoe UI, Arial" font-size="12" fill="#64748b">useless without the key</text>
+
+  <line x1="290" y1="191" x2="355" y2="191" stroke="#475569" stroke-width="2.5" marker-end="url(#g)"/>
+  <line x1="605" y1="191" x2="670" y2="191" stroke="#34d399" stroke-width="2.5" marker-end="url(#g)"/>
+
+  <!-- key source split -->
+  <text x="40" y="320" font-family="Segoe UI, Arial" font-size="15" font-weight="700" fill="#64748b">WHERE THE KEY COMES FROM — differs per deployment</text>
+
+  <rect x="40" y="340" width="420" height="180" rx="14" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+  <text x="64" y="372" font-family="Segoe UI, Arial" font-size="18" font-weight="700" fill="#e2e8f0">🖥  Desktop app</text>
+  <g font-family="Segoe UI, Arial" font-size="14" fill="#cbd5e1">
+    <text x="64" y="402">Per-machine secret, made on first run</text>
+    <text x="64" y="426">crypto.randomBytes(32) →</text>
+    <text x="64" y="448" fill="#34d399" font-weight="600">userData/secret.key (chmod 0600)</text>
+    <text x="64" y="474">Injected as MAILMIND_SECRET</text>
+    <text x="64" y="500" fill="#94a3b8" font-size="13">Every install is unique. Stolen db ≠ readable.</text>
+  </g>
+
+  <rect x="490" y="340" width="430" height="180" rx="14" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+  <text x="514" y="372" font-family="Segoe UI, Arial" font-size="18" font-weight="700" fill="#e2e8f0">☁  Web (NSSM) deployment</text>
+  <g font-family="Segoe UI, Arial" font-size="14" fill="#cbd5e1">
+    <text x="514" y="402">Fixed SESSION_SECRET from .env</text>
+    <text x="514" y="426" fill="#f87171" font-weight="600">never change it — would orphan</text>
+    <text x="514" y="448" fill="#f87171" font-weight="600">every stored credential</text>
+    <text x="514" y="478">Installer ships</text>
+    <text x="514" y="500" fill="#34d399" font-weight="600">.env.dist — OAuth-only allowlist, no AI keys</text>
+  </g>
+
+  <defs>
+    <marker id="g" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill="#475569"/></marker>
+  </defs>
+</svg>

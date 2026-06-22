@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inside Mailmind: Building a Privacy-First AI Email Client on Electron | Phoenixtek Solution</title>
+
+<link rel="icon" type="image/x-icon" href="../favicon.ico">
+<meta name="description" content="How a single-developer desktop app connects Gmail, Outlook, and IMAP, layers AI on top, encrypts everything at rest — and still ships an installer you can double-click.">
+<meta name="author" content="Supratim Mondal">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://phoenixtek.in/blog/mailmind-deep-dive.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Inside Mailmind: Building a Privacy-First AI Email Client on Electron">
+<meta property="og:description" content="A solo-developer architecture tour: multi-account email sync, bring-your-own-AI, AES-256 encryption at rest, and the lifecycle bugs nobody sees.">
+<meta property="og:url" content="https://phoenixtek.in/blog/mailmind-deep-dive.html">
+<meta property="og:image" content="https://phoenixtek.in/images/blog-mailmind/hero.svg">
+
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #FF6B35;
+    --secondary: #F7931E;
+    --accent: #00D9FF;
+    --dark: #1A1A2E;
+    --purple: #9D4EDD;
+    --green: #06FFA5;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family:'DM Sans', sans-serif;
+    color:#2a2a3d;
+    background:#FFFBF5;
+    line-height:1.7;
+  }
+  a { color:var(--primary); }
+
+  .top-bar {
+    padding:1.2rem 5%;
+    display:flex;
+    align-items:center;
+    gap:0.75rem;
+    background:rgba(255,255,255,0.95);
+    backdrop-filter:blur(10px);
+    position:sticky;
+    top:0;
+    z-index:10;
+    box-shadow:0 2px 20px rgba(0,0,0,0.05);
+  }
+  .top-bar img { width:38px; height:38px; object-fit:contain; }
+  .top-bar .brand {
+    font-family:'Archivo Black', sans-serif;
+    font-size:1.2rem;
+    background:linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+  }
+  .top-bar .back {
+    margin-left:auto;
+    font-weight:700;
+    font-size:0.9rem;
+    text-decoration:none;
+    color:var(--dark);
+  }
+
+  .hero {
+    max-width:880px;
+    margin:0 auto;
+    padding:3.5rem 5% 1.5rem;
+  }
+  .hero .meta {
+    font-size:0.85rem;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:#999;
+    margin-bottom:1rem;
+  }
+  .hero h1 {
+    font-family:'Archivo Black', sans-serif;
+    font-size:clamp(1.8rem, 4vw, 2.6rem);
+    line-height:1.25;
+    color:var(--dark);
+    margin-bottom:1.2rem;
+  }
+  .hero .dek {
+    font-size:1.15rem;
+    color:#555;
+    font-style:italic;
+    margin-bottom:2rem;
+  }
+  .hero-image {
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 20px 50px rgba(0,0,0,0.18);
+    background:#0f172a;
+  }
+  .hero-image img { width:100%; display:block; }
+
+  article {
+    max-width:760px;
+    margin:0 auto;
+    padding:1rem 5% 5rem;
+    font-size:1.08rem;
+    color:#3a3a4d;
+  }
+  article p { margin-bottom:1.4rem; }
+  article h2 {
+    font-family:'Archivo Black', sans-serif;
+    font-size:1.5rem;
+    color:var(--dark);
+    margin:2.8rem 0 1.2rem;
+  }
+  article ul, article ol {
+    margin:0 0 1.4rem 1.4rem;
+  }
+  article li { margin-bottom:0.6rem; }
+  article strong { color:var(--dark); }
+  article code {
+    background:#f0eee8;
+    color:#c2410c;
+    padding:0.15rem 0.4rem;
+    border-radius:5px;
+    font-size:0.92em;
+    font-family:'Courier New', monospace;
+  }
+  article hr {
+    border:none;
+    border-top:1px solid #eee0d0;
+    margin:2.5rem 0;
+  }
+  .diagram {
+    margin:1.5rem 0 2rem;
+    border-radius:16px;
+    overflow:hidden;
+    background:#0f172a;
+    box-shadow:0 12px 36px rgba(0,0,0,0.15);
+  }
+  .diagram img { width:100%; display:block; }
+  .diagram-cap {
+    text-align:center;
+    font-size:0.85rem;
+    color:#999;
+    margin-top:0.6rem;
+  }
+
+  .closing {
+    font-style:italic;
+    color:#777;
+    border-left:4px solid var(--primary);
+    padding-left:1.2rem;
+    margin-top:2.5rem;
+  }
+
+  .cta-box {
+    max-width:760px;
+    margin:0 auto 4rem;
+    padding:2rem 5%;
+  }
+  .cta-card {
+    background:linear-gradient(135deg, var(--dark), #2A2A40);
+    color:white;
+    border-radius:20px;
+    padding:2.2rem;
+    text-align:center;
+  }
+  .cta-card a {
+    display:inline-block;
+    margin-top:1rem;
+    padding:0.8rem 2rem;
+    background:linear-gradient(135deg, var(--primary), var(--secondary));
+    color:white;
+    border-radius:50px;
+    font-weight:700;
+    text-decoration:none;
+  }
+
+  footer {
+    background:#0F0F1E;
+    color:#999;
+    text-align:center;
+    padding:2.5rem 5%;
+    font-size:0.9rem;
+  }
+  footer a { color:var(--accent); text-decoration:none; }
+
+  @media (max-width:600px) {
+    .hero { padding-top:2.5rem; }
+    article { font-size:1rem; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="top-bar">
+    <img src="../logo.webp" alt="Phoenixtek">
+    <span class="brand">Phoenixtek</span>
+    <a href="../index.html#blog" class="back">← All Articles</a>
+  </div>
+
+  <div class="hero">
+    <div class="meta">June 22, 2026 &nbsp;•&nbsp; Engineering &nbsp;•&nbsp; By Supratim Mondal</div>
+    <h1>Inside Mailmind: Building a Privacy-First AI Email Client on Electron</h1>
+    <p class="dek">How a single-developer desktop app connects Gmail, Outlook, and IMAP, layers AI on top, encrypts everything at rest — and still ships an installer you can double-click.</p>
+    <div class="hero-image"><img src="../images/blog-mailmind/hero.svg" alt="Mailmind cover"></div>
+  </div>
+
+  <article>
+
+    <h2>The one-paragraph version</h2>
+    <p>Mailmind is a desktop email client that puts three mailbox worlds — <strong>Gmail</strong>, <strong>Microsoft/Outlook</strong>, and <strong>any IMAP server</strong> (Zoho, Yahoo, custom) — behind one keyboard-driven interface, then adds an AI layer that can summarize threads and draft replies using whichever provider <em>you</em> bring (Groq, OpenAI, Anthropic, Gemini, or Mistral). It runs as a tray app, syncs in the background, auto-updates from GitHub Releases, and stores every credential AES-256-GCM-encrypted on your own machine. There is no Mailmind server holding your mail. This post is the architecture tour.</p>
+
+    <hr>
+
+    <h2>1. The shape of the thing</h2>
+    <p>Most "Electron email clients" are a React SPA stuffed into a <code>BrowserWindow</code>. Mailmind is deliberately split into three cooperating layers, each with one job:</p>
+
+    <div class="diagram"><img src="../images/blog-mailmind/architecture.svg" alt="Mailmind architecture diagram"></div>
+
+    <ul>
+      <li><strong><code>main.js</code> — the Electron shell.</strong> Spawns the server, owns the window, the tray, background polling, notifications, and the auto-updater. It is the <em>only</em> layer that touches the OS.</li>
+      <li><strong><code>server/index.js</code> — a local Express API.</strong> Talks to Gmail, Microsoft Graph, and IMAP/SMTP; runs the AI endpoints; owns the SQLite database. It listens on <code>127.0.0.1:3000</code> and nothing else.</li>
+      <li><strong><code>public/index.html</code> — the entire frontend.</strong> Vanilla HTML/JS, no framework, no build step. State lives in <code>localStorage</code>. The whole UI — list, reader, compose, reply, AI panel, settings — is one file.</li>
+    </ul>
+
+    <p>Why a <em>local web server</em> inside a desktop app instead of calling APIs straight from the renderer? Because it cleanly isolates secrets. OAuth tokens and IMAP passwords never enter the browser context. The renderer only ever sees <code>/api/...</code> JSON; the keys live one process over, in a Node server that the renderer can't read.</p>
+
+    <p>The same <code>server/index.js</code> also runs as a <strong>web deployment</strong> behind NSSM + Cloudflare Tunnel — so the codebase is simultaneously a desktop app and a self-hostable web app. That dual life drives a lot of the design decisions below.</p>
+
+    <hr>
+
+    <h2>2. The multi-account engine</h2>
+    <p>A mailbox in Mailmind is a row in a SQLite <code>accounts</code> table with a <code>type</code> (<code>gmail</code> | <code>microsoft</code> | <code>imap</code>), a plaintext <code>email</code> for labeling, and an <strong>encrypted <code>secret</code></strong> blob holding the actual tokens or credentials.</p>
+
+    <div class="diagram"><img src="../images/blog-mailmind/multi-account-flow.svg" alt="Multi-account aggregation flow"></div>
+
+    <p>The clever bit is the aggregation endpoint, <code>/api/emails/all</code>. Each provider has wildly different APIs — Gmail's REST <code>users.messages</code>, Microsoft Graph's <code>/me/messages</code>, and raw IMAP <code>FETCH</code> — so the server normalizes all three into one email shape, then tags every message with <code>_accountId</code> and <code>_accountEmail</code>. The frontend (and the background poller) can then treat "all my inboxes" as a single newest-first stream without caring where each message came from.</p>
+
+    <p>That tagging is what makes <strong>true multi-mailbox background sync</strong> possible: the tray poller keeps a <code>Map&lt;accountId, newestEmailId&gt;</code> and can tell you <em>"New mail in work@company.com"</em> even when that account isn't the one open on screen.</p>
+
+    <hr>
+
+    <h2>3. Bring-your-own-AI</h2>
+    <p>Mailmind ships <strong>no AI keys</strong>. AI is opt-in and the key is yours. The resolution order in <code>resolveKey()</code> is:</p>
+    <ol>
+      <li><strong>Request-supplied</strong> key (passed from the UI for a one-off call)</li>
+      <li><strong>Database</strong> setting (your key, saved encrypted in Settings → AI Features)</li>
+      <li><strong>Environment</strong> fallback (only the self-hosted web deployment uses this)</li>
+    </ol>
+    <p>So the public desktop installer carries <em>zero</em> model credentials — users paste their own free Groq key (or any provider) and it's encrypted at rest like everything else. AI results are cached locally in an <code>ai_cache</code> table with a 7-day TTL, so re-opening the same thread is instant and free.</p>
+    <p>This is also a privacy property: the <em>only</em> time email content leaves your machine for AI is the moment you explicitly click "Analyze" or "Draft reply," and it goes straight to the provider you chose — never through us.</p>
+
+    <hr>
+
+    <h2>4. Encryption: the part that can't be casual</h2>
+    <p>Every stored secret — OAuth refresh tokens, IMAP/SMTP passwords, your AI API keys — is encrypted with <strong>AES-256-GCM</strong> before it touches disk.</p>
+
+    <div class="diagram"><img src="../images/blog-mailmind/security-model.svg" alt="Mailmind security model"></div>
+
+    <p>The encryption key is derived (<code>scrypt</code>) from a secret that is handled differently in each deployment:</p>
+    <ul>
+      <li><strong>Desktop:</strong> <code>main.js</code> generates a <strong>per-machine secret</strong> on first run (<code>crypto.randomBytes(32)</code>), writes it to <code>userData/secret.key</code> with <code>0600</code> permissions, and injects it into the spawned server as <code>MAILMIND_SECRET</code>. Every install has a unique key; a stolen <code>data.db</code> is useless without the matching <code>secret.key</code>.</li>
+      <li><strong>Web (NSSM):</strong> uses a fixed <code>SESSION_SECRET</code> from <code>.env</code> — which is why that secret must <em>never</em> change (rotating it would orphan every stored credential).</li>
+    </ul>
+    <p>There's a hard rule in the build: <strong>the installer bundles <code>.env.dist</code>, not <code>.env</code>.</strong> <code>.env.dist</code> is an OAuth-only allowlist (<code>GOOGLE_*</code>, <code>MICROSOFT_*</code>, <code>ZOHO_*</code>, <code>YAHOO_*</code>) — no AI keys, no <code>SESSION_SECRET</code>. The live secrets file is only ever used by the private web deployment. Shipping the wrong file would leak production secrets to every downloader; the allowlist makes that mistake structurally hard to make.</p>
+
+    <hr>
+
+    <h2>5. The desktop experience nobody sees</h2>
+    <p>A surprising amount of engineering went into things that are invisible when they work:</p>
+
+    <div class="diagram"><img src="../images/blog-mailmind/sync-notification-flow.svg" alt="Sync and notification flow"></div>
+
+    <p><strong>Tray-first lifecycle.</strong> Closing the window doesn't quit — it hides to the tray and keeps syncing, like Slack or Discord. That single behavior caused the trickiest bug in the project: because <code>win.on('close')</code> called <code>preventDefault()</code> to hide the window, it <em>also</em> cancelled <code>app.quit()</code> and the auto-updater's <code>quitAndInstall()</code> — so updates failed with <strong>"Mailmind cannot be closed."</strong> The fix was an <code>isQuitting</code> flag set on every genuine exit path, plus an NSIS <code>customInit</code> hook that force-kills any running instance (<code>taskkill /F /T</code>) <em>before</em> the installer copies files — covering even manual installs that can't run in-app code.</p>
+
+    <p><strong>No double notifications.</strong> The renderer polls every 60s when visible; the main process polls every 5 min always. To avoid two toasts for the same email, the main-process poller stays silent whenever the window is actually visible (<code>win.isVisible() && !win.isMinimized()</code>) and only speaks up for the background/minimized/tray states the renderer can't cover.</p>
+
+    <p><strong>Auto-update from GitHub Releases.</strong> <code>electron-updater</code> checks the public repo on launch; the release flow is bump → <code>npm run dist</code> → tag <code>vX.X.X</code> → <code>gh release create</code> with the <code>.exe</code>, <code>.blockmap</code>, and <code>latest.yml</code>. Killing the spawned server process tree <em>before</em> handing off to the updater is what stops orphaned <code>node.exe</code> processes from holding port 3000 and breaking the next launch.</p>
+
+    <hr>
+
+    <h2>6. Counting users without watching them</h2>
+    <p>The newest addition is <strong>anonymous usage analytics</strong>, and it's a case study in restraint.</p>
+    <p>The goal was small: <em>how many people are actually using Mailmind?</em> The temptation in an email client is to collect a lot — names, addresses, engagement. We collect almost nothing.</p>
+    <p>On launch (opt-out, toggle in Settings → Data &amp; Privacy), the app sends a single Google Analytics 4 event containing exactly two things:</p>
+    <ul>
+      <li>a <strong>random install ID</strong> generated locally — not linked to any name, email, or account</li>
+      <li>the <strong>app version</strong></li>
+    </ul>
+    <p>No email address. No mail content. No personal data of any kind. The install ID is just a coin-flip-random 64-character string stored next to the encryption key; it lets GA4 count <em>distinct installs</em> without knowing a single thing about who you are. It's the smallest possible answer to "how many users," and nothing more.</p>
+
+    <hr>
+
+    <h2>What I'd tell another solo builder</h2>
+    <ol>
+      <li><strong>A local server inside your Electron app is a feature, not overhead.</strong> It's the cleanest secret boundary you'll get, and it gives you a self-hostable web app for free.</li>
+      <li><strong>Normalize at the edge.</strong> Three email APIs became sane the moment everything got mapped to one shape and tagged with its origin.</li>
+      <li><strong>The lifecycle bugs are the real bugs.</strong> Tray hide-vs-quit, update handoff, orphaned processes, double notifications — none of it shows in a demo, all of it shows in production.</li>
+      <li><strong>Collect the minimum.</strong> For an email client, trust <em>is</em> the product. The analytics that ship are the analytics you'd be comfortable explaining in one sentence.</li>
+    </ol>
+
+    <p class="closing">Mailmind is built with Node.js/Express, vanilla JS, Electron, and better-sqlite3. Installer and source: <a href="https://github.com/Callmesupratim/mailmind" target="_blank" rel="noopener">github.com/Callmesupratim/mailmind</a>.</p>
+
+  </article>
+
+  <div class="cta-box">
+    <div class="cta-card">
+      <h3 style="font-family:'Archivo Black',sans-serif;">Want the same precision in your infrastructure monitoring?</h3>
+      <p style="color:#ccc;margin-top:0.5rem;">Phoenixtek Solution brings the same engineering discipline to geotechnical instrumentation and structural health monitoring.</p>
+      <a href="../index.html#contact">Get in touch</a>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 Phoenixtek Solution. All rights reserved.</p>
+    <p style="margin-top:0.5rem;"><a href="../index.html">phoenixtek.in</a></p>
+  </footer>
+
+</body>
+</html>

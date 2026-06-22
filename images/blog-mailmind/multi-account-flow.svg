@@ -1,0 +1,58 @@
+<svg viewBox="0 0 960 540" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t d">
+  <title id="t">Multi-account aggregation</title>
+  <desc id="d">Three different provider APIs are normalized into one tagged email stream by the all-emails endpoint.</desc>
+  <rect width="960" height="540" fill="#0f172a"/>
+  <text x="40" y="48" font-family="Segoe UI, Arial" font-size="26" font-weight="800" letter-spacing="2" fill="#e2e8f0">MULTI-ACCOUNT ENGINE</text>
+  <text x="40" y="76" font-family="Segoe UI, Arial" font-size="15" fill="#94a3b8">Three APIs → one newest-first stream tagged by origin</text>
+
+  <!-- sources -->
+  <g font-family="Segoe UI, Arial">
+    <rect x="40" y="120" width="220" height="70" rx="12" fill="#1e293b" stroke="#ef4444" stroke-width="1.5"/>
+    <text x="60" y="150" font-size="17" font-weight="700" fill="#e2e8f0">Gmail</text>
+    <text x="60" y="174" font-size="13" fill="#94a3b8">users.messages (REST)</text>
+
+    <rect x="40" y="235" width="220" height="70" rx="12" fill="#1e293b" stroke="#3b82f6" stroke-width="1.5"/>
+    <text x="60" y="265" font-size="17" font-weight="700" fill="#e2e8f0">Microsoft / Outlook</text>
+    <text x="60" y="289" font-size="13" fill="#94a3b8">Graph /me/messages</text>
+
+    <rect x="40" y="350" width="220" height="70" rx="12" fill="#1e293b" stroke="#a855f7" stroke-width="1.5"/>
+    <text x="60" y="380" font-size="17" font-weight="700" fill="#e2e8f0">IMAP (Zoho/Yahoo/…)</text>
+    <text x="60" y="404" font-size="13" fill="#94a3b8">raw FETCH over imapflow</text>
+  </g>
+
+  <!-- normalizer -->
+  <rect x="360" y="200" width="220" height="140" rx="16" fill="#13251f" stroke="#34d399" stroke-width="1.8"/>
+  <text x="470" y="248" text-anchor="middle" font-family="Segoe UI, Arial" font-size="15" font-weight="700" fill="#34d399">/api/emails/all</text>
+  <text x="470" y="276" text-anchor="middle" font-family="Segoe UI, Arial" font-size="13.5" fill="#a7f3d0">normalize shape</text>
+  <text x="470" y="298" text-anchor="middle" font-family="Segoe UI, Arial" font-size="13.5" fill="#a7f3d0">tag _accountId</text>
+  <text x="470" y="320" text-anchor="middle" font-family="Segoe UI, Arial" font-size="13.5" fill="#a7f3d0">sort newest-first</text>
+
+  <!-- arrows in -->
+  <g stroke="#475569" stroke-width="2.5" fill="none" marker-end="url(#g)">
+    <path d="M260 155 C 320 155, 320 240, 360 248"/>
+    <path d="M260 270 L 360 270"/>
+    <path d="M260 385 C 320 385, 320 300, 360 292"/>
+  </g>
+
+  <!-- unified stream -->
+  <rect x="680" y="120" width="240" height="300" rx="16" fill="#111c30" stroke="#334155" stroke-width="1.5"/>
+  <text x="700" y="148" font-family="Segoe UI, Arial" font-size="14" font-weight="700" fill="#64748b">UNIFIED INBOX</text>
+  <g font-family="Segoe UI, Arial">
+    <rect x="700" y="162" width="200" height="50" rx="9" fill="#1e293b"/>
+    <circle cx="722" cy="187" r="7" fill="#ef4444"/><text x="740" y="184" font-size="13" fill="#e2e8f0">Invoice #88</text><text x="740" y="201" font-size="11" fill="#64748b">you@gmail.com</text>
+    <rect x="700" y="220" width="200" height="50" rx="9" fill="#1e293b"/>
+    <circle cx="722" cy="245" r="7" fill="#3b82f6"/><text x="740" y="242" font-size="13" fill="#e2e8f0">Standup notes</text><text x="740" y="259" font-size="11" fill="#64748b">you@company.com</text>
+    <rect x="700" y="278" width="200" height="50" rx="9" fill="#1e293b"/>
+    <circle cx="722" cy="303" r="7" fill="#a855f7"/><text x="740" y="300" font-size="13" fill="#e2e8f0">Renewal due</text><text x="740" y="317" font-size="11" fill="#64748b">you@zoho.com</text>
+    <rect x="700" y="336" width="200" height="50" rx="9" fill="#1e293b"/>
+    <circle cx="722" cy="361" r="7" fill="#ef4444"/><text x="740" y="358" font-size="13" fill="#e2e8f0">Re: lunch?</text><text x="740" y="375" font-size="11" fill="#64748b">you@gmail.com</text>
+  </g>
+  <line x1="580" y1="270" x2="680" y2="270" stroke="#34d399" stroke-width="2.5" marker-end="url(#g)"/>
+
+  <text x="40" y="470" font-family="Segoe UI, Arial" font-size="14" fill="#94a3b8">The background poller keeps a <tspan fill="#e2e8f0" font-weight="600">Map&lt;accountId → newestEmailId&gt;</tspan> — so it can say</text>
+  <text x="40" y="494" font-family="Segoe UI, Arial" font-size="14" fill="#94a3b8">“New mail in <tspan fill="#34d399" font-weight="600">work@company.com</tspan>” even when that mailbox isn’t the one on screen.</text>
+
+  <defs>
+    <marker id="g" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill="#475569"/></marker>
+  </defs>
+</svg>
