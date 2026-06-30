@@ -1871,7 +1871,7 @@
         var center   = document.getElementById('doodle-center');
         var ctx      = canvas.getContext('2d');
         var W, H, animId, embers = [], startTime = null, done = false;
-        var matchInterval, liveTimer, rotateTimer;
+        var matchInterval, liveTimer, rotateTimer, fixtureTimer;
         var ballTrail = [];
 
         /* ── closeDoodle must be declared first (hoisted) ── */
@@ -1881,6 +1881,7 @@
           clearInterval(matchInterval);
           clearInterval(liveTimer);
           clearInterval(rotateTimer);
+          clearInterval(fixtureTimer);
           overlay.classList.add('fade-out');
           cancelAnimationFrame(animId);
           setTimeout(function() {
@@ -2023,6 +2024,57 @@
         var FLAGS = {};
         MATCHES.forEach(function(m) { FLAGS[m.t1] = m.f1; FLAGS[m.t2] = m.f2; });
 
+        /* ── Resolve TBD knockout slots into real teams from ESPN's live fixture feed ──
+           Round of 32+ teams aren't known until the previous round finishes, so MATCHES
+           ships with TBD placeholders. This fills them in once the real matchup exists
+           upstream — unmatched/undetermined slots are left as TBD, no fabrication. */
+        function applyLiveFixtures(events) {
+          var updated = false;
+          events.forEach(function(ev) {
+            var c = ev.competitions && ev.competitions[0];
+            if (!c || !c.competitors) return;
+            var home, away;
+            for (var i = 0; i < c.competitors.length; i++) {
+              if (c.competitors[i].homeAway === 'home') home = c.competitors[i];
+              if (c.competitors[i].homeAway === 'away') away = c.competitors[i];
+            }
+            if (!home || !away) return;
+            var ha = home.team.abbreviation, aa = away.team.abbreviation;
+            /* placeholder slots ("Round of 32 5 Winner" etc.) have an abbreviation
+               that isn't in our known-teams map — skip those, only real teams pass */
+            if (!FLAGS[ha] || !FLAGS[aa]) return;
+            var evTs = new Date(ev.date).getTime();
+            var best = null, bestDiff = Infinity;
+            for (var j = 0; j < MATCHES.length; j++) {
+              var m = MATCHES[j];
+              if (m.t1 !== 'TBD' && m.t2 !== 'TBD') continue;
+              var diff = Math.abs(m.ts - evTs);
+              if (diff < bestDiff) { bestDiff = diff; best = m; }
+            }
+            /* only accept a close timestamp match, so we never wire a result into the wrong slot */
+            if (best && bestDiff <= 4 * 60 * 60 * 1000) {
+              best.t1 = ha; best.f1 = FLAGS[ha];
+              best.t2 = aa; best.f2 = FLAGS[aa];
+              updated = true;
+            }
+          });
+          return updated;
+        }
+
+        function fetchUpcomingFixtures() {
+          var from = new Date(Date.now() - 24 * 60 * 60 * 1000);
+          var to   = new Date(Date.now() + 35 * 24 * 60 * 60 * 1000);
+          var fmt  = function(d) { return d.toISOString().slice(0, 10).replace(/-/g, ''); };
+          var url  = 'https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=' + fmt(from) + '-' + fmt(to);
+          fetch(url, { cache: 'no-store' })
+            .then(function(r) { return r.ok ? r.json() : null; })
+            .then(function(d) {
+              if (!d || !d.events || !d.events.length) return;
+              if (applyLiveFixtures(d.events) && panelMode === 'countdown') startCountdown();
+            })
+            .catch(function() { /* network/CORS error — keep TBD fallback */ });
+        }
+
         var panelMode = 'none'; /* 'countdown' | 'live' */
         var liveEvents = [], liveIdx = 0;
         var ESPN_URL = 'https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard';
@@ -2132,9 +2184,11 @@
         }
 
         function startMatchPanel() {
-          startCountdown();      /* show instantly, no network wait */
-          refreshLive();         /* then try live scores */
+          startCountdown();          /* show instantly, no network wait */
+          refreshLive();             /* then try live scores */
+          fetchUpcomingFixtures();   /* then try to resolve TBD slots into real teams */
           liveTimer = setInterval(refreshLive, 20000);
+          fixtureTimer = setInterval(fetchUpcomingFixtures, 5 * 60 * 1000);
         }
 
         /* ── Ember particle ── */
