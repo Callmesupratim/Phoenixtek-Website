@@ -2012,8 +2012,19 @@
           { t1:'TBD', f1:'🏆', t2:'TBD', f2:'🏆', label:'🏆 FINAL · Jul 20, 12:30 AM IST',    ts:Date.UTC(2026,6,19,19,0) }
         ];
 
+        /* Real upcoming fixtures pulled live from ESPN — accurate teams AND
+           kickoff times. Knockout matchups (and their exact times) aren't known
+           in advance, so once this is populated we prefer it over the hardcoded
+           skeleton below. */
+        var espnUpcoming = [];
+
         function getNextMatch() {
           var now = Date.now();
+          /* Prefer ESPN's live schedule when we have it. */
+          for (var k = 0; k < espnUpcoming.length; k++) {
+            if (espnUpcoming[k].ts > now) return espnUpcoming[k];
+          }
+          /* Fallback: hardcoded skeleton (ESPN unreachable / blocked / empty). */
           for (var i = 0; i < MATCHES.length; i++) {
             if (MATCHES[i].ts > now) return MATCHES[i];
           }
@@ -2061,6 +2072,77 @@
           return updated;
         }
 
+        /* Kickoff time formatted in IST, e.g. "Jul 1, 2:30 AM IST". */
+        function istLabel(ts) {
+          try {
+            return new Date(ts).toLocaleString('en-US', {
+              timeZone: 'Asia/Kolkata', month: 'short', day: 'numeric',
+              hour: 'numeric', minute: '2-digit', hour12: true
+            }) + ' IST';
+          } catch (e) { return ''; }
+        }
+
+        /* Round name for the match. ESPN exposes it as event.season.slug
+           (e.g. "round-of-32"); fall back to a note headline, then to a
+           prettified slug. Group-stage slugs are suppressed (no useful label). */
+        function roundLabel(ev, c) {
+          var slug = ev && ev.season && ev.season.slug;
+          var MAP = {
+            'round-of-32': 'Round of 32', 'round-of-16': 'Round of 16',
+            'quarterfinals': 'Quarter Final', 'semifinals': 'Semi Final',
+            'third-place': '3rd Place', 'final': 'Final'
+          };
+          if (slug && MAP[slug]) return MAP[slug];
+          if (c && c.notes && c.notes[0] && c.notes[0].headline) return c.notes[0].headline;
+          if (slug && slug.indexOf('group') === -1) {
+            return slug.replace(/-/g, ' ').replace(/\b\w/g, function(m) { return m.toUpperCase(); });
+          }
+          return '';
+        }
+
+        /* Decide a competitor's display code + flag.
+           - Known team (one of the 48 in our schedule) → FIFA code + flag emoji.
+           - Real team ESPN names but we don't have a flag for → its code + ⚽.
+           - Upstream placeholder ("Winner Group A", "Round of 32 5 Winner", etc.)
+             → TBD, so we never fabricate a matchup. */
+        function teamCode(comp) {
+          var t = (comp && comp.team) || {};
+          var abbr = t.abbreviation || '';
+          var nm   = t.displayName || t.name || '';
+          if (FLAGS[abbr]) return { code: abbr, flag: FLAGS[abbr] };
+          var placeholder = !abbr || /winner|runner|loser|tbd|group|place|seed|\d/i.test(nm);
+          if (!placeholder && /^[A-Z]{2,4}$/.test(abbr)) return { code: abbr, flag: '⚽' };
+          return { code: 'TBD', flag: '⚽' };
+        }
+
+        /* Turn ESPN's scheduled ('pre') events into our match objects, sorted by
+           kickoff. This carries the confirmed teams and times, so it stays correct
+           through the knockout rounds without us guessing the bracket. */
+        function buildUpcomingFromEvents(events) {
+          var out = [];
+          events.forEach(function(ev) {
+            if (!ev.status || !ev.status.type || ev.status.type.state !== 'pre') return;
+            var c = ev.competitions && ev.competitions[0];
+            if (!c || !c.competitors) return;
+            var home, away;
+            for (var i = 0; i < c.competitors.length; i++) {
+              if (c.competitors[i].homeAway === 'home') home = c.competitors[i];
+              if (c.competitors[i].homeAway === 'away') away = c.competitors[i];
+            }
+            if (!home || !away) return;
+            var ts = new Date(ev.date).getTime();
+            if (!ts) return;
+            var c1 = teamCode(home), c2 = teamCode(away);
+            var rd = roundLabel(ev, c);
+            out.push({
+              t1: c1.code, f1: c1.flag, t2: c2.code, f2: c2.flag,
+              label: (rd ? rd + ' · ' : '') + istLabel(ts), ts: ts
+            });
+          });
+          out.sort(function(a, b) { return a.ts - b.ts; });
+          return out;
+        }
+
         function fetchUpcomingFixtures() {
           var from = new Date(Date.now() - 24 * 60 * 60 * 1000);
           var to   = new Date(Date.now() + 35 * 24 * 60 * 60 * 1000);
@@ -2070,7 +2152,11 @@
             .then(function(r) { return r.ok ? r.json() : null; })
             .then(function(d) {
               if (!d || !d.events || !d.events.length) return;
-              if (applyLiveFixtures(d.events) && panelMode === 'countdown') startCountdown();
+              espnUpcoming = buildUpcomingFromEvents(d.events);
+              /* Keep back-filling the hardcoded skeleton too, so the fallback path
+                 stays consistent if ESPN drops out after this. */
+              applyLiveFixtures(d.events);
+              if (panelMode === 'countdown') startCountdown();
             })
             .catch(function() { /* network/CORS error — keep TBD fallback */ });
         }
