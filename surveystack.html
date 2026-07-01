@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SurveyStack — Field Survey Data Collection App</title>
+  <meta name="description" content="SurveyStack is a GPS-tagged, offline-ready field survey data collection app for infrastructure teams. Collect, sync, and export survey data — no internet required in the field.">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: #1a1a1a;
+      background: #fff;
+    }
+    a { color: #2d9e4f; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    header {
+      background: #1A1A2E;
+      padding: 1rem 5%;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    header a.home { color: #ccc; font-size: 0.9rem; }
+    header span { color: #555; }
+    header strong { color: #fff; font-size: 1rem; }
+
+    .hero {
+      background: linear-gradient(135deg, #1a4d2e 0%, #2d7a4f 60%, #3aaf6a 100%);
+      color: white;
+      padding: 5rem 5% 4rem;
+      text-align: center;
+    }
+    .hero img {
+      width: 110px;
+      height: 110px;
+      object-fit: cover;
+      border-radius: 26px;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+    }
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      margin: 0 0 1rem;
+      color: #fff;
+    }
+    .hero p {
+      font-size: 1.15rem;
+      color: rgba(255,255,255,0.8);
+      max-width: 620px;
+      margin: 0 auto 2rem;
+    }
+    .badges { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+    .badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.35);
+      color: #fff;
+      padding: 0.35rem 1rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .section {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 3.5rem 5%;
+    }
+    .section h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #111;
+      margin: 0 0 1rem;
+    }
+    .section p { color: #444; margin: 0 0 1rem; }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1.5rem;
+    }
+    .feature-card {
+      background: #f2fbf5;
+      border: 1px solid #c8ecd4;
+      border-radius: 16px;
+      padding: 1.25rem 1.5rem;
+    }
+    .feature-card .icon { font-size: 1.75rem; margin-bottom: 0.6rem; }
+    .feature-card h3 { font-size: 0.95rem; font-weight: 700; margin: 0 0 0.4rem; color: #111; }
+    .feature-card p { font-size: 0.88rem; color: #555; margin: 0; }
+
+    .highlight-block {
+      background: #f0fbf4;
+      border-left: 4px solid #2d9e4f;
+      border-radius: 0 12px 12px 0;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+    .highlight-block h2 { color: #1a1a2e; font-size: 1.3rem; margin: 0 0 0.75rem; }
+    .highlight-block ul { margin: 0.5rem 0 0; padding-left: 1.25rem; color: #333; }
+    .highlight-block ul li { margin-bottom: 0.5rem; }
+
+    .specs-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+      font-size: 0.95rem;
+    }
+    .specs-table th {
+      background: #1a4d2e;
+      color: white;
+      padding: 0.75rem 1rem;
+      text-align: left;
+      font-weight: 600;
+    }
+    .specs-table td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid #eee;
+      color: #444;
+    }
+    .specs-table tr:nth-child(even) td { background: #f9f9f9; }
+
+    .cta {
+      text-align: center;
+      padding: 3rem 5%;
+      background: linear-gradient(135deg, #f0fbf4, #e8f5e9);
+      border-top: 1px solid #c8ecd4;
+    }
+    .cta h2 { font-size: 1.6rem; margin: 0 0 0.5rem; color: #111; }
+    .cta p { color: #666; margin: 0 0 1.5rem; }
+    .cta-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, #2d9e4f, #3aaf6a);
+      color: white;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 0.85rem 2.2rem;
+      border-radius: 50px;
+      text-decoration: none;
+    }
+    .cta-btn:hover { text-decoration: none; opacity: 0.9; }
+    .cta-note {
+      font-size: 0.8rem;
+      color: #999;
+      margin: 1rem 0 0;
+    }
+
+    .support-strip {
+      background: #1A1A2E;
+      color: #aaa;
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.9rem;
+    }
+    .support-strip a { color: #3aaf6a; }
+
+    footer {
+      background: #111;
+      color: #666;
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.85rem;
+    }
+    footer a { color: #888; }
+
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 2.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a class="home" href="https://phoenixtek.in">← Phoenixtek Solution</a>
+    <span>/</span>
+    <strong>SurveyStack</strong>
+  </header>
+
+  <div class="hero">
+    <img src="images/surveystack-icon.jpg" alt="SurveyStack Icon">
+    <h1>SurveyStack</h1>
+    <p>Field survey data collection, simplified — GPS-tagged, offline-ready, and built for infrastructure teams.</p>
+    <div class="badges">
+      <span class="badge">📍 GPS Geo-Tagging</span>
+      <span class="badge">🔌 Works Offline</span>
+      <span class="badge">👥 Team Sync</span>
+      <span class="badge">📊 Excel Export</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>What is SurveyStack?</h2>
+    <p>SurveyStack is a mobile field data collection application developed by <strong>Phoenixtek Solution</strong> for engineers, surveyors, and infrastructure project teams. It simplifies the process of recording observations, measurements, and media in the field — with GPS tagging at every step — and syncs everything to the cloud when connectivity is available.</p>
+    <p>Whether you are conducting a road inspection, bridge assessment, or infrastructure audit, SurveyStack lets your team collect structured, geo-referenced data without needing an internet connection on-site.</p>
+
+    <div class="features">
+      <div class="feature-card">
+        <div class="icon">📍</div>
+        <h3>GPS Geo-Tagging</h3>
+        <p>Every data point, photo, and observation is automatically tagged with precise GPS coordinates so you always know exactly where each record was made.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🔌</div>
+        <h3>Works Offline</h3>
+        <p>Full functionality in the field with no internet required. All data is stored locally on the device and synced automatically when a connection is restored.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">👥</div>
+        <h3>Team Sync</h3>
+        <p>Multiple team members can collect data simultaneously across a project. Data from all field devices consolidates in the cloud for a complete project view.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">📊</div>
+        <h3>Excel Export</h3>
+        <p>Export your collected survey data as an Excel-compatible spreadsheet — ready for reporting, GIS import, or further analysis.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">📸</div>
+        <h3>Photo Documentation</h3>
+        <p>Capture photos linked to each survey point, automatically stamped with location, timestamp, and project context.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">📋</div>
+        <h3>Structured Forms</h3>
+        <p>Collect consistent, structured observations using project-specific forms — eliminating freehand notes and improving data quality.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="highlight-block">
+      <h2>🏗️ Built for infrastructure professionals</h2>
+      <p>SurveyStack is designed for the day-to-day realities of field survey work on civil and infrastructure projects:</p>
+      <ul>
+        <li>Road condition assessments and highway inspections</li>
+        <li>Bridge and structure visual surveys</li>
+        <li>Pre and post-construction site walkthroughs</li>
+        <li>Geotechnical field observation logging</li>
+        <li>Environmental baseline surveys</li>
+        <li>Defect mapping and snag-list documentation with GPS evidence</li>
+      </ul>
+    </div>
+
+    <h2>Technical specifications</h2>
+    <table class="specs-table">
+      <thead>
+        <tr><th>Specification</th><th>Details</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Platform</td><td>Android</td></tr>
+        <tr><td>Connectivity</td><td>Fully offline — syncs automatically when connected</td></tr>
+        <tr><td>Location</td><td>GPS geo-tagging on all records and media</td></tr>
+        <tr><td>Data collection</td><td>Structured forms, photos, observations, measurements</td></tr>
+        <tr><td>Team support</td><td>Multi-user sync across devices per project</td></tr>
+        <tr><td>Export</td><td>Excel / CSV compatible</td></tr>
+        <tr><td>Cloud backend</td><td>Auto-sync when online, offline-first local storage</td></tr>
+        <tr><td>Developer</td><td>Phoenixtek Solution, Kolkata, India</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="cta">
+    <h2>Get SurveyStack</h2>
+    <p>Contact us to get access or learn more about deploying SurveyStack for your team.</p>
+    <a href="mailto:service@phoenixtek.in" class="cta-btn">📩 Contact us to get access</a>
+    <p class="cta-note">Enterprise enquiries welcome &nbsp;·&nbsp; Developed by Phoenixtek Solution</p>
+  </div>
+
+  <div class="support-strip">
+    Questions or enterprise enquiries? <a href="mailto:service@phoenixtek.in">service@phoenixtek.in</a> &nbsp;|&nbsp; <a href="https://wa.me/919734115880">WhatsApp →</a>
+  </div>
+
+  <footer>
+    <p>© 2026 Phoenixtek Solution. All rights reserved. &nbsp;|&nbsp; <a href="https://phoenixtek.in">phoenixtek.in</a></p>
+  </footer>
+
+</body>
+</html>
