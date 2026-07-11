@@ -3040,7 +3040,7 @@
                 <div style="flex:1;min-width:220px;">
                     <h3 style="font-size:1.4rem;margin-bottom:0.5rem;">Mailmind</h3>
                     <p style="margin-bottom:1rem;">Mailmind is a desktop email client with AI-powered email analysis and reply drafting. It supports Gmail, Microsoft Outlook, Zoho, Yahoo, and any IMAP mailbox.</p>
-                    <div class="download-meta" style="margin-bottom:1.2rem;">🖥️ Available for Windows &nbsp;|&nbsp; v1.1.13</div>
+                    <div class="download-meta" style="margin-bottom:1.2rem;">🖥️ Available for Windows &nbsp;|&nbsp; <span class="mm-version">v1.1.13</span></div>
                     <div style="display:flex;gap:1.5rem;align-items:center;flex-wrap:wrap;">
                         <a href="/mailmind.html" style="font-size:0.85rem;color:var(--primary);text-decoration:none;font-weight:600;">Learn more →</a>
                         <a href="https://phoenixtek.in/privacy.html" target="_blank" rel="noopener" style="font-size:0.85rem;color:var(--accent);text-decoration:none;font-weight:600;">Privacy Policy →</a>
@@ -3961,7 +3961,7 @@
                         <div class="download-icon"><img src="images/LogoMailmind-removebg-preview.png" alt="Mailmind" style="width:60px;height:60px;object-fit:contain;"></div>
                         <h3>Mailmind</h3>
                         <p>AI-powered desktop email client for Windows. Supports Gmail, Outlook, Zoho, Yahoo, and any IMAP mailbox — with smart email summaries and reply drafting.</p>
-                        <div class="download-meta">💾 EXE &nbsp;|&nbsp; Windows 10/11 &nbsp;|&nbsp; v1.1.13</div>
+                        <div class="download-meta">💾 EXE &nbsp;|&nbsp; Windows 10/11 &nbsp;|&nbsp; <span class="mm-version">v1.1.13</span></div>
                         <a href="https://github.com/Callmesupratim/mailmind/releases/latest/download/Mailmind-Setup.exe" class="download-btn">⬇ Download for Windows</a>
                     </div>
                     <div class="download-card">
@@ -4323,6 +4323,16 @@
 
             checkBlogHash(); // auto-open post if URL contains #blog-slug
         });
+    </script>
+    <script>
+      fetch('https://api.github.com/repos/Callmesupratim/mailmind/releases/latest')
+        .then(function(r){ return r.ok ? r.json() : null; })
+        .then(function(d){
+          if (!d || !d.tag_name) return;
+          var v = d.tag_name;
+          document.querySelectorAll('.mm-version').forEach(function(el){ el.textContent = v; });
+        })
+        .catch(function(){});
     </script>
 </body>
 </html>

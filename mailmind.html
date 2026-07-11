@@ -169,13 +169,13 @@
     <img src="images/LogoMailmind-removebg-preview.png" alt="Mailmind Logo">
     <h1>Mailmind</h1>
     <p>A desktop email client with AI-powered email analysis and reply drafting — built for professionals who live in their inbox.</p>
-    <span class="badge">🖥️ Available for Windows &nbsp;|&nbsp; v1.1.13</span>
+    <span class="badge">🖥️ Available for Windows &nbsp;|&nbsp; <span class="mm-version">v1.1.13</span></span>
     <br><br>
     <a href="https://github.com/Callmesupratim/mailmind/releases/latest/download/Mailmind-Setup.exe"
        style="display:inline-block;background:linear-gradient(135deg,#FF6B35,#ff8c5a);color:white;font-weight:700;font-size:1rem;padding:0.85rem 2.2rem;border-radius:50px;text-decoration:none;margin-top:0.5rem;">
       ⬇ Download for Windows
     </a>
-    <p style="color:#666;font-size:0.8rem;margin-top:0.75rem;">Free download · Windows 10/11 · v1.1.13</p>
+    <p style="color:#666;font-size:0.8rem;margin-top:0.75rem;">Free download · Windows 10/11 · <span class="mm-version">v1.1.13</span></p>
   </div>
 
   <div class="section">
@@ -262,5 +262,15 @@
     <p>© 2026 Phoenixtek Solution. All rights reserved. &nbsp;|&nbsp; <a href="https://phoenixtek.in/privacy.html">Privacy Policy</a> &nbsp;|&nbsp; <a href="https://phoenixtek.in">phoenixtek.in</a></p>
   </footer>
 
+<script>
+  fetch('https://api.github.com/repos/Callmesupratim/mailmind/releases/latest')
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(d){
+      if (!d || !d.tag_name) return;
+      var v = d.tag_name;
+      document.querySelectorAll('.mm-version').forEach(function(el){ el.textContent = v; });
+    })
+    .catch(function(){});
+</script>
 </body>
 </html>
