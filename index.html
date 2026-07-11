@@ -3963,7 +3963,9 @@
                         <p>AI-powered desktop email client for Windows. Supports Gmail, Outlook, Zoho, Yahoo, and any IMAP mailbox — with smart email summaries and reply drafting.</p>
                         <div class="download-meta">💾 EXE &nbsp;|&nbsp; Windows 10/11 &nbsp;|&nbsp; <span class="mm-version">v1.1.13</span></div>
                         <a href="https://github.com/Callmesupratim/mailmind/releases/latest/download/Mailmind-Setup.exe" class="download-btn">⬇ Download for Windows</a>
-                    </div>
+                    </div>`;
+                applyMmVersion();
+                container.innerHTML += `
                     <div class="download-card">
                         <div class="download-icon">⚽</div>
                         <h3>FIFA World Cup 2026 — IST Schedule</h3>
@@ -4325,12 +4327,17 @@
         });
     </script>
     <script>
+      window.mmLatestVersion = null;
+      function applyMmVersion() {
+        if (!window.mmLatestVersion) return;
+        document.querySelectorAll('.mm-version').forEach(function(el){ el.textContent = window.mmLatestVersion; });
+      }
       fetch('https://api.github.com/repos/Callmesupratim/mailmind/releases/latest')
         .then(function(r){ return r.ok ? r.json() : null; })
         .then(function(d){
           if (!d || !d.tag_name) return;
-          var v = d.tag_name;
-          document.querySelectorAll('.mm-version').forEach(function(el){ el.textContent = v; });
+          window.mmLatestVersion = d.tag_name;
+          applyMmVersion();
         })
         .catch(function(){});
     </script>
