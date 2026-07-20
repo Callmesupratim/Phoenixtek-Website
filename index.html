@@ -2079,6 +2079,13 @@
         <p class="section-subtitle">Access our brochures, technical datasheets, and monitoring software — everything you need to evaluate our capabilities.</p>
 
         <div class="downloads-grid fade-in">
+            <div class="download-card">
+                <div class="download-icon"><img src="images/LogoMailmind-removebg-preview.png" alt="Mailmind" style="width:60px;height:60px;object-fit:contain;"></div>
+                <h3>Mailmind</h3>
+                <p>AI-powered desktop email client for Windows. Supports Gmail, Outlook, Zoho, Yahoo, and any IMAP mailbox — with smart email summaries and reply drafting.</p>
+                <div class="download-meta">💾 EXE &nbsp;|&nbsp; Windows 10/11 &nbsp;|&nbsp; <span class="mm-version">v1.1.13</span></div>
+                <a href="https://github.com/Callmesupratim/mailmind/releases/latest/download/Mailmind-Setup.exe" class="download-btn">⬇ Download for Windows</a>
+            </div>
         </div>
     </section>
 
@@ -2962,15 +2969,9 @@
 
                 const container = document.querySelector('#downloads .downloads-grid');
                 if (!container) return;
-                container.innerHTML = `
-                    <div class="download-card">
-                        <div class="download-icon"><img src="images/LogoMailmind-removebg-preview.png" alt="Mailmind" style="width:60px;height:60px;object-fit:contain;"></div>
-                        <h3>Mailmind</h3>
-                        <p>AI-powered desktop email client for Windows. Supports Gmail, Outlook, Zoho, Yahoo, and any IMAP mailbox — with smart email summaries and reply drafting.</p>
-                        <div class="download-meta">💾 EXE &nbsp;|&nbsp; Windows 10/11 &nbsp;|&nbsp; <span class="mm-version">v1.1.13</span></div>
-                        <a href="https://github.com/Callmesupratim/mailmind/releases/latest/download/Mailmind-Setup.exe" class="download-btn">⬇ Download for Windows</a>
-                    </div>`;
-                applyMmVersion();
+                // Mailmind is a static card already in the HTML — append sheet rows
+                // after it instead of overwriting the grid, so it survives even if
+                // this fetch fails or the sheet is empty.
 
                 valid.forEach(row => {
                     const rawURL = (row.GoogleDriveURL || '').trim();
