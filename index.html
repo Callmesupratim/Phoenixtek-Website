@@ -1979,6 +1979,22 @@
                 </div>
             </div>
         </div>
+
+        <!-- Latest announcement — kept outside .blog-grid so loadBlog()'s
+             sheet-driven rebuild (which fully replaces .blog-grid on every
+             load) never wipes it out. Plain <a> wrapper on purpose: the
+             document-level .blog-card click listener opens a data-attribute
+             modal, which this real navigable article shouldn't use. -->
+        <div class="fade-in" style="max-width:900px;margin:3rem auto 0;">
+            <a href="blog/conaid-launch.html" style="display:flex;flex-wrap:wrap;gap:1.5rem;align-items:center;background:white;border-radius:24px;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,0.07);text-decoration:none;transition:transform 0.3s, box-shadow 0.3s;" onmouseover="this.style.transform='translateY(-6px)';this.style.boxShadow='0 20px 60px rgba(0,0,0,0.13)';" onmouseout="this.style.transform='';this.style.boxShadow='0 10px 40px rgba(0,0,0,0.07)';">
+                <img src="images/blog-conaid/hero.png" alt="CONAID — Post-Bid Contract Management" style="width:280px;height:180px;object-fit:cover;flex-shrink:0;">
+                <div class="blog-content" style="flex:1;min-width:240px;">
+                    <div class="blog-meta">July 20, 2026 • Product Launch</div>
+                    <h3>Introducing CONAID: Post-Bid Contract Management, Built for Civil Contractors</h3>
+                    <p>BOQ progress, RA billing, payment milestones, and compliance alerts — in one place, before they become a crisis.</p>
+                </div>
+            </a>
+        </div>
     </section>
 
     <!-- Media Section (Photos & Videos) -->

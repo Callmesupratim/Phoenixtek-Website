@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Introducing CONAID: Post-Bid Contract Management, Built for Civil Contractors | Phoenixtek Solution</title>
+
+<link rel="icon" type="image/x-icon" href="../favicon.ico">
+<meta name="description" content="CONAID tracks BOQ progress, RA billing, payment milestones, and compliance deadlines in one place — built by Phoenixtek for civil contractors managing awarded contracts.">
+<meta name="author" content="Supratim Mondal">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://phoenixtek.in/blog/conaid-launch.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Introducing CONAID: Post-Bid Contract Management, Built for Civil Contractors">
+<meta property="og:description" content="Winning the bid is the easy part. CONAID tracks BOQ progress, RA billing, payment milestones, and compliance deadlines in one place — before they become a crisis.">
+<meta property="og:url" content="https://phoenixtek.in/blog/conaid-launch.html">
+<meta property="og:image" content="https://phoenixtek.in/images/blog-conaid/hero.png">
+
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #FF6B35;
+    --secondary: #F7931E;
+    --accent: #00D9FF;
+    --dark: #1A1A2E;
+    --purple: #9D4EDD;
+    --green: #06FFA5;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family:'DM Sans', sans-serif;
+    color:#2a2a3d;
+    background:#FFFBF5;
+    line-height:1.7;
+  }
+  a { color:var(--primary); }
+
+  .top-bar {
+    padding:1.2rem 5%;
+    display:flex;
+    align-items:center;
+    gap:0.75rem;
+    background:rgba(255,255,255,0.95);
+    backdrop-filter:blur(10px);
+    position:sticky;
+    top:0;
+    z-index:10;
+    box-shadow:0 2px 20px rgba(0,0,0,0.05);
+  }
+  .top-bar img { width:38px; height:38px; object-fit:contain; }
+  .top-bar .brand {
+    font-family:'Archivo Black', sans-serif;
+    font-size:1.2rem;
+    background:linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+  }
+  .top-bar .back {
+    margin-left:auto;
+    font-weight:700;
+    font-size:0.9rem;
+    text-decoration:none;
+    color:var(--dark);
+  }
+
+  .hero {
+    max-width:880px;
+    margin:0 auto;
+    padding:3.5rem 5% 1.5rem;
+  }
+  .hero .meta {
+    font-size:0.85rem;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:#999;
+    margin-bottom:1rem;
+  }
+  .hero h1 {
+    font-family:'Archivo Black', sans-serif;
+    font-size:clamp(1.8rem, 4vw, 2.6rem);
+    line-height:1.25;
+    color:var(--dark);
+    margin-bottom:1.2rem;
+  }
+  .hero .dek {
+    font-size:1.15rem;
+    color:#555;
+    font-style:italic;
+    margin-bottom:2rem;
+  }
+  .hero-image {
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 20px 50px rgba(0,0,0,0.18);
+    background:#0f172a;
+  }
+  .hero-image img { width:100%; display:block; }
+
+  article {
+    max-width:760px;
+    margin:0 auto;
+    padding:1rem 5% 5rem;
+    font-size:1.08rem;
+    color:#3a3a4d;
+  }
+  article p { margin-bottom:1.4rem; }
+  article h2 {
+    font-family:'Archivo Black', sans-serif;
+    font-size:1.5rem;
+    color:var(--dark);
+    margin:2.8rem 0 1.2rem;
+  }
+  article ul, article ol {
+    margin:0 0 1.4rem 1.4rem;
+  }
+  article li { margin-bottom:0.7rem; }
+  article strong { color:var(--dark); }
+  article hr {
+    border:none;
+    border-top:1px solid #eee0d0;
+    margin:2.5rem 0;
+  }
+
+  .feature-list { list-style:none; margin:0 0 1.4rem; }
+  .feature-list li {
+    display:flex;
+    gap:0.75rem;
+    align-items:flex-start;
+    padding:0.9rem 0;
+    border-bottom:1px solid #f2ece1;
+  }
+  .feature-list li:last-child { border-bottom:none; }
+  .feature-list .check {
+    flex-shrink:0;
+    width:26px; height:26px;
+    border-radius:50%;
+    background:linear-gradient(135deg, var(--primary), var(--secondary));
+    color:white;
+    display:flex; align-items:center; justify-content:center;
+    font-size:0.8rem;
+    font-weight:700;
+    margin-top:0.15rem;
+  }
+  .feature-list strong { display:block; color:var(--dark); margin-bottom:0.2rem; }
+  .feature-list span.desc { color:#666; font-size:0.98rem; }
+
+  .closing {
+    font-style:italic;
+    color:#777;
+    border-left:4px solid var(--primary);
+    padding-left:1.2rem;
+    margin-top:2.5rem;
+  }
+
+  .cta-box {
+    max-width:760px;
+    margin:0 auto 4rem;
+    padding:2rem 5%;
+  }
+  .cta-card {
+    background:linear-gradient(135deg, var(--dark), #2A2A40);
+    color:white;
+    border-radius:20px;
+    padding:2.2rem;
+    text-align:center;
+  }
+  .cta-card a {
+    display:inline-block;
+    margin-top:1rem;
+    padding:0.8rem 2rem;
+    background:linear-gradient(135deg, var(--primary), var(--secondary));
+    color:white;
+    border-radius:50px;
+    font-weight:700;
+    text-decoration:none;
+  }
+
+  footer {
+    background:#0F0F1E;
+    color:#999;
+    text-align:center;
+    padding:2.5rem 5%;
+    font-size:0.9rem;
+  }
+  footer a { color:var(--accent); text-decoration:none; }
+
+  @media (max-width:600px) {
+    .hero { padding-top:2.5rem; }
+    article { font-size:1rem; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="top-bar">
+    <img src="../logo.webp" alt="Phoenixtek">
+    <span class="brand">Phoenixtek</span>
+    <a href="../index.html#blog" class="back">← All Articles</a>
+  </div>
+
+  <div class="hero">
+    <div class="meta">July 20, 2026 &nbsp;•&nbsp; Product Launch &nbsp;•&nbsp; By Supratim Mondal</div>
+    <h1>Introducing CONAID: Post-Bid Contract Management, Built for Civil Contractors</h1>
+    <p class="dek">Winning the bid is the easy part. What happens after — BOQ progress, RA billing, payment milestones, compliance deadlines — is where projects actually get won or lost.</p>
+    <div class="hero-image"><img src="../images/blog-conaid/hero.png" alt="CONAID — Post-Bid Contract Management, Built for Civil Contractors"></div>
+  </div>
+
+  <article>
+
+    <p>At Phoenixtek, we built CONAID because we needed it ourselves. Running geotechnical and structural monitoring projects across India means juggling awarded contracts across multiple authorities, each with its own BOQ, billing cycle, and compliance paperwork — and we were doing it the way most civil contractors still do: across ten different spreadsheets per project, hoping nothing slips through.</p>
+
+    <p>It did slip through, eventually. A bank guarantee lapsed without anyone noticing until it became a problem. That's the moment CONAID stopped being a nice-to-have and became something we had to build. Now we're bringing it to other civil contractors who are managing the same chaos.</p>
+
+    <hr>
+
+    <h2>What it does</h2>
+
+    <ul class="feature-list">
+      <li>
+        <span class="check">✓</span>
+        <div><strong>Contract Register</strong><span class="desc">LOA, Award Date, Authority Engineer, DLP, Time of Completion — every detail in one place, not scattered across files.</span></div>
+      </li>
+      <li>
+        <span class="check">✓</span>
+        <div><strong>BOQ-Linked Progress Tracking</strong><span class="desc">Real completion percentage, rolled up per item and per contract — not guesswork.</span></div>
+      </li>
+      <li>
+        <span class="check">✓</span>
+        <div><strong>RA Billing</strong><span class="desc">Cumulative billing validated against BOQ quantities, so you never over-bill or lose sight of what's certified versus paid.</span></div>
+      </li>
+      <li>
+        <span class="check">✓</span>
+        <div><strong>Payment Milestones</strong><span class="desc">Percentage-based tracking from mobilization advance to final handover.</span></div>
+      </li>
+      <li>
+        <span class="check">✓</span>
+        <div><strong>Document &amp; Compliance Alerts</strong><span class="desc">Bank guarantees, EMD, insurance, and EOTs tracked with expiry warnings — before they become a crisis.</span></div>
+      </li>
+      <li>
+        <span class="check">✓</span>
+        <div><strong>Material Planning Matrix</strong><span class="desc">Know what materials — stone, cement, bitumen, steel — each work type actually needs: WMM, DBM, BT, Bridge, CD, and more.</span></div>
+      </li>
+      <li>
+        <span class="check">✓</span>
+        <div><strong>Excel Import, Everywhere</strong><span class="desc">BOQ, milestones, material data — upload straight from the sheets your team already works in.</span></div>
+      </li>
+    </ul>
+
+    <hr>
+
+    <h2>Built for how contractors actually work</h2>
+    <p>CONAID isn't trying to replace the way your team already tracks things — it's trying to stop that tracking from living in ten different files that nobody fully trusts. Every awarded contract gets one record: the register details, the BOQ, the billing history, the milestones, and the compliance clock, all connected instead of copy-pasted between spreadsheets.</p>
+    <p>That connection is what makes RA billing safer — the system checks cumulative billing against BOQ quantities automatically, so an over-claim gets caught before it goes out, not after an audit. And it's what makes the compliance alerts actually useful: instead of a calendar reminder someone has to remember to set, expiry warnings on bank guarantees, EMDs, and insurance surface on their own.</p>
+
+    <p class="closing">No more ten spreadsheets per project. No more finding out a bank guarantee lapsed after the fact.</p>
+
+  </article>
+
+  <div class="cta-box">
+    <div class="cta-card">
+      <h3 style="font-family:'Archivo Black',sans-serif;">Managing awarded contracts the hard way?</h3>
+      <p style="color:#ccc;margin-top:0.5rem;">If you're a civil contractor juggling BOQ progress, RA billing, and compliance deadlines across spreadsheets, let's talk about CONAID.</p>
+      <a href="../index.html#contact">Get in touch</a>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 Phoenixtek Solution. All rights reserved.</p>
+    <p style="margin-top:0.5rem;"><a href="../index.html">phoenixtek.in</a></p>
+  </footer>
+
+</body>
+</html>
