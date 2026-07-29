@@ -1992,7 +1992,7 @@
         <div class="blog-grid fade-in">
             <a href="blog/conaid-launch.html" style="display:block;background:white;border-radius:24px;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,0.07);text-decoration:none;color:inherit;transition:transform 0.3s, box-shadow 0.3s;" onmouseover="this.style.transform='translateY(-8px)';this.style.boxShadow='0 20px 60px rgba(0,0,0,0.13)';" onmouseout="this.style.transform='';this.style.boxShadow='0 10px 40px rgba(0,0,0,0.07)';">
                 <div class="blog-image-wrap">
-                    <img src="images/blog-conaid/hero.png" alt="CONAID — Post-Bid Contract Management">
+                    <img src="images/blog-conaid/hero.png" alt="CONAID — Post-Bid Contract Management" loading="lazy">
                     <div class="blog-read-overlay"><span>Click to Read</span></div>
                 </div>
                 <div class="blog-content">
@@ -2045,7 +2045,7 @@
             <!-- SurveyStar -->
             <div class="download-card" style="flex-direction:row;align-items:flex-start;gap:2rem;flex-wrap:wrap;">
                 <div style="flex-shrink:0;">
-                    <img src="images/SurveyStar_icon.png" alt="SurveyStar" style="width:80px;height:80px;object-fit:contain;border-radius:18px;">
+                    <img src="images/SurveyStar_icon.png" alt="SurveyStar" loading="lazy" style="width:80px;height:80px;object-fit:contain;border-radius:18px;">
                 </div>
                 <div style="flex:1;min-width:220px;">
                     <h3 style="font-size:1.4rem;margin-bottom:0.5rem;">SurveyStar</h3>
@@ -2054,7 +2054,7 @@
                     <div style="display:flex;align-items:center;gap:1.2rem;flex-wrap:wrap;">
                         <a href="https://play.google.com/store/apps/details?id=com.phoenixtek.surveystar" target="_blank" rel="noopener">
                             <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
-                                 alt="Get it on Google Play" style="height:54px;">
+                                 alt="Get it on Google Play" loading="lazy" style="height:54px;">
                         </a>
                         <a href="/surveystar.html" style="font-size:0.85rem;color:var(--primary);text-decoration:none;font-weight:600;">Learn more →</a>
                     </div>
@@ -2064,7 +2064,7 @@
             <!-- Mailmind -->
             <div class="download-card" style="flex-direction:row;align-items:flex-start;gap:2rem;flex-wrap:wrap;">
                 <div style="flex-shrink:0;">
-                    <img src="images/LogoMailmind-removebg-preview.png" alt="Mailmind" style="width:80px;height:80px;object-fit:contain;">
+                    <img src="images/LogoMailmind-removebg-preview.png" alt="Mailmind" loading="lazy" style="width:80px;height:80px;object-fit:contain;">
                 </div>
                 <div style="flex:1;min-width:220px;">
                     <h3 style="font-size:1.4rem;margin-bottom:0.5rem;">Mailmind</h3>
@@ -2080,7 +2080,7 @@
             <!-- SurveyStack -->
             <div class="download-card" style="flex-direction:row;align-items:flex-start;gap:2rem;flex-wrap:wrap;">
                 <div style="flex-shrink:0;">
-                    <img src="images/surveystack-icon.jpg" alt="SurveyStack" style="width:80px;height:80px;object-fit:contain;border-radius:18px;">
+                    <img src="images/surveystack-icon.jpg" alt="SurveyStack" loading="lazy" style="width:80px;height:80px;object-fit:contain;border-radius:18px;">
                 </div>
                 <div style="flex:1;min-width:220px;">
                     <h3 style="font-size:1.4rem;margin-bottom:0.5rem;">SurveyStack</h3>
@@ -2103,7 +2103,7 @@
 
         <div class="downloads-grid fade-in">
             <div class="download-card">
-                <div class="download-icon"><img src="images/LogoMailmind-removebg-preview.png" alt="Mailmind" style="width:60px;height:60px;object-fit:contain;"></div>
+                <div class="download-icon"><img src="images/LogoMailmind-removebg-preview.png" alt="Mailmind" loading="lazy" style="width:60px;height:60px;object-fit:contain;"></div>
                 <h3>Mailmind</h3>
                 <p>AI-powered desktop email client for Windows. Supports Gmail, Outlook, Zoho, Yahoo, and any IMAP mailbox — with smart email summaries and reply drafting.</p>
                 <div class="download-meta">💾 EXE &nbsp;|&nbsp; Windows 10/11 &nbsp;|&nbsp; <span class="mm-version">v1.1.13</span></div>
@@ -2837,7 +2837,7 @@
             const images = normalizeURLList(imageURL);
             const thumb  = images[0] || '';
             const imgHtml = thumb
-                ? `<img src="${thumb}" alt="${he(title)}"><div class="blog-read-overlay"><span>Click to Read</span></div>`
+                ? `<img src="${thumb}" alt="${he(title)}" loading="lazy"><div class="blog-read-overlay"><span>Click to Read</span></div>`
                 : `<div class="blog-gradient" style="background:${gradient};width:100%;height:100%;"></div><div class="blog-read-overlay"><span>Click to Read</span></div>`;
             return `
                 <div class="blog-card"
@@ -3009,7 +3009,7 @@
                     const rawIcon = (row.Icon || '').trim();
                     const iconSrc = rawIcon.match(/^https?:|^images\//) ? normalizeImageURL(rawIcon) : '';
                     const iconHTML = iconSrc
-                        ? `<img src="${iconSrc}" alt="${row.Title}" style="width:60px;height:60px;object-fit:contain;border-radius:12px;">`
+                        ? `<img src="${iconSrc}" alt="${row.Title}" loading="lazy" style="width:60px;height:60px;object-fit:contain;border-radius:12px;">`
                         : (rawIcon || '📁');
                     const isPlayStore = hasLink && /play\.google\.com/.test(dlURL);
                     const metaHTML = isPlayStore
@@ -3018,7 +3018,7 @@
                     const ctaHTML = isPlayStore
                         ? `<a href="${dlURL}" target="_blank" rel="noopener" aria-label="Get ${row.Title} on Google Play">
                                <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
-                                    alt="Get it on Google Play" style="height:54px;">
+                                    alt="Get it on Google Play" loading="lazy" style="height:54px;">
                            </a>`
                         : `<a href="${dlURL}" ${hasLink ? 'target="_blank" rel="noopener"' : ''}
                                class="download-btn ${hasLink ? '' : 'coming-soon'}">
