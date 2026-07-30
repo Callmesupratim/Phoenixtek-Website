@@ -648,8 +648,18 @@
 
         .blog-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
             gap: 2rem;
+        }
+
+        /* Belt-and-suspenders cap: auto-fill (not auto-fit) already keeps
+           empty trailing tracks reserved instead of collapsing them, so a
+           short last row doesn't stretch — this just bounds card width if
+           a track ever ends up wider than a comfortable card size. */
+        .blog-grid > * {
+            max-width: 400px;
+            width: 100%;
+            margin: 0 auto;
         }
 
         .blog-card {
@@ -1184,10 +1194,6 @@
 
             .stats-grid {
                 grid-template-columns: 1fr 1fr;
-            }
-
-            .blog-grid {
-                grid-template-columns: repeat(2, 1fr);
             }
         }
 
