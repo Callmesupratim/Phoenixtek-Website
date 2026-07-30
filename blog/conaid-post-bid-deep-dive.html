@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>From Paper Files to Real-Time Control</title>
+
+<link rel="icon" type="image/x-icon" href="../favicon.ico">
+<meta name="description" content="How CONAID's post-bid management system replaces spreadsheets with one connected record for BOQ tracking, RA billing, and compliance.">
+<meta name="author" content="Supratim Mondal">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://phoenixtek.in/blog/conaid-post-bid-deep-dive.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="From Paper Files to Real-Time Control">
+<meta property="og:description" content="How Post-Bid Management software is rewriting the rulebook for civil contractors — one BOQ line, one rate source, one audit entry at a time.">
+<meta property="og:url" content="https://phoenixtek.in/blog/conaid-post-bid-deep-dive.html">
+<meta property="og:image" content="https://phoenixtek.in/images/blog-conaid/hero.png">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="From Paper Files to Real-Time Control">
+<meta name="twitter:description" content="How Post-Bid Management software is rewriting the rulebook for civil contractors — one BOQ line, one rate source, one audit entry at a time.">
+<meta name="twitter:image" content="https://phoenixtek.in/images/blog-conaid/hero.png">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "From Paper Files to Real-Time Control",
+  "description": "How CONAID's post-bid management system replaces spreadsheets with one connected record for BOQ tracking, RA billing, and compliance.",
+  "image": "https://phoenixtek.in/images/blog-conaid/hero.png",
+  "datePublished": "2026-07-30",
+  "author": { "@type": "Person", "name": "Supratim Mondal" },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Phoenixtek Solution",
+    "logo": { "@type": "ImageObject", "url": "https://phoenixtek.in/logo.webp" }
+  },
+  "mainEntityOfPage": "https://phoenixtek.in/blog/conaid-post-bid-deep-dive.html"
+}
+</script>
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LQZZ7DFTHG"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-LQZZ7DFTHG');
+</script>
+
+<style>
+  :root {
+    --paper: #eef0ee;
+    --paper-raised: #ffffff;
+    --ink: #14181d;
+    --ink-soft: #454e57;
+    --line: #c7ccd1;
+    --line-soft: #dde1e3;
+    --accent: #c85a2e;
+    --accent-ink: #7a3416;
+    --steel: #35597a;
+    --steel-soft: #e7edf1;
+    --good: #2f7a4f;
+    --warn: #b8801f;
+    --crit: #b23b3b;
+    --shadow: 0 1px 2px rgba(20, 24, 29, 0.06), 0 8px 24px rgba(20, 24, 29, 0.05);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: Charter, "Iowan Old Style", Georgia, "Noto Serif", serif;
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: var(--accent); color: #fff; }
+
+  .backnav {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 20px 24px 0;
+  }
+  .backnav a {
+    font-family: Bahnschrift, "DIN Alternate", "Arial Narrow", sans-serif;
+    font-size: 12.5px;
+    letter-spacing: 0.05em;
+    color: var(--ink-soft);
+    text-decoration: none;
+  }
+  .backnav a:hover { color: var(--accent-ink); }
+
+  .sheet {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 24px 96px;
+  }
+
+  /* ---------- Title block ---------- */
+
+  .titleblock {
+    border: 1px solid var(--line);
+    border-top: 4px solid var(--accent);
+    margin: 24px 0 8px;
+    padding: 28px 28px 22px;
+    background: var(--paper-raised);
+    box-shadow: var(--shadow);
+  }
+
+  .eyebrow {
+    font-family: Bahnschrift, "DIN Alternate", "Arial Narrow", sans-serif;
+    font-weight: 700;
+    font-size: 12.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    background: var(--accent);
+  }
+
+  h1 {
+    font-family: Bahnschrift, "DIN Alternate", "Arial Narrow", sans-serif;
+    font-weight: 700;
+    font-stretch: condensed;
+    text-transform: none;
+    font-size: clamp(34px, 6vw, 50px);
+    line-height: 1.04;
+    letter-spacing: -0.01em;
+    margin: 14px 0 10px;
+    text-wrap: balance;
+    color: var(--ink);
+  }
+
+  .dek {
+    font-family: Charter, Georgia, serif;
+    font-style: italic;
+    font-size: 19px;
+    color: var(--ink-soft);
+    margin: 0 0 20px;
+    max-width: 56ch;
+    text-wrap: balance;
+  }
+
+  .meta-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--line-soft);
+    padding-top: 14px;
+    gap: 4px;
+  }
+
+  .meta-field {
+    font-family: Bahnschrift, "DIN Alternate", sans-serif;
+  }
+
+  .meta-field .k {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 3px;
+  }
+
+  .meta-field .v {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ---------- Article typography ---------- */
+
+  article { margin-top: 36px; }
+
+  article > p {
+    max-width: 66ch;
+    margin: 0 0 22px;
+  }
+
+  article h2 {
+    font-family: Bahnschrift, "DIN Alternate", sans-serif;
+    font-weight: 700;
+    font-size: 26px;
+    letter-spacing: -0.005em;
+    line-height: 1.15;
+    text-wrap: balance;
+    margin: 52px 0 18px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line-soft);
+    color: var(--ink);
+  }
+
+  article h3 {
+    font-family: Bahnschrift, "DIN Alternate", sans-serif;
+    font-weight: 600;
+    font-size: 18.5px;
+    margin: 30px 0 12px;
+    color: var(--accent-ink);
+  }
+
+  article strong { color: var(--ink); font-weight: 700; }
+
+  article ol {
+    max-width: 64ch;
+    padding-left: 0;
+    margin: 18px 0 26px;
+    list-style: none;
+    counter-reset: item;
+  }
+
+  article ol li {
+    counter-increment: item;
+    display: grid;
+    grid-template-columns: 30px 1fr;
+    gap: 10px;
+    margin-bottom: 12px;
+    line-height: 1.55;
+  }
+
+  article ol li::before {
+    content: counter(item);
+    font-family: Bahnschrift, sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--accent-ink);
+    border: 1px solid var(--line);
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+  }
+
+  /* ---------- Figures ---------- */
+
+  figure {
+    margin: 34px 0 40px;
+    max-width: 100%;
+  }
+
+  .fig-frame {
+    border: 1px solid var(--line);
+    background: var(--paper-raised);
+    box-shadow: var(--shadow);
+    overflow-x: auto;
+  }
+
+  .fig-frame-pad { padding: 18px; min-width: 560px; }
+
+  figcaption {
+    font-family: Bahnschrift, "DIN Alternate", sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.03em;
+    color: var(--ink-soft);
+    margin-top: 9px;
+    padding-left: 2px;
+  }
+
+  figcaption b {
+    color: var(--accent-ink);
+    letter-spacing: 0.1em;
+  }
+
+  /* ---------- Mockup: app chrome ---------- */
+
+  .app-mock {
+    font-family: "Segoe UI", system-ui, sans-serif;
+    font-size: 12.5px;
+    color: #1b2027;
+  }
+
+  .app-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid #dfe3e6;
+  }
+
+  .app-brand {
+    font-family: Bahnschrift, sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    color: #14181d;
+    letter-spacing: 0.02em;
+  }
+
+  .app-nav {
+    display: flex;
+    gap: 16px;
+    font-size: 11.5px;
+    color: #5c6570;
+  }
+
+  .app-nav span.active { color: var(--accent-ink); font-weight: 700; }
+
+  .card-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .stat-card {
+    background: #f6f7f8;
+    border: 1px solid #e4e7ea;
+    padding: 12px 14px;
+  }
+
+  .stat-card .lbl {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #7a828a;
+    margin-bottom: 6px;
+  }
+
+  .stat-card .num {
+    font-family: Consolas, "SFMono-Regular", monospace;
+    font-variant-numeric: tabular-nums;
+    font-size: 19px;
+    font-weight: 700;
+    color: #14181d;
+  }
+
+  .contract-row {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr 1fr 0.8fr;
+    gap: 8px;
+    padding: 9px 10px;
+    border-bottom: 1px solid #eceef0;
+    align-items: center;
+  }
+
+  .contract-row.head {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #8a929a;
+    border-bottom: 1px solid #d7dbdf;
+  }
+
+  .contract-row .name { font-weight: 600; }
+  .contract-row .sub { color: #8a929a; font-size: 11px; }
+  .contract-row .num { font-family: Consolas, monospace; font-variant-numeric: tabular-nums; }
+
+  .pbar {
+    width: 100%;
+    height: 6px;
+    background: #e4e7ea;
+    position: relative;
+  }
+  .pbar i {
+    position: absolute; left: 0; top: 0; bottom: 0;
+    background: var(--steel);
+    display: block;
+  }
+
+  .pill {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    padding: 2px 7px;
+    border: 1px solid transparent;
+  }
+  .pill.good { color: var(--good); border-color: color-mix(in srgb, var(--good) 40%, transparent); background: color-mix(in srgb, var(--good) 12%, transparent); }
+  .pill.warn { color: var(--warn); border-color: color-mix(in srgb, var(--warn) 40%, transparent); background: color-mix(in srgb, var(--warn) 12%, transparent); }
+  .pill.crit { color: var(--crit); border-color: color-mix(in srgb, var(--crit) 40%, transparent); background: color-mix(in srgb, var(--crit) 12%, transparent); }
+
+  table.boq {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+  table.boq th {
+    text-align: left;
+    font-size: 9.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #7a828a;
+    padding: 6px 8px;
+    border-bottom: 1px solid #d7dbdf;
+    background: #f6f7f8;
+  }
+  table.boq th.num { text-align: right; }
+  table.boq td {
+    padding: 8px 8px;
+    border-bottom: 1px solid #eceef0;
+    vertical-align: top;
+  }
+  table.boq td.num { text-align: right; font-family: Consolas, monospace; font-variant-numeric: tabular-nums; }
+  table.boq td.desc { color: #454e57; }
+  table.boq tr.alt td { background: #fafbfb; }
+  table.boq .match-ok { color: #14181d; text-decoration: underline dotted #b7bdc3; }
+  table.boq .match-src { display: block; font-size: 10px; color: #8a929a; margin-top: 2px; }
+  table.boq .match-warn { color: var(--warn); text-decoration: underline dotted; font-weight: 600; }
+  table.boq tfoot td {
+    border-top: 2px solid #14181d;
+    border-bottom: none;
+    font-weight: 700;
+    padding-top: 9px;
+  }
+
+  .filter-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .chip {
+    font-size: 11px;
+    padding: 4px 10px;
+    border: 1px solid #d7dbdf;
+    color: #5c6570;
+    background: #fff;
+  }
+  .chip.on {
+    background: var(--accent-ink);
+    border-color: var(--accent-ink);
+    color: #fff;
+  }
+  .lib-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 0.6fr 0.8fr;
+    gap: 8px;
+    padding: 9px 10px;
+    border-bottom: 1px solid #eceef0;
+    align-items: center;
+    font-size: 12px;
+  }
+  .lib-row.head { font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; color: #8a929a; border-bottom: 1px solid #d7dbdf; }
+  .src-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    color: #fff;
+  }
+  .src-tag.roads { background: var(--steel); }
+  .src-tag.buildings { background: #6b7280; }
+  .src-tag.nh { background: var(--accent); }
+  .conflict {
+    margin-top: 10px;
+    padding: 8px 10px;
+    background: color-mix(in srgb, var(--warn) 10%, transparent);
+    border-left: 3px solid var(--warn);
+    font-size: 11.5px;
+    color: #5c4013;
+  }
+
+  .log-row {
+    display: grid;
+    grid-template-columns: 70px 1fr 90px;
+    gap: 10px;
+    padding: 8px 10px;
+    border-bottom: 1px solid #eceef0;
+    font-size: 12px;
+    align-items: baseline;
+  }
+  .log-row .ts { font-family: Consolas, monospace; color: #8a929a; font-size: 10.5px; }
+  .log-row .who { color: var(--steel); font-weight: 700; }
+  .log-row .diff { font-family: Consolas, monospace; font-size: 11px; }
+  .log-row .diff .from { color: var(--crit); text-decoration: line-through; }
+  .log-row .diff .to { color: var(--good); }
+
+  blockquote {
+    margin: 40px 0;
+    padding: 4px 0 4px 22px;
+    border-left: 3px solid var(--accent);
+    font-family: Charter, Georgia, serif;
+    font-style: italic;
+    font-size: 21px;
+    line-height: 1.45;
+    color: var(--ink);
+    max-width: 56ch;
+  }
+
+  .signoff {
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+    font-family: Bahnschrift, sans-serif;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    letter-spacing: 0.02em;
+  }
+
+  @media (max-width: 640px) {
+    .titleblock { padding: 20px 18px; }
+    .meta-strip { grid-template-columns: repeat(2, 1fr); row-gap: 12px; }
+    article h2 { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="backnav"><a href="../index.html#blog">← Phoenixtek / All Articles</a></div>
+
+<div class="sheet">
+
+  <div class="titleblock">
+    <div class="eyebrow">Field Notes — Alfresco</div>
+    <h1>From Paper Files to Real-Time Control</h1>
+    <p class="dek">How Post-Bid Management software is rewriting the rulebook for civil contractors — one BOQ line, one rate source, one audit entry at a time.</p>
+    <div class="meta-strip">
+      <div class="meta-field"><span class="k">Sheet</span><span class="v">01 of 01</span></div>
+      <div class="meta-field"><span class="k">Discipline</span><span class="v">Contract Execution</span></div>
+      <div class="meta-field"><span class="k">Applies to</span><span class="v">Roads · Bridges · Buildings</span></div>
+      <div class="meta-field"><span class="k">Rev</span><span class="v">A</span></div>
+    </div>
+  </div>
+
+  <article>
+    <p>For decades, winning a tender was where the real work began — and where the real chaos started too. Once the LOA (Letter of Award) lands on a contractor's desk, a project with a hundred moving parts kicks off: BOQ items to track, materials to procure, RA bills to raise, milestones to hit, documents to keep valid, and a client who wants to know progress <em>today</em>, not next month.</p>
+
+    <p>Most civil contractors still run this entire universe through Excel sheets, WhatsApp updates, and a site engineer's memory. It works — until it doesn't. A missed bank guarantee expiry, a BOQ item billed twice, a rate mismatch nobody caught until the RA bill was rejected — these aren't rare edge cases. They're Tuesday.</p>
+
+    <p>A <strong>Post-Bid Management System</strong> exists to close that gap: to take everything that happens after you win the contract and put it into one connected, auditable, always-current system.</p>
+
+    <h2>What actually happens after the bid is won</h2>
+    <p>The post-bid phase of a civil contract is really five overlapping jobs running in parallel:</p>
+    <ol>
+      <li><strong>Tracking the BOQ</strong> — quantities executed vs. quantities awarded, item by item, category by category.</li>
+      <li><strong>Managing materials</strong> — what's required per the estimate, what's been procured, what's been consumed, what's in stock right now.</li>
+      <li><strong>Raising and following RA bills</strong> — draft, submit, get certified, get paid, stay visible the whole way.</li>
+      <li><strong>Watching payment milestones</strong> — percentages, due dates, achieved-vs-paid status.</li>
+      <li><strong>Keeping compliance alive</strong> — bank guarantees, EMDs, insurance, EOT letters, all with expiry dates that cost real money if missed.</li>
+    </ol>
+    <p>Handled manually, each of these lives in a different spreadsheet, a different folder, a different person's head. A Post-Bid Management System puts them on one contract record, so progress on one naturally moves the others — bill an item, and the BOQ, the materials estimate, and the payment milestone all update together instead of needing five separate edits.</p>
+
+    <figure>
+      <div class="fig-frame"><div class="fig-frame-pad app-mock">
+        <div class="app-topbar">
+          <div class="app-brand">CONAID</div>
+          <div class="app-nav"><span class="active">Dashboard</span><span>Contracts</span><span>Material Matrix</span><span>Activity</span></div>
+        </div>
+        <div class="card-row">
+          <div class="stat-card"><div class="lbl">Active Contracts</div><div class="num">3</div></div>
+          <div class="stat-card"><div class="lbl">Active Contract Value</div><div class="num">₹42.6 Cr</div></div>
+          <div class="stat-card"><div class="lbl">Billed to Date</div><div class="num">₹27.1 Cr</div></div>
+        </div>
+        <div class="contract-row head"><div>Contract</div><div>Value</div><div>Billed</div><div>Progress</div><div>Status</div></div>
+        <div class="contract-row">
+          <div><div class="name">C-001 — Road Widening Ph. 1</div><div class="sub">Awarding: PWD</div></div>
+          <div class="num">₹18.40 Cr</div>
+          <div class="num">₹11.65 Cr</div>
+          <div class="pbar"><i style="width:63%"></i></div>
+          <div><span class="pill good">On track</span></div>
+        </div>
+        <div class="contract-row">
+          <div><div class="name">C-002 — Bridge over River Kali</div><div class="sub">Awarding: NHAI</div></div>
+          <div class="num">₹19.20 Cr</div>
+          <div class="num">₹12.05 Cr</div>
+          <div class="pbar"><i style="width:52%"></i></div>
+          <div><span class="pill warn">EMD exp. 14d</span></div>
+        </div>
+        <div class="contract-row">
+          <div><div class="name">C-003 — Culvert Repair Work</div><div class="sub">Awarding: PWD</div></div>
+          <div class="num">₹5.00 Cr</div>
+          <div class="num">₹3.42 Cr</div>
+          <div class="pbar"><i style="width:78%"></i></div>
+          <div><span class="pill good">On track</span></div>
+        </div>
+      </div></div>
+      <figcaption><b>Fig. 1</b> — one dashboard, every active contract's value, billing, and progress, with expiring documents surfaced before they lapse.</figcaption>
+    </figure>
+
+    <h2>The piece most systems get wrong: where your rates actually come from</h2>
+    <p>Here's a detail that sounds boring until it costs you money: when you estimate materials or verify a rate, <em>which</em> government Schedule of Rates are you actually checking against? PWD Roads? PWD Buildings? NH Roads? Each has its own rate analysis, and a rate that's correct in one book can be wildly wrong pulled from another.</p>
+    <p>A well-built post-bid system doesn't just store rates — it tracks the <strong>source</strong> of every rate-analysis entry, lets you filter and query the library by source and by work category, and flags when an import might conflict with something already in the library from a different source. When a BOQ item gets matched to a rate, the system shows exactly which schedule that number came from — not just a figure, but its provenance.</p>
+
+    <figure>
+      <div class="fig-frame"><div class="fig-frame-pad app-mock">
+        <div class="app-topbar">
+          <div class="app-brand">CONAID</div>
+          <div class="app-nav"><span>Dashboard</span><span class="active">Rate Analysis Library</span><span>Activity</span></div>
+        </div>
+        <div class="filter-row">
+          <span class="chip on">PWD Roads</span>
+          <span class="chip">PWD Buildings</span>
+          <span class="chip">NH Roads</span>
+          <span class="chip">Pavement — BT</span>
+          <span class="chip">Structure — Bridge</span>
+        </div>
+        <div class="lib-row head"><div>Item</div><div>Description</div><div>Unit</div><div>Source</div></div>
+        <div class="lib-row"><div>2.19</div><div>Bituminous Concrete, 100–120 TPH hot mix plant, crushed aggregate</div><div>Cum</div><div><span class="src-tag roads">PWD ROADS</span></div></div>
+        <div class="lib-row"><div>4.07</div><div>Providing &amp; laying WMM, grading as per MoRTH</div><div>Cum</div><div><span class="src-tag roads">PWD ROADS</span></div></div>
+        <div class="lib-row"><div>7.12</div><div>RCC M25 for pier cap, including formwork</div><div>Cum</div><div><span class="src-tag nh">NH ROADS</span></div></div>
+        <div class="conflict">⚠ Possible duplicate: item 7.12 (NH Roads) is 91% similar to item 3.4 already in <b>PWD Buildings</b> — rates differ by ₹410/Cum. Flagged for review, import not blocked.</div>
+      </div></div>
+      <figcaption><b>Fig. 2</b> — one library, filtered by source and category, with cross-source conflicts surfaced instead of silently imported.</figcaption>
+    </figure>
+
+    <h2>Why this changes the contractor's perspective, not just the paperwork</h2>
+    <p>The real shift isn't that spreadsheets become software. It's a change in how a contractor thinks about a running contract.</p>
+
+    <h3>From reactive to real-time</h3>
+    <p>Instead of finding out at month-end that progress has stalled, a live BOQ shows quantity executed, matched rate, source, and running amount the moment a site engineer logs it — total included.</p>
+
+    <figure>
+      <div class="fig-frame"><div class="fig-frame-pad app-mock">
+        <div class="app-topbar">
+          <div class="app-brand">CONAID</div>
+          <div class="app-nav"><span>Dashboard</span><span class="active">BOQ &amp; Progress</span><span>RA Bills</span><span>Materials</span></div>
+        </div>
+        <table class="boq">
+          <colgroup><col style="width:8%"><col style="width:26%"><col style="width:9%"><col style="width:16%"><col style="width:12%"><col style="width:29%"></colgroup>
+          <thead><tr><th>Item No.</th><th>Description</th><th>Unit</th><th class="num">Qty / Rate</th><th class="num">Amount</th><th>Matching Estimate</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td class="desc">Earthwork excavation</td><td>Cum</td><td class="num">1,000 / 150</td><td class="num">1,50,000</td><td><span class="match-warn">Unmatched</span></td></tr>
+            <tr class="alt"><td>19</td><td class="desc">Bituminous concrete, 100–120 TPH hot mix plant</td><td>Cum</td><td class="num">6,917.3 / 10,080.66</td><td class="num">6,97,30,949.42</td><td><span class="match-ok">Bituminous Concrete — PWD SoR 2.19</span><span class="match-src">PWD Roads</span></td></tr>
+            <tr><td>22</td><td class="desc">Providing &amp; laying WMM</td><td>Cum</td><td class="num">2,140 / 3,265</td><td class="num">69,87,100</td><td><span class="match-ok">WMM Grading — PWD SoR 4.07</span><span class="match-src">PWD Roads</span></td></tr>
+          </tbody>
+          <tfoot><tr><td colspan="4">Total</td><td class="num">7,68,68,049.42</td><td></td></tr></tfoot>
+        </table>
+      </div></div>
+      <figcaption><b>Fig. 3</b> — quantity, rate, matched estimate source, and a running total, all on one screen instead of five reconciled spreadsheets.</figcaption>
+    </figure>
+
+    <h3>From "trust the engineer" to "trust the record"</h3>
+    <p>Every action — a rate match, a progress update, a bill certification — is logged with who did it and when. Disputes with clients or auditors stop being he-said-she-said and start being: here's the entry.</p>
+
+    <figure>
+      <div class="fig-frame"><div class="fig-frame-pad app-mock">
+        <div class="app-topbar">
+          <div class="app-brand">CONAID</div>
+          <div class="app-nav"><span>Dashboard</span><span class="active">Activity</span></div>
+        </div>
+        <div class="log-row"><div class="ts">09:14</div><div><span class="who">R. Sen</span> updated progress on C-001, item 19 — <span class="diff"><span class="from">52%</span> → <span class="to">61%</span></span></div><div></div></div>
+        <div class="log-row"><div class="ts">11:02</div><div><span class="who">A. Ghosh</span> certified RA Bill <strong>RA-014</strong> on C-002 — ₹1.82 Cr</div><div></div></div>
+        <div class="log-row"><div class="ts">14:37</div><div><span class="who">S. Mondal</span> matched item 22 to PWD SoR 4.07 (PWD Roads)</div><div></div></div>
+        <div class="log-row"><div class="ts">16:05</div><div><span class="who">Platform Admin</span> imported 34 items into Rate Analysis Library — source: NH Roads</div><div></div></div>
+      </div></div>
+      <figcaption><b>Fig. 4</b> — every match, milestone, and certification, timestamped and attributed, ready the moment a client or auditor asks.</figcaption>
+    </figure>
+
+    <h3>From isolated projects to a compounding knowledge base</h3>
+    <p>Rate suggestions can pull from other contracts your organization has run — if a similar BOQ item was priced elsewhere, the system surfaces that rate as a suggestion. Every contract makes the next one smarter instead of starting from a blank sheet.</p>
+
+    <h3>From compliance-as-afterthought to compliance-as-default</h3>
+    <p>Bank guarantees and insurance expiries surface on the dashboard automatically, instead of living in someone's calendar reminder that gets missed during a busy week.</p>
+
+    <h3>From single-site visibility to organization-wide oversight</h3>
+    <p>A firm juggling five, ten, or twenty active contracts finally gets one place to see all of them — which are healthy, which are falling behind, which have documents about to lapse — instead of asking five site engineers for five separate updates.</p>
+
+    <blockquote>The contractors who adopt this mindset first won't just work faster. They'll bid the next tender with better data, defend their claims with a cleaner audit trail, and run more contracts with the same headcount.</blockquote>
+
+    <h2>The bigger picture</h2>
+    <p>Civil contracting has always been an execution business — the tender is the easy part, delivering against it profitably is the hard part. For years, the tools contractors used for that delivery phase lagged decades behind the complexity of the work itself.</p>
+    <p>A proper Post-Bid Management System doesn't replace the site engineer, the billing team, or the project manager. It gives them a shared, structured, always-accurate version of the truth — so the conversation shifts from "let me check and get back to you" to "here it is, live." For an industry where margins are thin and disputes are expensive, that shift alone is worth the investment.</p>
+
+    <div class="signoff">ALFRESCO — FIELD NOTES · ROADS &amp; INFRASTRUCTURE CONSULTANCY</div>
+  </article>
+</div>
+
+</body>
+</html>
