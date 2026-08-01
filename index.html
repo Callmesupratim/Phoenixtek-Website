@@ -1242,6 +1242,24 @@
             margin-top: 3rem;
         }
 
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 968px) {
+            .apps-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .apps-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         .download-card {
             background: white;
             border-radius: 24px;
@@ -1650,7 +1668,7 @@
                 <li><a href="#portfolio">Portfolio</a></li>
                 <li><a href="#blog">Blog</a></li>
                 <li><a href="#media">Media</a></li>
-                <li><a href="#mailmind">Our Apps</a></li>
+                <li><a href="#mailmind">Tools & Apps</a></li>
                 <li><a href="#downloads">Downloads</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
@@ -2099,59 +2117,47 @@
 
     <!-- Our Software Section -->
     <section id="mailmind" style="background: linear-gradient(180deg, #f0f8ff 0%, #FFFFFF 100%);">
-        <h2 class="section-title">Our Software</h2>
+        <h2 class="section-title">Tools & Apps</h2>
         <p class="section-subtitle">Beyond instrumentation — tools we build for everyday productivity.</p>
 
-        <div class="fade-in" style="max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:1.5rem;">
+        <div class="fade-in apps-grid">
 
             <!-- SurveyStar -->
-            <div class="download-card" style="flex-direction:row;align-items:flex-start;gap:2rem;flex-wrap:wrap;">
-                <div style="flex-shrink:0;">
-                    <img src="images/SurveyStar_icon.png" alt="SurveyStar" loading="lazy" style="width:80px;height:80px;object-fit:contain;border-radius:18px;">
-                </div>
-                <div style="flex:1;min-width:220px;">
-                    <h3 style="font-size:1.4rem;margin-bottom:0.5rem;">SurveyStar</h3>
-                    <p style="margin-bottom:1rem;">SurveyStar is a GPS road survey app for field engineers. GPS chainage tracking, geo-tagged photos with watermarks, GPS-subtitle video, offline voice notes (English/Hindi/Bengali), KML export for GIS tools, and automatic cloud backup — works fully without internet during surveys.</p>
-                    <div class="download-meta" style="margin-bottom:1.2rem;">📱 Available for Android 8.0+</div>
-                    <div style="display:flex;align-items:center;gap:1.2rem;flex-wrap:wrap;">
-                        <a href="https://play.google.com/store/apps/details?id=com.phoenixtek.surveystar" target="_blank" rel="noopener">
-                            <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
-                                 alt="Get it on Google Play" loading="lazy" style="height:54px;">
-                        </a>
-                        <a href="/surveystar.html" style="font-size:0.85rem;color:var(--primary);text-decoration:none;font-weight:600;">Learn more →</a>
-                    </div>
+            <div class="download-card" style="align-items:center;text-align:center;">
+                <img src="images/SurveyStar_icon.png" alt="SurveyStar" loading="lazy" style="width:64px;height:64px;object-fit:contain;border-radius:16px;">
+                <h3 style="font-size:1.2rem;">SurveyStar</h3>
+                <p>SurveyStar is a GPS road survey app for field engineers. GPS chainage tracking, geo-tagged photos with watermarks, GPS-subtitle video, offline voice notes (English/Hindi/Bengali), KML export for GIS tools, and automatic cloud backup — works fully without internet during surveys.</p>
+                <div class="download-meta">📱 Available for Android 8.0+</div>
+                <div style="display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap;">
+                    <a href="https://play.google.com/store/apps/details?id=com.phoenixtek.surveystar" target="_blank" rel="noopener">
+                        <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
+                             alt="Get it on Google Play" loading="lazy" style="height:48px;">
+                    </a>
+                    <a href="/surveystar.html" style="font-size:0.85rem;color:var(--primary);text-decoration:none;font-weight:600;">Learn more →</a>
                 </div>
             </div>
 
             <!-- Mailmind -->
-            <div class="download-card" style="flex-direction:row;align-items:flex-start;gap:2rem;flex-wrap:wrap;">
-                <div style="flex-shrink:0;">
-                    <img src="images/LogoMailmind-removebg-preview.png" alt="Mailmind" loading="lazy" style="width:80px;height:80px;object-fit:contain;">
-                </div>
-                <div style="flex:1;min-width:220px;">
-                    <h3 style="font-size:1.4rem;margin-bottom:0.5rem;">Mailmind</h3>
-                    <p style="margin-bottom:1rem;">Mailmind is a desktop email client with AI-powered email analysis and reply drafting. It supports Gmail, Microsoft Outlook, Zoho, Yahoo, and any IMAP mailbox.</p>
-                    <div class="download-meta" style="margin-bottom:1.2rem;">🖥️ Available for Windows &nbsp;|&nbsp; <span class="mm-version">v1.1.13</span></div>
-                    <div style="display:flex;gap:1.5rem;align-items:center;flex-wrap:wrap;">
-                        <a href="/mailmind.html" style="font-size:0.85rem;color:var(--primary);text-decoration:none;font-weight:600;">Learn more →</a>
-                        <a href="https://phoenixtek.in/privacy.html" target="_blank" rel="noopener" style="font-size:0.85rem;color:var(--accent);text-decoration:none;font-weight:600;">Privacy Policy →</a>
-                    </div>
+            <div class="download-card" style="align-items:center;text-align:center;">
+                <img src="images/LogoMailmind-removebg-preview.png" alt="Mailmind" loading="lazy" style="width:64px;height:64px;object-fit:contain;">
+                <h3 style="font-size:1.2rem;">Mailmind</h3>
+                <p>Mailmind is a desktop email client with AI-powered email analysis and reply drafting. It supports Gmail, Microsoft Outlook, Zoho, Yahoo, and any IMAP mailbox.</p>
+                <div class="download-meta">🖥️ Available for Windows &nbsp;|&nbsp; <span class="mm-version">v1.1.13</span></div>
+                <div style="display:flex;gap:1rem;align-items:center;justify-content:center;flex-wrap:wrap;">
+                    <a href="/mailmind.html" style="font-size:0.85rem;color:var(--primary);text-decoration:none;font-weight:600;">Learn more →</a>
+                    <a href="https://phoenixtek.in/privacy.html" target="_blank" rel="noopener" style="font-size:0.85rem;color:var(--accent);text-decoration:none;font-weight:600;">Privacy Policy →</a>
                 </div>
             </div>
 
             <!-- SurveyStack -->
-            <div class="download-card" style="flex-direction:row;align-items:flex-start;gap:2rem;flex-wrap:wrap;">
-                <div style="flex-shrink:0;">
-                    <img src="images/surveystack-icon.jpg" alt="SurveyStack" loading="lazy" style="width:80px;height:80px;object-fit:contain;border-radius:18px;">
-                </div>
-                <div style="flex:1;min-width:220px;">
-                    <h3 style="font-size:1.4rem;margin-bottom:0.5rem;">SurveyStack</h3>
-                    <p style="margin-bottom:1rem;">SurveyStack is a field survey data collection app for infrastructure teams. GPS geo-tagging on every record, structured forms, photo documentation, team sync, and Excel export — works fully offline in the field.</p>
-                    <div class="download-meta" style="margin-bottom:1.2rem;">📱 Available for Android</div>
-                    <div style="display:flex;gap:1.5rem;align-items:center;flex-wrap:wrap;">
-                        <a href="/surveystack.html" style="font-size:0.85rem;color:var(--primary);text-decoration:none;font-weight:600;">Learn more →</a>
-                        <a href="mailto:service@phoenixtek.in" style="font-size:0.85rem;color:var(--accent);text-decoration:none;font-weight:600;">Contact for access →</a>
-                    </div>
+            <div class="download-card" style="align-items:center;text-align:center;">
+                <img src="images/surveystack-icon.jpg" alt="SurveyStack" loading="lazy" style="width:64px;height:64px;object-fit:contain;border-radius:16px;">
+                <h3 style="font-size:1.2rem;">SurveyStack</h3>
+                <p>SurveyStack is a field survey data collection app for infrastructure teams. GPS geo-tagging on every record, structured forms, photo documentation, team sync, and Excel export — works fully offline in the field.</p>
+                <div class="download-meta">📱 Available for Android</div>
+                <div style="display:flex;gap:1rem;align-items:center;justify-content:center;flex-wrap:wrap;">
+                    <a href="/surveystack.html" style="font-size:0.85rem;color:var(--primary);text-decoration:none;font-weight:600;">Learn more →</a>
+                    <a href="mailto:service@phoenixtek.in" style="font-size:0.85rem;color:var(--accent);text-decoration:none;font-weight:600;">Contact for access →</a>
                 </div>
             </div>
 
