@@ -459,6 +459,132 @@
             line-height: 1.7;
         }
 
+
+        /* Products Section */
+        .products-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        .product-feature {
+            display: grid;
+            grid-template-columns: minmax(280px, 420px) 1fr;
+            gap: 3rem;
+            align-items: center;
+            background: white;
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.07);
+            border-top: 4px solid var(--primary);
+        }
+
+        .product-feature img {
+            width: 100%;
+            display: block;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .product-tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: white;
+            background: var(--primary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+        }
+
+        .product-info h3 {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 2rem;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .product-info .product-sub {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #444;
+            margin-bottom: 1rem;
+        }
+
+        .product-info p {
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .product-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .product-stats div {
+            text-align: center;
+            padding: 0.8rem 0.4rem;
+            background: #f7f7fa;
+            border-radius: 12px;
+        }
+
+        .product-stats strong {
+            display: block;
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 1.3rem;
+            color: var(--primary);
+        }
+
+        .product-stats span {
+            font-size: 0.7rem;
+            color: #777;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .product-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .product-chips span {
+            font-size: 0.85rem;
+            padding: 0.35rem 0.9rem;
+            border: 1px solid #ddd;
+            border-radius: 999px;
+            color: #444;
+        }
+
+        .product-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        @media (max-width: 968px) {
+            .product-feature {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .product-feature img {
+                max-width: 420px;
+                margin: 0 auto;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .product-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
         /* Portfolio Section */
         #portfolio {
             background: var(--dark);
@@ -1615,7 +1741,7 @@
         }
 
         /* Responsive — hamburger breakpoint */
-        @media (max-width: 768px) {
+        @media (max-width: 1100px) {
             .hamburger {
                 display: flex;
             }
@@ -1643,7 +1769,9 @@
                 opacity: 1;
                 pointer-events: all;
             }
+        }
 
+        @media (max-width: 768px) {
             .cta-buttons {
                 flex-direction: column;
             }
@@ -1667,6 +1795,7 @@
                 <li><a href="#home" class="active">Home</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#services">Services</a></li>
+                <li><a href="#products">Products</a></li>
                 <li><a href="#portfolio">Portfolio</a></li>
                 <li><a href="#blog">Blog</a></li>
                 <li><a href="#media">Media</a></li>
@@ -1914,6 +2043,40 @@
                 <div class="service-icon">🗄️</div>
                 <h3>Custom ERP</h3>
                 <p>Enterprise Resource Planning systems tailored to your business processes — unifying operations, finance, and reporting into one purpose-built platform.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products">
+        <h2 class="section-title">Our Products</h2>
+        <p class="section-subtitle">Instruments engineered by Phoenixtek for dependable data from the field.</p>
+        <div class="products-grid fade-in">
+            <div class="product-feature">
+                <img src="images/products/phx-daq-24-poster.png" alt="PHX-DAQ 24 — 4-channel 24-bit sensor and temperature datalogger" loading="lazy">
+                <div class="product-info">
+                    <span class="product-tag">New · 2026</span>
+                    <h3>PHX-DAQ 24</h3>
+                    <div class="product-sub">4-channel 24-bit sensor and temperature datalogger</div>
+                    <p>A compact, Ethernet-connected datalogger for strain and temperature monitoring on bridges, barrages and other structures. Four 24-bit bridge-sensor inputs and four NTC temperature inputs on a single module, with data delivered over standard Ethernet using Modbus TCP. Supplied with PHX-Sense Studio, our Windows console for discovery, live plots, calibration and CSV recording.</p>
+                    <div class="product-stats">
+                        <div><strong>4</strong><span>Sensor channels</span></div>
+                        <div><strong>24-bit</strong><span>Resolution</span></div>
+                        <div><strong>100 Hz</strong><span>Per channel</span></div>
+                        <div><strong>128×</strong><span>Prog. gain</span></div>
+                    </div>
+                    <div class="product-chips">
+                        <span>Strain gauges</span>
+                        <span>Load cells</span>
+                        <span>Pressure transducers</span>
+                        <span>Force &amp; torque sensors</span>
+                        <span>NTC temperature probes</span>
+                    </div>
+                    <div class="product-actions">
+                        <a href="images/products/PHX-DAQ-24_Datasheet_RevA.pdf" class="btn btn-primary" target="_blank" rel="noopener">⬇ Download Datasheet</a>
+                        <a href="#contact" class="btn btn-secondary">Request a Demo</a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -2284,6 +2447,7 @@
                     <li><a href="#home">Home</a></li>
                     <li><a href="#about">About Us</a></li>
                     <li><a href="#services">Services</a></li>
+                    <li><a href="#products">Products</a></li>
                     <li><a href="#portfolio">Portfolio</a></li>
                     <li><a href="#downloads">Downloads</a></li>
                 </ul>
