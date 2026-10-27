@@ -387,11 +387,12 @@
           <li><strong>Sensor check</strong>: detects a disconnected sensor or broken wire on each channel<span class="new-tag">NEW</span></li>
           <li><strong>Up to 3 PCs</strong> receive full-rate data at once<span class="new-tag">NEW</span></li>
           <li><strong>Ethernet 10/100</strong> with Modbus TCP and a continuous data stream</li>
-          <li><strong>Automatic discovery</strong> on the network; DHCP or static IP</li>
+          <li><strong>Automatic discovery</strong> on the network; fixed factory IP, DHCP or static</li>
           <li><strong>Built-in Wi-Fi access point</strong> for on-site setup</li>
           <li><strong>Authenticated</strong> configuration and firmware updates</li>
           <li><strong>Network firmware updates</strong> with automatic rollback</li>
           <li><strong>Self-reporting health</strong>: uptime and restart counters</li>
+          <li><strong>Reset button</strong> restores factory defaults<span class="new-tag">NEW</span></li>
           <li><strong>24 V DC supply</strong> with input protection</li>
         </ul>
       </div>
@@ -453,13 +454,11 @@
           <tr><td>Sensor excitation</td><td>3.3 V DC per channel, ratiometric measurement: excitation drift cancels out. 350 Ω bridges recommended</td></tr>
           <tr><td>Sensor configurations</td><td>Quarter, half and full bridge. Completion resistors are fitted externally, at the sensor</td></tr>
           <tr><td>Sensor check</td><td>Detects an unconnected sensor or broken wire on each enabled channel. Runs at power-up, when a channel is switched on, and on request from PHX-Sense Studio (takes about 0.2 s)</td></tr>
-          <tr><td>Noise / accuracy</td><td><span class="tbc">TBC</span> (characterisation in progress)</td></tr>
         </tbody>
         <thead><tr><th colspan="2">Temperature inputs</th></tr></thead>
         <tbody>
           <tr><td>Channels / sensor</td><td>4 × NTC thermistor, 10 kΩ at 25 °C, β = 3950 (waterproof probes recommended)</td></tr>
           <tr><td>Update rate</td><td>About 1 Hz per channel. A disconnected probe is reported as "no probe", not as a false reading</td></tr>
-          <tr><td>Range / accuracy</td><td><span class="tbc">TBC</span></td></tr>
         </tbody>
         <thead><tr><th colspan="2">Sampling and data</th></tr></thead>
         <tbody>
@@ -469,9 +468,10 @@
         </tbody>
         <thead><tr><th colspan="2">Communications</th></tr></thead>
         <tbody>
-          <tr><td>Network</td><td>10/100 Mbit/s Ethernet, RJ45. Modbus TCP (port 502, up to 4 clients), TCP data stream (port 5000), automatic network discovery. DHCP or static IP</td></tr>
-          <tr><td>Wi-Fi</td><td>Built-in 2.4 GHz access point (WPA2) for commissioning and as a fallback when Ethernet is unavailable</td></tr>
+          <tr><td>Network</td><td>10/100 Mbit/s Ethernet, RJ45. Modbus TCP (port 502, up to 4 clients), TCP data stream (port 5000), automatic network discovery. Factory default: fixed IP 192.168.10.10, subnet mask 255.255.255.0. DHCP or another static IP can be set</td></tr>
+          <tr><td>Wi-Fi</td><td>Built-in 2.4 GHz access point (WPA2) for commissioning. Always on while the unit uses a fixed IP (the factory default); with DHCP it starts only when Ethernet is unavailable</td></tr>
           <tr><td>Firmware update</td><td>Over the network from PHX-Sense Studio. The unit returns to the previous firmware automatically if an update does not complete correctly</td></tr>
+          <tr><td>Factory reset</td><td>From PHX-Sense Studio, or on site with the on-board BOOT button: with the unit running, hold it for 10 s until the status LED turns solid white. Restores the network settings, sample rate, channels, gains and access key to factory defaults. Calibration stored in PHX-Sense Studio is kept</td></tr>
         </tbody>
         <thead><tr><th colspan="2">Power, environmental and mechanical</th></tr></thead>
         <tbody>
@@ -479,11 +479,11 @@
           <tr><td>Power consumption</td><td>Typically under 3 W at 24 V with all channels streaming</td></tr>
           <tr><td>Operating temperature</td><td>0 to +50 °C</td></tr>
           <tr><td>Enclosure</td><td>Aluminium enclosure recommended. IP65 when installed in an IP65-rated enclosure with cable glands</td></tr>
-          <tr><td>Dimensions / weight</td><td>Depends on the enclosure supplied. <span class="tbc">TBC</span></td></tr>
-          <tr><td>Status LED</td><td>Blue: Ethernet connected. Green: access point active. Three quick blinks then a pause: ready. Single slow blink: a PC, PLC or LabVIEW is reading data. Slow red: no network</td></tr>
+          <tr><td>Dimensions / weight</td><td>Depends on the enclosure supplied</td></tr>
+          <tr><td>Status LED</td><td>Blue: Ethernet connected. Green: access point active. Three quick blinks then a pause: ready. Single slow blink: a PC, PLC or LabVIEW is reading data. Slow red: no network. Fast white: reset button held; solid white: restoring factory defaults</td></tr>
         </tbody>
       </table>
-      <p class="table-note">Values are design values and may be refined after production testing. TBC: to be confirmed.</p>
+      <p class="table-note">Values are design values and may be refined after production testing.</p>
     </div>
   </div>
 
@@ -502,7 +502,7 @@
           <li>Recording to CSV, one file per module, with session notes and event markers</li>
           <li>Temperature logging alongside the sensor channels</li>
           <li>Sample rate, gain, channel selection and PLC averaging per unit</li>
-          <li>Network setup and site access key</li>
+          <li>Network setup, access key and factory reset</li>
           <li>Firmware update with progress and automatic rollback</li>
           <li>Unit health view: uptime and restart history</li>
         </ul>
