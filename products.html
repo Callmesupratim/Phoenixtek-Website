@@ -454,6 +454,8 @@
           <tr><td>Sensor excitation</td><td>3.3 V DC per channel, ratiometric measurement: excitation drift cancels out. 350 Ω bridges recommended</td></tr>
           <tr><td>Sensor configurations</td><td>Quarter, half and full bridge. Completion resistors are fitted externally, at the sensor</td></tr>
           <tr><td>Sensor check</td><td>Detects an unconnected sensor or broken wire on each enabled channel. Runs at power-up, when a channel is switched on, and on request from PHX-Sense Studio (takes about 0.2 s)</td></tr>
+          <tr><td>Repeatability</td><td>±0.01% of reading, typical, at 10% of sensor capacity</td></tr>
+          <tr><td>Accuracy</td><td>±1% of reading, typical, 0.5–18% of capacity (system with 10 kg load cell; depends on mounting)</td></tr>
         </tbody>
         <thead><tr><th colspan="2">Temperature inputs</th></tr></thead>
         <tbody>
@@ -471,7 +473,7 @@
           <tr><td>Network</td><td>10/100 Mbit/s Ethernet, RJ45. Modbus TCP (port 502, up to 4 clients), TCP data stream (port 5000), automatic network discovery. Factory default: fixed IP 192.168.10.10, subnet mask 255.255.255.0. DHCP or another static IP can be set</td></tr>
           <tr><td>Wi-Fi</td><td>Built-in 2.4 GHz access point (WPA2) for commissioning. Always on while the unit uses a fixed IP (the factory default); with DHCP it starts only when Ethernet is unavailable</td></tr>
           <tr><td>Firmware update</td><td>Over the network from PHX-Sense Studio. The unit returns to the previous firmware automatically if an update does not complete correctly</td></tr>
-          <tr><td>Factory reset</td><td>From PHX-Sense Studio, or on site with the on-board BOOT button: with the unit running, hold it for 10 s until the status LED turns solid white. Restores the network settings, sample rate, channels, gains and access key to factory defaults. Calibration stored in PHX-Sense Studio is kept</td></tr>
+          <tr><td>Factory reset</td><td>From PHX-Sense Studio, or on site: with the unit running, hold the BOOT button 10 s until the LED turns solid white. Restores network settings, sample rate, channels, gains and access key. Calibration stored in PHX-Sense Studio is kept</td></tr>
         </tbody>
         <thead><tr><th colspan="2">Power, environmental and mechanical</th></tr></thead>
         <tbody>
