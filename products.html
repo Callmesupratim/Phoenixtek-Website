@@ -415,14 +415,14 @@
     <div class="stats-inner">
       <div><strong>4</strong><span>Sensor channels</span></div>
       <div><strong>24-bit</strong><span>Resolution</span></div>
-      <div><strong>100 Hz</strong><span>Per channel</span></div>
+      <div><strong>1 kHz</strong><span>Max per channel</span></div>
       <div><strong>128×</strong><span>Programmable gain</span></div>
     </div>
   </div>
 
   <div class="section">
     <h2>Introducing <em>PHX-DAQ 24</em></h2>
-    <p>At Phoenixtek Solution we build instruments for engineers who need dependable data from the field. PHX-DAQ 24 puts four 24-bit strain-gauge inputs and four temperature probe inputs on a single module. It samples each strain channel at 100 Hz and delivers the data over standard Ethernet using Modbus TCP, so it connects straight to PLCs, SCADA systems and NI LabVIEW.</p>
+    <p>At Phoenixtek Solution we build instruments for engineers who need dependable data from the field. PHX-DAQ 24 puts four 24-bit strain-gauge inputs and four temperature probe inputs on a single module. It samples each strain channel at 100 Hz for everyday monitoring, or up to 1000 Hz for short dynamic tests, and delivers the data over standard Ethernet using Modbus TCP, so it connects straight to PLCs, SCADA systems and NI LabVIEW.</p>
     <p>It ships with PHX-Sense Studio, our Windows console. Find every logger on the network, watch live plots, calibrate and zero each channel, and record to CSV, across as many modules as your project needs.</p>
   </div>
 
@@ -471,7 +471,7 @@
           <li><strong>4 independent 24-bit inputs</strong>, one converter per channel, for bridge-type sensors</li>
           <li><strong>Programmable gain 1× to 128×</strong>, set per channel</li>
           <li><strong>4 temperature inputs</strong> for NTC probes, for on-site temperature compensation</li>
-          <li><strong>1 to 100 Hz</strong> selectable output rate</li>
+          <li><strong>1 to 1000 Hz</strong> selectable output rate, 100 Hz for daily monitoring</li>
           <li><strong>Ready-to-use mV/V values</strong> for PLC and SCADA, averaged to remove mains hum<span class="new-tag">NEW</span></li>
           <li><strong>Sensor check</strong>: detects a disconnected sensor or broken wire on each channel<span class="new-tag">NEW</span></li>
           <li><strong>Up to 3 PCs</strong> receive full-rate data at once<span class="new-tag">NEW</span></li>
@@ -553,7 +553,7 @@
         </tbody>
         <thead><tr><th colspan="2">Sampling and data</th></tr></thead>
         <tbody>
-          <tr><td>Output rate</td><td>1 to 100 Hz, selectable (default 100 Hz). Each channel can be enabled or disabled</td></tr>
+          <tr><td>Output rate</td><td>1 to 1000 Hz, selectable. 100 Hz is the default for continuous monitoring; higher rates give more bandwidth at the cost of slightly higher noise, for short dynamic tests. Each channel can be enabled or disabled</td></tr>
           <tr><td>Data stream</td><td>Continuous TCP stream of every sample, to up to 3 receivers at the same time. Samples are sequence-numbered so a receiver can detect missing data</td></tr>
           <tr><td>Live values (Modbus)</td><td>Per channel: averaged value in mV/V (IEEE-754 float) and raw code, plus temperatures and a status word (data fresh, overload, sensor check). Averaging window 1 to 100 samples, default 10, which removes 50 and 60 Hz mains pick-up at 100 Hz</td></tr>
         </tbody>
