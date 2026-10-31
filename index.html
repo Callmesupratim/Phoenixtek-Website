@@ -310,6 +310,24 @@
             display: inline-block;
         }
 
+
+        /* Featured product */
+        .featured-product { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 3.5rem; align-items: center; }
+        .fp-media { background: #fff; border-radius: 24px; overflow: hidden; box-shadow: 0 20px 50px rgba(26, 26, 46, 0.12); }
+        .fp-media video { width: 100%; aspect-ratio: 1 / 1; display: block; object-fit: cover; }
+        .fp-badge { display: inline-block; background: var(--primary); color: #fff; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; padding: 0.35rem 0.9rem; border-radius: 6px; }
+        .fp-text h2 { font-size: 2.8rem; color: var(--dark); margin: 1rem 0 0.5rem; }
+        .fp-sub { font-size: 1.2rem; font-weight: 700; color: var(--dark); margin-bottom: 1rem; }
+        .fp-text p { color: #555; line-height: 1.7; margin-bottom: 1rem; }
+        .fp-btns { display: flex; flex-wrap: wrap; align-items: center; gap: 1.5rem; margin-top: 1.5rem; }
+        .fp-link { color: var(--primary); font-weight: 700; text-decoration: none; }
+        .fp-link:hover { text-decoration: underline; }
+        @media (max-width: 900px) {
+            .featured-product { grid-template-columns: 1fr; gap: 2rem; }
+            .fp-media { max-width: 480px; margin: 0 auto; width: 100%; }
+            .fp-text h2 { font-size: 2.2rem; }
+        }
+
         .btn-primary {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: var(--light);
@@ -1859,6 +1877,27 @@
         </div>
     </section>
 
+    <!-- Featured Product Section -->
+    <section id="featured-product" style="background: linear-gradient(180deg, #FFF7F2 0%, #FFFFFF 100%); padding: 5rem 5%;">
+        <div class="featured-product fade-in">
+            <div class="fp-media">
+                <video id="product-video-el" muted loop playsinline preload="none" poster="images/products/phx-daq-24/phx-daq-24-360-poster.jpg" aria-label="PHX-DAQ 24 rotating 360 degrees">
+                    <source src="images/products/phx-daq-24/phx-daq-24-360.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="fp-text">
+                <span class="fp-badge">New · Coming Soon 2026</span>
+                <h2>PHX-DAQ 24</h2>
+                <p class="fp-sub">Our own 4-channel 24-bit sensor and temperature datalogger</p>
+                <p>Built by Phoenixtek for strain gauges, load cells, pressure transducers and other bridge-type sensors. Connects over Ethernet to PHX-Sense Studio, PLCs, SCADA and NI LabVIEW.</p>
+                <div class="fp-btns">
+                    <a href="products.html" class="btn btn-primary">Explore PHX-DAQ 24</a>
+                    <a href="images/products/PHX-DAQ-24_Datasheet_RevB.pdf" class="fp-link" target="_blank" rel="noopener">⬇ Datasheet (PDF)</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Services Section -->
     <section id="services">
         <h2 class="section-title">Our Services</h2>
@@ -2483,20 +2522,20 @@
 
         document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-        // Auto-play/pause the intro video as it scrolls in/out of view
-        const introVideo = document.getElementById('intro-video-el');
-        if (introVideo) {
-            const videoObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        introVideo.play().catch(() => {});
-                    } else {
-                        introVideo.pause();
-                    }
-                });
-            }, { threshold: 0.4 });
-            videoObserver.observe(introVideo);
-        }
+        // Auto-play/pause the intro and product videos as they scroll in/out of view
+        const videoObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.play().catch(() => {});
+                } else {
+                    entry.target.pause();
+                }
+            });
+        }, { threshold: 0.4 });
+        ['intro-video-el', 'product-video-el'].forEach(id => {
+            const v = document.getElementById(id);
+            if (v) videoObserver.observe(v);
+        });
 
         // Tab switching for media section
         function showTab(tabName) {
