@@ -15,14 +15,14 @@
   <meta property="og:title" content="Products — PHX-DAQ 24 Datalogger | Phoenixtek Solution">
   <meta property="og:description" content="4-channel 24-bit Ethernet datalogger for strain, load, pressure and temperature monitoring on bridges, dams and other structures.">
   <meta property="og:url" content="https://phoenixtek.in/products.html">
-  <meta property="og:image" content="https://phoenixtek.in/images/products/phx-daq-24-poster.png">
+  <meta property="og:image" content="https://phoenixtek.in/images/products/phx-daq-24/og.jpg">
   <meta property="og:locale" content="en_IN">
   <meta property="og:site_name" content="Phoenixtek Solution">
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Products — PHX-DAQ 24 Datalogger | Phoenixtek Solution">
   <meta name="twitter:description" content="4-channel 24-bit Ethernet datalogger for strain, load, pressure and temperature monitoring.">
-  <meta name="twitter:image" content="https://phoenixtek.in/images/products/phx-daq-24-poster.png">
+  <meta name="twitter:image" content="https://phoenixtek.in/images/products/phx-daq-24/og.jpg">
 
   <script type="application/ld+json">
   {
@@ -30,7 +30,7 @@
     "@type": "Product",
     "name": "PHX-DAQ 24",
     "description": "4-channel 24-bit sensor and temperature datalogger with Ethernet, Modbus TCP and PHX-Sense Studio software.",
-    "image": "https://phoenixtek.in/images/products/phx-daq-24-poster.png",
+    "image": "https://phoenixtek.in/images/products/phx-daq-24/og.jpg",
     "brand": { "@type": "Brand", "name": "Phoenixtek Solution" },
     "url": "https://phoenixtek.in/products.html"
   }
@@ -126,6 +126,55 @@
       border-radius: 18px;
       box-shadow: 0 20px 60px rgba(0,0,0,0.5);
     }
+
+
+    /* real product photo in hero */
+    .hero-product { position: relative; }
+    .hero-product::before {
+      content: ""; position: absolute; inset: 6% 4%;
+      background: radial-gradient(ellipse at center, rgba(255,107,53,0.28), rgba(255,107,53,0) 68%);
+    }
+    .hero .hero-product img { position: relative; height: auto; border-radius: 0; box-shadow: none; filter: drop-shadow(0 28px 36px rgba(0,0,0,0.55)); }
+    .hero-360 {
+      position: absolute; right: 4%; bottom: -0.5rem;
+      font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: #f5f0ea; border: 1px solid rgba(245,240,234,0.35); border-radius: 999px; padding: 0.4rem 0.9rem;
+    }
+    .hero-360:hover { border-color: var(--primary); color: var(--primary); text-decoration: none; }
+
+    /* 360 viewer */
+    .view360-sec { background: var(--ink); color: #f5f0ea; padding: 4rem 5%; }
+    .view360-sec .wrap { max-width: 1100px; margin: 0 auto; text-align: center; }
+    .view360-sec h2 { font-size: 1.9rem; margin: 0 0 0.75rem; color: #f5f0ea; }
+    .view360-sec h2 em { font-style: normal; color: var(--primary); }
+    .view360-sec p { color: #c9c2b8; margin: 0 auto 1.5rem; max-width: 640px; }
+    .spin360 { position: relative; width: min(100%, calc(68vh * 1600 / 1344)); margin: 0 auto; aspect-ratio: 1600 / 1344;
+      background: radial-gradient(ellipse at 50% 55%, #3a2c22 0%, rgba(20,17,15,0) 68%);
+      cursor: grab; touch-action: pan-y; user-select: none; -webkit-user-select: none; outline: none; }
+    .spin360:focus-visible { box-shadow: 0 0 0 2px var(--primary); border-radius: 16px; }
+    .spin360.drag { cursor: grabbing; }
+    .spin360 img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; pointer-events: none; transition: opacity .35s; }
+    .spin360 .over { opacity: 0; }
+    .spin360.alt .over { opacity: 1; }
+    .spin360.alt .main, .spin360.alt .shadow { opacity: 0; }
+    .spin360 .shadow { transition: opacity .35s; position: absolute; left: 22%; right: 22%; bottom: 9%; height: 7%; border-radius: 50%;
+      background: radial-gradient(ellipse, rgba(0,0,0,.55), rgba(0,0,0,0) 70%); }
+    .spin360 .hint { position: absolute; left: 50%; bottom: 10px; transform: translateX(-50%); background: rgba(245,240,234,.12); color: #f5f0ea;
+      font-size: 0.8rem; padding: 0.35rem 0.9rem; border-radius: 999px; transition: opacity .4s; white-space: nowrap; }
+    .spin360 .load { position: absolute; inset: 0; display: grid; place-items: center; color: #8a8178; font-size: 0.9rem; }
+    .spin-bar { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; margin-top: 1.25rem; }
+    .spin-bar button { font: inherit; font-size: 0.9rem; border: 1px solid #3a332c; background: #1f1a16; color: #f5f0ea; border-radius: 8px; padding: 0.45rem 0.95rem; cursor: pointer; }
+    .spin-bar button:hover { border-color: var(--primary); color: var(--primary); }
+    .spin-bar button.on { background: var(--primary); border-color: var(--primary); color: #fff; }
+    .spin-bar .sep { width: 1px; background: #3a332c; margin: 0 0.25rem; }
+
+    /* photo gallery */
+    .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 2rem; }
+    .gallery figure { margin: 0; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: #fff; }
+    .gallery img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: contain; display: block; padding: 0.5rem; }
+    .gallery figcaption { font-size: 0.85rem; color: #555; padding: 0.7rem 1rem; border-top: 1px solid var(--line); background: #fcfaf7; }
+    @media (max-width: 900px) { .gallery { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) { .gallery { grid-template-columns: 1fr; } .hero-360 { right: 0; } }
 
     .btn {
       display: inline-block;
@@ -355,7 +404,10 @@
           <a class="btn btn-outline" href="mailto:info@phoenixtek.in?subject=PHX-DAQ%2024%20launch%20notification">Notify Me at Launch</a>
         </div>
       </div>
-      <img src="images/products/phx-daq-24-poster.png" alt="PHX-DAQ 24 — 4-channel 24-bit sensor and temperature datalogger">
+      <div class="hero-product">
+        <img src="images/products/phx-daq-24/hero.webp" width="1200" height="958" alt="PHX-DAQ 24 datalogger: orange lid with PHX-DAQ 24 branding and status LED, grey enclosure with green sensor terminals">
+        <a href="#view-360" class="hero-360">↻ View in 360°</a>
+      </div>
     </div>
   </div>
 
@@ -372,6 +424,43 @@
     <h2>Introducing <em>PHX-DAQ 24</em></h2>
     <p>At Phoenixtek Solution we build instruments for engineers who need dependable data from the field. PHX-DAQ 24 puts four 24-bit strain-gauge inputs and four temperature probe inputs on a single module. It samples each strain channel at 100 Hz and delivers the data over standard Ethernet using Modbus TCP, so it connects straight to PLCs, SCADA systems and NI LabVIEW.</p>
     <p>It ships with PHX-Sense Studio, our Windows console. Find every logger on the network, watch live plots, calibrate and zero each channel, and record to CSV, across as many modules as your project needs.</p>
+  </div>
+
+
+  <div class="view360-sec" id="view-360">
+    <div class="wrap">
+      <h2>PHX-DAQ 24 in <em>360°</em></h2>
+      <p>Drag sideways to turn the unit, or up and down for the top and bottom. The sensor terminals, Ethernet port and 24 V input are all on the sides.</p>
+      <div class="spin360" id="spin" tabindex="0" role="img" aria-label="PHX-DAQ 24, 360 degree view. Drag or use the arrow keys to rotate; up and down arrows show the top and bottom.">
+        <div class="shadow"></div>
+        <img class="main" id="spinImg" src="images/products/phx-daq-24/360/spin_01.webp" alt="">
+        <img class="over" id="viewImg" alt="">
+        <div class="load" id="spinLoad">Loading…</div>
+        <div class="hint" id="spinHint">drag ⟷ rotate · ⇅ top / bottom</div>
+      </div>
+      <div class="spin-bar">
+        <button type="button" data-step="-30" aria-label="Rotate left">⟲</button>
+        <button type="button" id="spinPlay">Pause</button>
+        <button type="button" data-step="30" aria-label="Rotate right">⟳</button>
+        <span class="sep"></span>
+        <button type="button" data-view="spin" class="on">360°</button>
+        <button type="button" data-view="top">Top</button>
+        <button type="button" data-view="bottom">Bottom</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>A closer <em>look</em></h2>
+    <p>Pluggable screw terminals for every sensor, a standard RJ45 Ethernet port and a 24 V DC input, in a compact enclosure with mounting lugs.</p>
+    <div class="gallery">
+      <figure><img src="images/products/phx-daq-24/photo-3169.jpg" width="1000" height="909" loading="lazy" alt="PHX-DAQ 24 side view showing four green pluggable sensor terminals labelled CH1 to CH4"><figcaption>Four sensor inputs, CH1 to CH4, on pluggable screw terminals</figcaption></figure>
+      <figure><img src="images/products/phx-daq-24/photo-3168.jpg" width="1000" height="944" loading="lazy" alt="PHX-DAQ 24 end view with 24 V DC power terminal and RJ45 LAN port"><figcaption>24 V DC power input and RJ45 Ethernet port</figcaption></figure>
+      <figure><img src="images/products/phx-daq-24/photo-3170.jpg" width="1000" height="817" loading="lazy" alt="PHX-DAQ 24 top lid with product name and status LED"><figcaption>Status LED on the lid shows network and activity at a glance</figcaption></figure>
+      <figure><img src="images/products/phx-daq-24/photo-3173.jpg" width="777" height="1000" loading="lazy" alt="PHX-DAQ 24 end panel with LAN and 24 V DC connectors"><figcaption>Labelled connectors for quick wiring on site</figcaption></figure>
+      <figure><img src="images/products/phx-daq-24/photo-3172.jpg" width="1000" height="788" loading="lazy" alt="PHX-DAQ 24 underside with mounting holes and lugs"><figcaption>Base with mounting points and lugs for fixing inside a site enclosure</figcaption></figure>
+      <figure><img src="images/products/phx-daq-24/photo-3166.jpg" width="1000" height="814" loading="lazy" alt="PHX-DAQ 24 three-quarter view"><figcaption>Compact unit, ready to fit inside a site enclosure</figcaption></figure>
+    </div>
   </div>
 
   <div class="section alt">
@@ -614,5 +703,85 @@
     <p>© 2026 Phoenixtek Solution. All rights reserved. &nbsp;|&nbsp; <a href="https://phoenixtek.in">phoenixtek.in</a></p>
   </footer>
 
+  <script>
+  (() => {
+    // [file, yaw in degrees]. Shots were hand-turned, so angles are uneven; show the nearest frame to the current angle.
+    const P = 'images/products/phx-daq-24/360/';
+    const FRAMES = [["spin_01",0],["spin_02",15],["spin_03",32],["spin_04",50],["spin_05",68],["spin_06",78],["spin_07",88],["spin_08",118],
+      ["spin_09",135],["spin_10",150],["spin_11",170],["spin_12",190],["spin_13",222],["spin_14",260],["spin_15",293],["spin_16",310],
+      ["spin_17",326],["spin_18",345]].map(([f, a]) => [P + f + '.webp', a]);
+    const TILT = { '-1': [P + 'view_bottom.webp', 'Bottom view'], '1': [P + 'view_high.webp', 'High angle view'], '2': [P + 'view_top.webp', 'Top view'] };
+    const DEG_PER_PX = 0.45, AUTO_DEG_PER_S = 40, PX_PER_TILT = 70;
+
+    const box = document.getElementById('spin'), img = document.getElementById('spinImg'), over = document.getElementById('viewImg');
+    const hint = document.getElementById('spinHint'), load = document.getElementById('spinLoad'), play = document.getElementById('spinPlay');
+    let angle = 0, shown = 0, auto = !matchMedia('(prefers-reduced-motion: reduce)').matches, dragging = false, lastX = 0, lastT = 0, vel = 0;
+    let tilt = 0, startY = 0, startTilt = 0, axis = null, startX = 0, visible = false, started = false;
+    if (!auto) play.textContent = 'Play';
+
+    const setTilt = t => {
+      tilt = Math.max(-1, Math.min(2, t));
+      if (tilt !== 0) { over.src = TILT[tilt][0]; over.alt = TILT[tilt][1]; }
+      box.classList.toggle('alt', tilt !== 0);
+      document.querySelectorAll('.spin-bar [data-view]').forEach(b =>
+        b.classList.toggle('on', b.dataset.view === (tilt === 0 ? 'spin' : tilt === -1 ? 'bottom' : tilt === 2 ? 'top' : '')));
+    };
+    const nearest = a => {
+      a = ((a % 360) + 360) % 360;
+      let best = 0, bd = 1e9;
+      FRAMES.forEach(([, fa], i) => { const d = Math.min(Math.abs(a - fa), 360 - Math.abs(a - fa)); if (d < bd) { bd = d; best = i; } });
+      return best;
+    };
+    const render = () => { const i = nearest(angle); if (i !== shown) { img.src = FRAMES[i][0]; shown = i; } };
+
+    // Fetch the frames only when the viewer comes near the screen, and spin only while it is visible.
+    const preload = () => {
+      if (started) return; started = true;
+      const all = FRAMES.map(f => f[0]).concat(Object.values(TILT).map(v => v[0]));
+      let n = 0;
+      all.forEach(f => { const im = new Image(); im.onload = im.onerror = () => { if (++n === all.length) load.remove(); }; im.src = f; });
+    };
+    new IntersectionObserver(es => es.forEach(e => { visible = e.isIntersecting; if (visible) preload(); }), { rootMargin: '300px' }).observe(box);
+
+    const stopAuto = () => { auto = false; play.textContent = 'Play'; hint.style.opacity = 0; };
+    box.addEventListener('pointerdown', e => {
+      dragging = true; stopAuto(); vel = 0; axis = null;
+      lastX = startX = e.clientX; startY = e.clientY; startTilt = tilt; lastT = performance.now();
+      box.classList.add('drag'); box.setPointerCapture(e.pointerId);
+    });
+    box.addEventListener('pointermove', e => {
+      if (!dragging) return;
+      // lock to whichever axis the drag starts along
+      if (!axis && Math.hypot(e.clientX - startX, e.clientY - startY) > 8)
+        axis = Math.abs(e.clientX - startX) >= Math.abs(e.clientY - startY) ? 'x' : 'y';
+      if (axis === 'y') { setTilt(startTilt + Math.round((e.clientY - startY) / PX_PER_TILT)); return; }
+      if (axis !== 'x') return;
+      if (tilt !== 0) setTilt(0);
+      const now = performance.now(), dx = e.clientX - lastX;
+      angle -= dx * DEG_PER_PX; vel = -dx * DEG_PER_PX / Math.max(1, now - lastT) * 1000;
+      lastX = e.clientX; lastT = now; render();
+    });
+    const end = () => { dragging = false; if (axis === 'y') vel = 0; box.classList.remove('drag'); };
+    box.addEventListener('pointerup', end); box.addEventListener('pointercancel', end);
+    box.addEventListener('keydown', e => {
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') { stopAuto(); setTilt(0); angle += e.key === 'ArrowRight' ? 15 : -15; render(); e.preventDefault(); }
+      if (e.key === 'ArrowUp' || e.key === 'ArrowDown') { stopAuto(); setTilt(tilt + (e.key === 'ArrowUp' ? 1 : -1)); e.preventDefault(); }
+    });
+    document.querySelectorAll('.spin-bar [data-step]').forEach(b => b.onclick = () => { stopAuto(); setTilt(0); angle += +b.dataset.step; render(); });
+    document.querySelectorAll('.spin-bar [data-view]').forEach(b => b.onclick = () => { stopAuto(); setTilt({ spin: 0, top: 2, bottom: -1 }[b.dataset.view]); });
+    play.onclick = () => { auto = !auto; play.textContent = auto ? 'Pause' : 'Play'; if (auto) setTilt(0); };
+
+    let prev = performance.now();
+    const tick = now => {
+      const dt = Math.min(0.1, (now - prev) / 1000); prev = now;
+      if (visible) {
+        if (auto) { angle += AUTO_DEG_PER_S * dt; render(); }
+        else if (!dragging && Math.abs(vel) > 5) { angle += vel * dt; vel *= Math.pow(0.04, dt); render(); }  // fling inertia
+      }
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  })();
+  </script>
 </body>
 </html>
