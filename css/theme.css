@@ -1,0 +1,70 @@
+/* Phoenixtek site theme: the warm drafting-sheet look from the homepage, applied to every sub-page.
+   Linked last in each page's <head>, so it overrides that page's own inline styles. */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Instrument+Serif:ital@1&display=swap');
+
+:root {
+  --primary: #FF6B35;
+  --ink: #17130F;
+  --paper: #F4EFE8;
+  --paper-2: #FBF8F4;
+  --rule: #E3DBD0;
+  --muted: #6b625a;
+  --serif: 'Instrument Serif', Georgia, serif;
+}
+
+body { font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+h1, h2, h3 { font-family: 'DM Sans', sans-serif; font-weight: 700; letter-spacing: -0.025em; }
+h1 em, h2 em { font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--primary); letter-spacing: -0.01em; }
+
+/* Breadcrumb header bar on product and app pages */
+body > header {
+  background: #fff; border-bottom: 1px solid var(--rule); box-shadow: none;
+}
+body > header a.home { color: var(--muted); }
+body > header a.home:hover { color: var(--primary); text-decoration: none; }
+body > header span { color: #c9bfb4; }
+body > header strong { color: var(--ink); }
+
+/* Dark heroes become warm near-black; SurveyStack keeps its green brand hero */
+header ~ .hero:not(.brand-hero) { background: var(--ink); }
+header ~ .hero h1 { letter-spacing: -0.035em; }
+header ~ .hero:not(.brand-hero) h1:not(:has(em)) {
+  background: none; -webkit-text-fill-color: currentColor; color: #f4efe8;
+}
+header ~ .hero:not(.brand-hero) p { color: #b9afa5; }
+
+/* Content sections and cards */
+.section h2 { color: var(--ink); letter-spacing: -0.025em; }
+.feature-card { background: #fff; border: 1px solid var(--rule); border-radius: 16px; box-shadow: none; transition: transform .2s, border-color .2s, box-shadow .2s; }
+.feature-card:hover { transform: translateY(-3px); border-color: #ffc8ae; box-shadow: 0 16px 34px rgba(23,19,15,0.07); }
+.feature-card h3 { color: var(--ink); letter-spacing: -0.01em; }
+.feature-card p { color: var(--muted); }
+.highlight-block { border-radius: 14px; }
+.specs-table th, .permissions-table th { background: var(--ink); }
+.specs-table td:first-child { color: var(--ink); }
+
+/* Buttons */
+.btn, .cta-btn, .cta-download, .download-btn { border-radius: 10px !important; }
+.btn-primary { background: var(--primary); box-shadow: 0 10px 24px rgba(255,107,53,0.25); }
+
+/* Closing CTA, support strip, footer */
+.cta { background: var(--ink); }
+.support-strip { background: var(--ink); color: #b9afa5; border-top: 1px solid #2a241f; }
+footer { background: #0f0c0a !important; color: #8a8178; border-top: 1px solid #2a241f; }
+footer a { color: #b9afa5; }
+footer a:hover { color: var(--primary); }
+
+/* Blog article pages */
+.top-bar { background: rgba(255,255,255,0.96); border-bottom: 1px solid var(--rule); box-shadow: none; }
+.top-bar .brand { background: none; -webkit-text-fill-color: currentColor; color: var(--primary); font-family: 'DM Sans', sans-serif; font-weight: 700; letter-spacing: -0.02em; }
+.top-bar .back { color: var(--ink); }
+.top-bar ~ .hero h1 { font-family: 'DM Sans', sans-serif; font-weight: 700; letter-spacing: -0.035em; color: var(--ink); line-height: 1.12; }
+.hero .meta { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 0.72rem; letter-spacing: 0.12em; color: #8a8178; }
+article h2, article h3 { font-family: 'DM Sans', sans-serif; font-weight: 700; color: var(--ink); letter-spacing: -0.025em; }
+.hero-image { border-radius: 18px; box-shadow: 0 20px 44px rgba(23,19,15,0.14); }
+.cta-card { background: var(--ink) !important; border-radius: 18px; }
+.cta-card a { background: var(--primary) !important; border-radius: 10px !important; }
+
+/* Policy pages */
+.pp h1 { color: var(--ink); font-size: 2rem; letter-spacing: -0.03em; }
+.pp h2 { color: var(--ink); }
