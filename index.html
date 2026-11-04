@@ -1780,6 +1780,81 @@
             .trust-inner div { padding: 1rem 0.7rem; }
             .trust-inner svg { width: 24px; height: 24px; }
         }
+
+        /* ===== Redesign round 2: every section in the warm drafting-sheet look ===== */
+        section { max-width: none; }
+        section:not(.hero):not(#intro-video) > * { max-width: 1240px; margin-left: auto; margin-right: auto; }
+        #about, #media, #mailmind { background: #fff; border-top: 1px solid var(--rule); }
+        #featured-product, #blog { background: var(--paper); border-top: 1px solid var(--rule); padding: 6rem 5%; }
+        #downloads { background: var(--paper-2); border-top: 1px solid var(--rule); }
+        #intro-video, #portfolio, #contact { background: var(--ink); color: #f4efe8; }
+        #intro-video { padding: 6rem 0; }
+        #intro-video .sec-pill { margin-bottom: 1.1rem; }
+
+        .section-title {
+            font-family: 'DM Sans', sans-serif; font-weight: 700; letter-spacing: -0.03em; line-height: 1.08;
+            font-size: clamp(2rem, 4vw, 3.2rem); color: var(--ink); margin-bottom: 2.6rem;
+        }
+        #intro-video .section-title, #portfolio .section-title, #contact .section-title { color: #f4efe8; }
+        .section-subtitle { color: #6b625a; font-size: 1.1rem; }
+        #portfolio .section-subtitle, #contact .section-subtitle { color: #b9afa5 !important; }
+        .sec-pill-dark { background: rgba(255,107,53,0.12); border-color: rgba(255,107,53,0.35); }
+
+        .btn { border-radius: 10px; }
+        .btn-primary { background: var(--primary); box-shadow: 0 10px 24px rgba(255,107,53,0.28); }
+        .btn-secondary { border-radius: 10px; }
+
+        /* About */
+        .visual-card { border-radius: 18px; border: 1px solid var(--rule); box-shadow: none; }
+        .about-visual > div:first-child { border-radius: 18px !important; box-shadow: none !important; border: 1px solid var(--rule); }
+        .stat-number { background: none; -webkit-text-fill-color: currentColor; color: var(--ink); font-family: 'DM Sans', sans-serif; font-weight: 700; letter-spacing: -0.03em; }
+        .stat-label { color: #8a8178; }
+        .mv-card { padding: 1.4rem 1.5rem; background: var(--paper-2); border: 1px solid var(--rule); border-radius: 14px; border-top: 3px solid var(--primary); }
+        .value-item { border: 1px solid var(--rule); box-shadow: none !important; border-radius: 14px; }
+        .value-icon { background: #fff1ea !important; }
+
+        /* Featured product */
+        .fp-media { border-radius: 18px; border: 1px solid var(--rule); box-shadow: 0 20px 44px rgba(23,19,15,0.10); }
+        .fp-badge { border-radius: 999px; letter-spacing: 0.1em; }
+        .fp-text h2 { font-family: 'DM Sans', sans-serif; font-weight: 700; letter-spacing: -0.03em; color: var(--ink); }
+
+        /* Portfolio and gallery */
+        .portfolio-item { border-radius: 16px; }
+        .media-item { border-radius: 14px; }
+        .tab-btn { border-radius: 10px !important; }
+
+        /* Blog cards */
+        .blog-card { border-radius: 16px; border: 1px solid var(--rule); box-shadow: none; }
+        .blog-card:hover { box-shadow: 0 18px 40px rgba(23,19,15,0.08); }
+        .blog-meta { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 0.7rem !important; letter-spacing: 0.08em; color: #8a8178 !important; }
+        .blog-card h3 { color: var(--ink); letter-spacing: -0.01em; }
+
+        /* App and download cards */
+        .download-card { border-radius: 16px; border: 1px solid var(--rule); border-image: none; box-shadow: none; }
+        .download-card:hover { transform: translateY(-4px); border-color: #ffc8ae; box-shadow: 0 18px 40px rgba(23,19,15,0.08); }
+        .download-icon { background: #fff1ea; border-radius: 12px; width: 52px; height: 52px; font-size: 1.5rem; }
+        .download-card h3 { font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--ink); }
+        .download-card p { color: #6b625a; }
+        .download-meta { color: #8a8178; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 0.72rem; }
+        .download-btn { background: var(--primary); border-radius: 10px; }
+
+        /* Contact */
+        #contact .contact-info h2 { font-family: 'DM Sans', sans-serif; font-weight: 700; letter-spacing: -0.03em; }
+        #contact .contact-info p { color: #b9afa5; }
+        .contact-icon { background: rgba(255,107,53,0.14); border: 1px solid rgba(255,107,53,0.35); }
+        .contact-form { background: #1f1a16; border: 1px solid #3a332c; border-radius: 18px; }
+        .form-group input, .form-group textarea { background: #17130f; border: 1px solid #3a332c; }
+        .form-group input:focus, .form-group textarea:focus { border-color: var(--primary); }
+
+        /* Footer */
+        footer { background: #0f0c0a; border-top: 1px solid #2a241f; }
+        .footer-section h3 { color: #f4efe8; }
+        .footer-section a { color: #b9afa5; }
+        .footer-section a:hover { color: var(--primary); }
+        .footer-section p a { color: var(--primary) !important; }
+        .about-text h3, .about-text h2 { font-family: 'DM Sans', sans-serif; font-weight: 700; letter-spacing: -0.02em; color: var(--ink); }
+        .social-icon { background: rgba(255,107,53,0.14) !important; border: 1px solid rgba(255,107,53,0.4); color: #f4efe8 !important; }
+        .social-icon:hover { background: var(--primary) !important; }
     </style>
 </head>
 <body>
@@ -1851,8 +1926,9 @@
 
     <!-- About Section -->
     <section id="about">
-        <h2 class="section-title">About Phoenixtek Solutions</h2>
-        <p class="section-subtitle">Engineering trust, one measurement at a time — India's dedicated partner for geotechnical and structural safety.</p>
+        <span class="sec-pill">About us</span>
+        <h2 class="section-title">Engineering trust, one <em>measurement</em> at a time.</h2>
+        <p class="section-subtitle">Phoenixtek Solutions is India's dedicated partner for geotechnical and structural safety.</p>
 
         <div class="about-content" style="margin-top: 3rem;">
             <div class="about-text">
@@ -1863,11 +1939,11 @@
                 <p>Building on that foundation, we've also grown into a technology partner — developing custom software, mobile applications, and enterprise systems for our clients, with the same engineering discipline we bring to the field.</p>
 
                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin: 2rem 0;">
-                    <div style="padding:1.5rem; background:linear-gradient(135deg,#FF6B3510,#00D9FF10); border-radius:16px; border-left:4px solid var(--primary);">
+                    <div class="mv-card">
                         <strong style="font-size:1rem; color:var(--dark); display:block; margin-bottom:0.5rem;">Our Mission</strong>
                         <span style="font-size:0.95rem; color:#555; line-height:1.7;">To deliver precise, reliable geotechnical and structural monitoring solutions that protect lives, safeguard infrastructure, and support India's sustainable development goals.</span>
                     </div>
-                    <div style="padding:1.5rem; background:linear-gradient(135deg,#00D9FF10,#FF6B3510); border-radius:16px; border-left:4px solid var(--accent);">
+                    <div class="mv-card">
                         <strong style="font-size:1rem; color:var(--dark); display:block; margin-bottom:0.5rem;">Our Vision</strong>
                         <span style="font-size:0.95rem; color:#555; line-height:1.7;">To be India's most trusted infrastructure monitoring partner — empowering engineers and decision-makers with real-time, data-driven insights for safer, smarter construction.</span>
                     </div>
@@ -1953,7 +2029,7 @@
                     </div>
                 </div>
 
-                <div class="visual-card" style="margin-top:2rem; background:linear-gradient(135deg, var(--dark) 0%, #2d2d4e 100%); color:white;">
+                <div class="visual-card" style="margin-top:2rem; background:var(--ink); border-color:var(--ink); color:white;">
                     <h3 style="margin-bottom:0.75rem; color:white;">Leadership</h3>
                     <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem;">
                         <img src="images/supratim-mondal.webp"
@@ -1972,8 +2048,9 @@
     </section>
 
     <!-- Intro Video Section -->
-    <section id="intro-video" style="background: var(--dark); padding: 5rem 0;">
-        <h2 class="section-title" style="color: var(--light); padding: 0 5%;">See Us In Action</h2>
+    <section id="intro-video">
+        <span class="sec-pill sec-pill-dark">In the field</span>
+        <h2 class="section-title" style="color: var(--light); padding: 0 5%;">See us in <em>action.</em></h2>
         <div class="fade-in" style="margin-top: 3rem;">
             <video id="intro-video-el" controls muted loop playsinline preload="metadata" poster="images/hero-video/hero-poster.jpg"
                    style="width: 100%; max-height: 85vh; object-fit: cover; display: block;">
@@ -1983,7 +2060,7 @@
     </section>
 
     <!-- Featured Product Section -->
-    <section id="featured-product" style="background: linear-gradient(180deg, #FFF7F2 0%, #FFFFFF 100%); padding: 5rem 5%;">
+    <section id="featured-product">
         <div class="featured-product fade-in">
             <div class="fp-media">
                 <video id="product-video-el" muted loop playsinline preload="none" poster="images/products/phx-daq-24/phx-daq-24-360-poster.jpg" aria-label="PHX-DAQ 24 rotating 360 degrees">
@@ -2069,7 +2146,8 @@
 
     <!-- Portfolio Section -->
     <section id="portfolio">
-        <h2 class="section-title">Featured Projects</h2>
+        <span class="sec-pill sec-pill-dark">Portfolio</span>
+        <h2 class="section-title">Projects across <em>India.</em></h2>
         <p class="section-subtitle">Showcasing our expertise in geotechnical instrumentation and infrastructure monitoring across India</p>
         <div class="portfolio-grid fade-in">
             <div class="portfolio-item">
@@ -2102,7 +2180,7 @@
             </div>
         </div>
 
-        <h3 style="text-align:center;font-size:1.4rem;margin:3.5rem 0 0.5rem;color:var(--dark);">From the Field</h3>
+        <h3 style="text-align:center;font-size:1.4rem;margin:3.5rem auto 0.5rem;color:#f4efe8;">From the Field</h3>
         <p style="text-align:center;font-size:1.1rem;color:#666;max-width:700px;margin:0 auto 2.5rem;">A look at our team on active project sites across India.</p>
         <div class="portfolio-grid fade-in">
             <div class="portfolio-item">
@@ -2179,7 +2257,8 @@
 
     <!-- Media Section (Photos & Videos) -->
     <section id="media">
-        <h2 class="section-title">Project Gallery</h2>
+        <span class="sec-pill">Gallery</span>
+        <h2 class="section-title">Project <em>gallery.</em></h2>
         <p class="section-subtitle">Visual documentation of our instrumentation work and monitoring projects</p>
         
         <div class="media-tabs">
@@ -2210,7 +2289,8 @@
 
     <!-- Blog Section -->
     <section id="blog">
-        <h2 class="section-title">Industry Insights</h2>
+        <span class="sec-pill">Blog</span>
+        <h2 class="section-title">Industry <em>insights.</em></h2>
         <p class="section-subtitle">Latest updates on geotechnical engineering, monitoring technologies, and infrastructure safety</p>
         <div class="blog-grid fade-in">
             <div class="blog-card" data-title="Structural Health Monitoring: Engineering the Future of Safer Bridges and Smart Infrastructure" data-meta="May 21, 2026 • SHM" data-excerpt="How strain, deflection, vibration and tilt sensors with data loggers give engineers a continuous, data-driven view of how bridges behave under real traffic and weather." data-image="images/Anji-Khad-Bridge.jpg" data-gradient="linear-gradient(135deg,var(--accent),var(--purple))" data-link="https://phoenixtek.in/blog/article.html#structural-health-monitoring-engineering-the-future-of-safer-bridges-and-smart-infrastructure">
@@ -2249,7 +2329,7 @@
              is a plain <a> (not .blog-card) on purpose: the document-level
              .blog-card click listener opens a data-attribute modal, which
              this real navigable article shouldn't use. -->
-        <p class="section-subtitle" style="margin:3rem 0 -1rem;font-size:1rem;">Latest announcement</p>
+        <p class="section-subtitle" style="margin:3.5rem auto 1.5rem;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:0.75rem;letter-spacing:0.14em;text-transform:uppercase;color:#8a8178;">Latest announcement</p>
         <div class="blog-grid fade-in">
             <a href="blog/conaid-launch.html" style="display:block;background:white;border-radius:24px;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,0.07);text-decoration:none;color:inherit;transition:transform 0.3s, box-shadow 0.3s;" onmouseover="this.style.transform='translateY(-8px)';this.style.boxShadow='0 20px 60px rgba(0,0,0,0.13)';" onmouseout="this.style.transform='';this.style.boxShadow='0 10px 40px rgba(0,0,0,0.07)';">
                 <div class="blog-image-wrap">
@@ -2278,8 +2358,9 @@
 
 
     <!-- Our Software Section -->
-    <section id="mailmind" style="background: linear-gradient(180deg, #f0f8ff 0%, #FFFFFF 100%);">
-        <h2 class="section-title">Tools & Apps</h2>
+    <section id="mailmind">
+        <span class="sec-pill">Apps</span>
+        <h2 class="section-title">Tools we <em>build.</em></h2>
         <p class="section-subtitle">Beyond instrumentation — tools we build for everyday productivity.</p>
 
         <div class="fade-in apps-grid">
@@ -2328,7 +2409,8 @@
 
     <!-- Downloads Section -->
     <section id="downloads">
-        <h2 class="section-title">Downloads</h2>
+        <span class="sec-pill">Downloads</span>
+        <h2 class="section-title">Datasheets, software and <em>brochures.</em></h2>
         <p class="section-subtitle">Access our brochures, technical datasheets, and monitoring software — everything you need to evaluate our capabilities.</p>
 
         <div class="downloads-grid fade-in">
@@ -2372,7 +2454,8 @@
 
     <!-- Contact Section -->
     <section id="contact">
-        <h2 class="section-title">Get In Touch</h2>
+        <span class="sec-pill sec-pill-dark">Contact</span>
+        <h2 class="section-title">Let's talk about your <em>project.</em></h2>
         <p class="section-subtitle" style="color: #ccc;">Ready to discuss your geotechnical monitoring needs? Contact us for expert consultation and project quotes.</p>
         <div class="contact-container fade-in">
             <div class="contact-info">
