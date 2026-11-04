@@ -76,7 +76,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;700&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -1675,6 +1675,111 @@
                 font-size: 2.5rem;
             }
         }
+
+        /* ===== Redesign: hero, trust strip, services (warm drafting-sheet look) ===== */
+        :root { --paper: #F4EFE8; --paper-2: #FBF8F4; --ink: #17130F; --rule: #E3DBD0; --serif: 'Instrument Serif', Georgia, serif; }
+        .hero {
+            max-width: none; min-height: auto; margin: 0;
+            background: var(--paper); padding: 8.5rem 5% 4.5rem; position: relative; overflow: hidden;
+        }
+        .hero::before {
+            content: ""; position: absolute; inset: 0; width: auto; height: auto; top: 0; right: 0; opacity: 1; animation: none;
+            background:
+                linear-gradient(var(--rule), var(--rule)) calc(50% - 620px) 0 / 1px 100% no-repeat,
+                linear-gradient(var(--rule), var(--rule)) calc(50% + 620px) 0 / 1px 100% no-repeat;
+            pointer-events: none;
+        }
+        .hero::after {
+            content: ""; position: absolute; width: 520px; height: 520px; left: auto; right: -120px; top: 80px; bottom: auto;
+            background: radial-gradient(circle, rgba(255,107,53,0.18), rgba(255,107,53,0) 65%); opacity: 1; animation: none;
+        }
+        .hero-content { max-width: 1240px; margin: 0 auto; grid-template-columns: 1.05fr 1fr; gap: 4.5rem; }
+        .hero-pill {
+            display: inline-flex; align-items: center; gap: 0.6rem; background: #fff; border: 1px solid var(--rule); border-radius: 999px;
+            padding: 0.3rem 0.9rem 0.3rem 0.3rem; font-size: 0.85rem; color: #4a433c; text-decoration: none; margin-bottom: 1.6rem;
+            animation: fadeInUp 0.8s ease 0.1s both; transition: border-color .2s;
+        }
+        .hero-pill:hover { border-color: var(--primary); }
+        .hero-pill span { background: var(--primary); color: #fff; font-weight: 700; font-size: 0.72rem; border-radius: 999px; padding: 0.2rem 0.6rem; }
+        .hero-eyebrow {
+            font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 0.75rem !important; letter-spacing: 0.14em; text-transform: uppercase;
+            color: #8a8178 !important; margin: 0 0 1rem !important; line-height: 1.6 !important;
+        }
+        .hero h1 {
+            font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: clamp(2.6rem, 5.4vw, 4.6rem); line-height: 1.02;
+            letter-spacing: -0.035em; color: var(--ink); margin-bottom: 1.5rem;
+        }
+        .hero h1 em, .section-title em {
+            font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--primary); letter-spacing: -0.01em;
+        }
+        .hero p.hero-lead { font-size: 1.15rem; line-height: 1.7; color: #5b534b; max-width: 540px; margin-bottom: 2.2rem; }
+        .hero .btn { border-radius: 10px; padding: 0.95rem 1.6rem; }
+        .hero .btn-primary { background: var(--primary); box-shadow: 0 10px 24px rgba(255,107,53,0.32); }
+        .hero .btn-secondary { background: #fff; border: 1px solid var(--rule); color: var(--ink); }
+        .hero .btn-secondary:hover { background: var(--ink); border-color: var(--ink); color: #fff; }
+
+        .hero-visual { position: relative; padding: 1.5rem 0 2.5rem; }
+        .hero-photo { border-radius: 22px; overflow: hidden; box-shadow: 0 30px 60px rgba(23,19,15,0.18); border: 6px solid #fff; transform: rotate(1.2deg); }
+        .hero-photo img { display: block; width: 100%; height: 100%; aspect-ratio: 4 / 3.2; object-fit: cover; }
+        .float-card {
+            position: absolute; background: #fff; border: 1px solid var(--rule); border-radius: 14px;
+            box-shadow: 0 14px 30px rgba(23,19,15,0.12); animation: fadeInUp 0.8s ease 1.1s both;
+        }
+        .fc-site { top: 0; right: -1rem; display: flex; align-items: center; gap: 0.7rem; padding: 0.7rem 1rem; }
+        .fc-site i { width: 9px; height: 9px; border-radius: 50%; background: #2fbf71; box-shadow: 0 0 0 4px rgba(47,191,113,0.18); }
+        .fc-site b { display: block; font-size: 0.88rem; color: var(--ink); }
+        .fc-site small { color: #8a8178; font-size: 0.78rem; }
+        .fc-daq { left: -1.5rem; bottom: 0; width: 260px; background: var(--ink); border-color: var(--ink); color: #f4efe8; padding: 0.85rem 1rem 0.9rem; }
+        .fc-head { display: flex; justify-content: space-between; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 0.68rem; letter-spacing: 0.08em; color: #b9afa5; }
+        .fc-head .live { color: var(--primary); }
+        .fc-daq svg { width: 100%; height: 64px; margin: 0.4rem 0 0.2rem; }
+        .fc-daq polyline { fill: none; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+        .fc-daq small { font-size: 0.75rem; color: #b9afa5; }
+
+        .trust-strip { background: var(--paper); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 0 5%; }
+        .trust-inner { max-width: 1240px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); }
+        .trust-inner div { display: grid; grid-template-columns: auto 1fr; column-gap: 0.85rem; align-items: center; padding: 1.4rem 1.2rem; border-left: 1px solid var(--rule); }
+        .trust-inner div:last-child { border-right: 1px solid var(--rule); }
+        .trust-inner svg { grid-row: span 2; width: 30px; height: 30px; fill: none; stroke: var(--primary); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+        .trust-inner b { font-size: 1.05rem; color: var(--ink); line-height: 1.2; }
+        .trust-inner span { font-size: 0.85rem; color: #8a8178; }
+
+        #services { max-width: none; background: var(--paper-2); padding: 6rem 5%; }
+        #services > * { max-width: 1240px; margin-left: auto; margin-right: auto; }
+        .sec-pill {
+            display: table; margin: 0 auto 1.1rem; background: #fff1ea; color: var(--primary); border: 1px solid #ffd9c7;
+            font-size: 0.8rem; font-weight: 700; border-radius: 999px; padding: 0.3rem 0.9rem;
+        }
+        .sec-pill::before { content: "● "; font-size: 0.6rem; vertical-align: 2px; }
+        #services .section-title { font-family: 'DM Sans', sans-serif; font-weight: 700; letter-spacing: -0.03em; color: var(--ink); font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.08; }
+        #services .section-subtitle { color: #6b625a; }
+        #services .services-grid { counter-reset: svc; gap: 1rem; }
+        #services .service-card {
+            counter-increment: svc; background: #fff; border: 1px solid var(--rule); border-radius: 16px; box-shadow: none; padding: 1.6rem 1.5rem 1.7rem;
+        }
+        #services .service-card::before { content: counter(svc, decimal-leading-zero); position: absolute; top: 1.4rem; right: 1.4rem; left: auto; width: auto; height: auto;
+            background: none; transform: none; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 0.75rem; color: #b9afa5; }
+        #services .service-card:hover { transform: translateY(-4px); border-color: #ffc8ae; box-shadow: 0 18px 40px rgba(23,19,15,0.08); }
+        #services .service-icon { width: 48px; height: 48px; border-radius: 12px; background: #fff1ea; font-size: 1.45rem; margin-bottom: 1.2rem; }
+        #services .service-card h3 { font-size: 1.12rem; line-height: 1.3; color: var(--ink); margin-bottom: 0.6rem; }
+        #services .service-card p { font-size: 0.93rem; line-height: 1.6; color: #6b625a; }
+
+        @media (max-width: 1100px) {
+            .hero-content { grid-template-columns: 1fr; gap: 3rem; }
+            .hero-visual { max-width: 640px; margin: 0 auto; width: 100%; }
+            .trust-inner { grid-template-columns: repeat(2, 1fr); }
+            .trust-inner div:nth-child(2) { border-right: 1px solid var(--rule); }
+            .trust-inner div:nth-child(-n+2) { border-bottom: 1px solid var(--rule); }
+        }
+        @media (max-width: 600px) {
+            .hero { padding: 7rem 1rem 3rem; }
+            .hero-pill { font-size: 0.78rem; }
+            .fc-site { right: 0.5rem; }
+            .fc-daq { left: 0.5rem; width: 220px; }
+            .trust-inner { grid-template-columns: 1fr 1fr; }
+            .trust-inner div { padding: 1rem 0.7rem; }
+            .trust-inner svg { width: 24px; height: 24px; }
+        }
     </style>
 </head>
 <body>
@@ -1707,39 +1812,42 @@
     <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="hero-content">
-            <div>
-                <h1>Expert <span class="gradient-text">Geotechnical Instrumentation</span> & Monitoring Solutions</h1>
-                <p>Phoenixtek Solutions delivers precision engineering services in structural health monitoring, geotechnical instrumentation, and infrastructure safety analysis across India.</p>
+            <div class="hero-copy">
+                <a href="products.html" class="hero-pill"><span>New</span> PHX-DAQ 24, our own datalogger, in 360° →</a>
+                <p class="hero-eyebrow">Geotechnical instrumentation · SHM · Load testing</p>
+                <h1>Measured data for safer <em>infrastructure.</em></h1>
+                <p class="hero-lead">Phoenixtek Solutions instruments and monitors bridges, dams, tunnels and metro works across India, from sensor installation and live data acquisition to the final engineering report.</p>
                 <div class="cta-buttons">
-                    <a href="#contact" class="btn btn-primary">Get Started</a>
-                    <a href="#portfolio" class="btn btn-secondary">View Projects</a>
+                    <a href="#contact" class="btn btn-primary">Start a project →</a>
+                    <a href="#portfolio" class="btn btn-secondary">View projects</a>
                 </div>
             </div>
             <div class="hero-visual">
-                <div class="visual-card">
-                    <h3 style="text-align: center; margin-bottom: 1rem;">Our Expertise</h3>
-                    <div class="stats-grid">
-                        <div class="stat-item">
-                            <div class="stat-number">SHM</div>
-                            <div class="stat-label">Structural Health Monitoring</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">IoT</div>
-                            <div class="stat-label">Smart Sensor Network</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">24/7</div>
-                            <div class="stat-label">Live Data Acquisition</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">Cloud</div>
-                            <div class="stat-label">Based Analytics</div>
-                        </div>
-                    </div>
+                <div class="hero-photo">
+                    <img src="images/20260412_071722.jpg" width="1600" height="901" alt="Phoenixtek bridge load test on NH-35: loaded trucks on a steel arch bridge" fetchpriority="high">
+                </div>
+                <div class="float-card fc-site"><i></i><div><b>Bridge load test</b><small>Guma Bridge, NH-35</small></div></div>
+                <div class="float-card fc-daq">
+                    <div class="fc-head"><span>PHX-DAQ 24 · CH1–CH4</span><span class="live">● LIVE</span></div>
+                    <svg viewBox="0 0 220 64" aria-hidden="true">
+                        <polyline points="0,40 18,38 36,30 54,34 72,22 90,26 108,18 126,24 144,14 162,20 180,12 198,16 220,10" style="stroke:#FF6B35"/>
+                        <polyline points="0,50 18,48 36,44 54,46 72,40 90,42 108,36 126,40 144,34 162,36 180,30 198,33 220,28" style="stroke:#F7B267"/>
+                        <polyline points="0,56 18,55 36,53 54,54 72,50 90,51 108,48 126,50 144,46 162,48 180,44 198,45 220,42" style="stroke:#8ec0ff"/>
+                    </svg>
+                    <small>Strain · deflection · temperature</small>
                 </div>
             </div>
         </div>
     </section>
+
+    <div class="trust-strip">
+        <div class="trust-inner">
+            <div><svg viewBox="0 0 24 24"><path d="M3 20h18M5 20V12M19 20V12M3 12c4-7 14-7 18 0M9 20v-6M15 20v-6"/></svg><b>SHM</b><span>Structural health monitoring</span></div>
+            <div><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2.5"/><path d="M7.5 7.5a6.4 6.4 0 0 0 0 9M16.5 7.5a6.4 6.4 0 0 1 0 9M4.6 4.6a10.5 10.5 0 0 0 0 14.8M19.4 4.6a10.5 10.5 0 0 1 0 14.8"/></svg><b>IoT</b><span>Smart sensor network</span></div>
+            <div><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><b>24/7</b><span>Live data acquisition</span></div>
+            <div><svg viewBox="0 0 24 24"><path d="M7 18h10a4 4 0 0 0 .6-7.95A6 6 0 0 0 6.1 9.5 4.3 4.3 0 0 0 7 18z"/></svg><b>Cloud</b><span>Based analytics</span></div>
+        </div>
+    </div>
 
     <!-- About Section -->
     <section id="about">
@@ -1897,8 +2005,9 @@
 
     <!-- Services Section -->
     <section id="services">
-        <h2 class="section-title">Our Services</h2>
-        <p class="section-subtitle">Comprehensive geotechnical and structural monitoring solutions for infrastructure safety and performance</p>
+        <span class="sec-pill">Services</span>
+        <h2 class="section-title">Everything a structure needs to be <em>measured.</em></h2>
+        <p class="section-subtitle">Geotechnical and structural monitoring for infrastructure safety and performance, planned, installed and reported by one team.</p>
         <div class="services-grid fade-in">
             <div class="service-card">
                 <div class="service-icon">🏗️</div>
