@@ -3,24 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Products — PHX-DAQ 24 Datalogger (Coming Soon) | Phoenixtek Solution</title>
+  <title>Products — PHX-DAQ 24 Datalogger (Coming Soon) | Phoenixtek Solutions</title>
   <meta name="description" content="Coming soon: PHX-DAQ 24, a 4-channel 24-bit Ethernet datalogger for strain gauges, load cells, pressure transducers and NTC temperature probes. Modbus TCP for PLC, SCADA and NI LabVIEW, supplied with PHX-Sense Studio.">
   <meta name="keywords" content="PHX-DAQ 24, datalogger, strain gauge datalogger, 24-bit data acquisition, Modbus TCP logger, structural health monitoring instrument, Phoenixtek products">
-  <meta name="author" content="Phoenixtek Solution">
+  <meta name="author" content="Phoenixtek Solutions">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://phoenixtek.in/products.html">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Products — PHX-DAQ 24 Datalogger | Phoenixtek Solution">
+  <meta property="og:title" content="Products — PHX-DAQ 24 Datalogger | Phoenixtek Solutions">
   <meta property="og:description" content="4-channel 24-bit Ethernet datalogger for strain, load, pressure and temperature monitoring on bridges, dams and other structures.">
   <meta property="og:url" content="https://phoenixtek.in/products.html">
   <meta property="og:image" content="https://phoenixtek.in/images/products/phx-daq-24/og.jpg?v=2">
   <meta property="og:locale" content="en_IN">
-  <meta property="og:site_name" content="Phoenixtek Solution">
+  <meta property="og:site_name" content="Phoenixtek Solutions">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Products — PHX-DAQ 24 Datalogger | Phoenixtek Solution">
+  <meta name="twitter:title" content="Products — PHX-DAQ 24 Datalogger | Phoenixtek Solutions">
   <meta name="twitter:description" content="4-channel 24-bit Ethernet datalogger for strain, load, pressure and temperature monitoring.">
   <meta name="twitter:image" content="https://phoenixtek.in/images/products/phx-daq-24/og.jpg?v=2">
 
@@ -31,9 +31,65 @@
     "name": "PHX-DAQ 24",
     "description": "4-channel 24-bit sensor and temperature datalogger with Ethernet, Modbus TCP and PHX-Sense Studio software.",
     "image": "https://phoenixtek.in/images/products/phx-daq-24/og.jpg?v=2",
-    "brand": { "@type": "Brand", "name": "Phoenixtek Solution" },
+    "brand": { "@type": "Brand", "name": "Phoenixtek Solutions" },
     "url": "https://phoenixtek.in/products.html"
   }
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "When will PHX-DAQ 24 be available?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "PHX-DAQ 24 launches in 2026. Register your interest below and we will tell you as soon as units ship. Pilot deployments are available before launch."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is PHX-Sense Studio included?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. PHX-Sense Studio, our Windows console for discovery, live plots, calibration and CSV recording, is supplied with every unit at no extra licence cost. You can download it from this page today."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I connect it to my PLC, SCADA or LabVIEW?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. PHX-DAQ 24 speaks standard Modbus TCP over Ethernet, so any PLC, SCADA system or HMI with a Modbus TCP client can read it without a gateway. A LabVIEW toolkit and a .NET driver are available."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which sensors does it support?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Bridge-type sensors: strain gauges (quarter, half and full bridge), load cells, pressure transducers and force or torque sensors, plus four 10 kΩ NTC temperature probes."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How fast can it sample?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Each channel can be set from 1 to 1000 Hz. 100 Hz is the default for continuous monitoring; higher rates suit short dynamic tests."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does the cost compare with conventional loggers?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A PHX-DAQ 24 costs about one-third of a conventional imported strain logger, and the software is included. Contact us for a quote for your project."
+      }
+    }
+  ]
+}
   </script>
 
   <!-- Google Analytics -->
@@ -352,6 +408,34 @@
     .cta .btns { justify-content: center; }
     .cta-note { font-size: 0.8rem; color: #8a8175; margin: 1.5rem 0 0; }
 
+
+    /* conventional vs PHX-DAQ 24 */
+    .compare { width: 100%; border-collapse: collapse; margin-top: 1.5rem; font-size: 0.95rem; }
+    .compare th, .compare td { padding: 0.8rem 1rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    .compare thead th { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: #777; }
+    .compare thead th.us { color: var(--primary); }
+    .compare td:first-child { font-weight: 700; color: var(--ink); width: 24%; }
+    .compare td.them { color: #666; }
+    .compare td.us { color: var(--ink); font-weight: 700; background: #fff6f1; }
+
+    /* FAQ */
+    .faq details { border-bottom: 1px solid var(--line); padding: 1rem 0; }
+    .faq summary { cursor: pointer; font-weight: 700; color: var(--ink); list-style: none; display: flex; justify-content: space-between; gap: 1rem; }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after { content: "+"; color: var(--primary); font-size: 1.3rem; line-height: 1; }
+    .faq details[open] summary::after { content: "−"; }
+    .faq details p { margin: 0.75rem 0 0; }
+
+    /* enquiry form */
+    .enquiry { max-width: 720px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; text-align: left; }
+    .enquiry label { display: block; font-size: 0.8rem; letter-spacing: 0.06em; color: #c9c2b8; margin-bottom: 0.3rem; }
+    .enquiry input, .enquiry select, .enquiry textarea { width: 100%; font: inherit; font-size: 0.95rem; padding: 0.7rem 0.85rem; border-radius: 8px; border: 1px solid #3a332c; background: #1f1a16; color: #f5f0ea; }
+    .enquiry input:focus, .enquiry select:focus, .enquiry textarea:focus { outline: 2px solid var(--primary); outline-offset: 0; }
+    .enquiry .full { grid-column: 1 / -1; }
+    .enquiry textarea { min-height: 96px; resize: vertical; }
+    .enquiry button { grid-column: 1 / -1; justify-self: center; border: 0; cursor: pointer; font: inherit; font-weight: 700; }
+    @media (max-width: 600px) { .enquiry { grid-template-columns: 1fr; } .compare td:first-child { width: auto; } }
+
     .support-strip {
       background: var(--dark);
       color: #aaa;
@@ -386,7 +470,7 @@
 <body>
 
   <header>
-    <a class="home" href="https://phoenixtek.in">← Phoenixtek Solution</a>
+    <a class="home" href="https://phoenixtek.in">← Phoenixtek Solutions</a>
     <span>/</span>
     <strong>Products</strong>
   </header>
@@ -401,7 +485,7 @@
         <p class="lead">Ethernet-connected logger for strain gauges, load cells, pressure transducers and other bridge-type sensors. Works with PHX-Sense Studio, PLCs, SCADA and NI LabVIEW.</p>
         <div class="btns">
           <a class="btn btn-primary" href="images/products/PHX-DAQ-24_Datasheet_RevB.pdf?v=3" target="_blank" rel="noopener">⬇ Download Datasheet</a>
-          <a class="btn btn-outline" href="mailto:info@phoenixtek.in?subject=PHX-DAQ%2024%20launch%20notification">Notify Me at Launch</a>
+          <a class="btn btn-outline" href="#enquire">Notify Me at Launch</a>
         </div>
       </div>
       <div class="hero-product">
@@ -422,7 +506,7 @@
 
   <div class="section">
     <h2>Introducing <em>PHX-DAQ 24</em></h2>
-    <p>At Phoenixtek Solution we build instruments for engineers who need dependable data from the field. PHX-DAQ 24 puts four 24-bit strain-gauge inputs and four temperature probe inputs on a single module. It samples each strain channel at 100 Hz for everyday monitoring, or up to 1000 Hz for short dynamic tests, and delivers the data over standard Ethernet using Modbus TCP, so it connects straight to PLCs, SCADA systems and NI LabVIEW.</p>
+    <p>At Phoenixtek Solutions we build instruments for engineers who need dependable data from the field. PHX-DAQ 24 puts four 24-bit strain-gauge inputs and four temperature probe inputs on a single module. It samples each strain channel at 100 Hz for everyday monitoring, or up to 1000 Hz for short dynamic tests, and delivers the data over standard Ethernet using Modbus TCP, so it connects straight to PLCs, SCADA systems and NI LabVIEW.</p>
     <p>It ships with PHX-Sense Studio, our Windows console. Find every logger on the network, watch live plots, calibrate and zero each channel, and record to CSV, across as many modules as your project needs.</p>
   </div>
 
@@ -684,15 +768,56 @@
     </div>
   </div>
 
-  <div class="cta">
+  <div class="section">
+    <h2>Why PHX-DAQ 24 <em>instead of a conventional logger</em></h2>
+    <p>Most conventional loggers lock your data into their own software and need extra hardware to talk to a PLC. PHX-DAQ 24 is built around open standards, so it fits the system you already have.</p>
+    <table class="compare">
+      <thead><tr><th></th><th>Conventional logger</th><th class="us">PHX-DAQ 24</th></tr></thead>
+      <tbody>
+        <tr><td>Cost</td><td class="them">Imported, priced per system</td><td class="us">About one-third of the cost</td></tr>
+        <tr><td>Software</td><td class="them">Separate licence</td><td class="us">PHX-Sense Studio included</td></tr>
+        <tr><td>PLC / SCADA link</td><td class="them">Extra gateway or proprietary driver</td><td class="us">Standard Modbus TCP, built in</td></tr>
+        <tr><td>Setup and updates</td><td class="them">Often a site visit</td><td class="us">Over the network from one PC</td></tr>
+        <tr><td>Sensor faults</td><td class="them">Found after data is lost</td><td class="us">Broken-wire check on every channel</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section alt">
+    <div class="wrap faq">
+      <h2>Frequently asked <em>questions</em></h2>
+      <details><summary>When will PHX-DAQ 24 be available?</summary><p>PHX-DAQ 24 launches in 2026. Register your interest below and we will tell you as soon as units ship. Pilot deployments are available before launch.</p></details>
+      <details><summary>Is PHX-Sense Studio included?</summary><p>Yes. PHX-Sense Studio, our Windows console for discovery, live plots, calibration and CSV recording, is supplied with every unit at no extra licence cost. You can download it from this page today.</p></details>
+      <details><summary>Can I connect it to my PLC, SCADA or LabVIEW?</summary><p>Yes. PHX-DAQ 24 speaks standard Modbus TCP over Ethernet, so any PLC, SCADA system or HMI with a Modbus TCP client can read it without a gateway. A LabVIEW toolkit and a .NET driver are available.</p></details>
+      <details><summary>Which sensors does it support?</summary><p>Bridge-type sensors: strain gauges (quarter, half and full bridge), load cells, pressure transducers and force or torque sensors, plus four 10 kΩ NTC temperature probes.</p></details>
+      <details><summary>How fast can it sample?</summary><p>Each channel can be set from 1 to 1000 Hz. 100 Hz is the default for continuous monitoring; higher rates suit short dynamic tests.</p></details>
+      <details><summary>How does the cost compare with conventional loggers?</summary><p>A PHX-DAQ 24 costs about one-third of a conventional imported strain logger, and the software is included. Contact us for a quote for your project.</p></details>
+    </div>
+  </div>
+
+  <div class="cta" id="enquire">
     <h2>PHX-DAQ 24 is coming soon</h2>
-    <p>Register your interest to be told at launch, or talk to us about a pilot deployment on your bridge, dam, tunnel or test rig.</p>
-    <div class="btns">
-      <a class="btn btn-primary" href="mailto:info@phoenixtek.in?subject=PHX-DAQ%2024%20launch%20notification">📩 Register Interest</a>
+    <p>Register your interest to be told at launch, or ask for a quote or a pilot deployment on your bridge, dam, tunnel or test rig.</p>
+    <form class="enquiry" id="phx-enquiry" action="https://formspree.io/f/xnjrdqjv" method="POST">
+      <input type="hidden" name="_subject" value="PHX-DAQ 24 enquiry">
+      <div><label for="eq-name">Name</label><input id="eq-name" name="name" required autocomplete="name"></div>
+      <div><label for="eq-email">Email</label><input id="eq-email" type="email" name="email" required autocomplete="email"></div>
+      <div><label for="eq-org">Organisation</label><input id="eq-org" name="company" autocomplete="organization"></div>
+      <div><label for="eq-type">I'm interested in</label>
+        <select id="eq-type" name="interest">
+          <option>Launch notification</option>
+          <option>Quote</option>
+          <option>Pilot deployment</option>
+          <option>Integration (PLC / SCADA / LabVIEW)</option>
+        </select></div>
+      <div class="full"><label for="eq-msg">Project details (structure, number of sensors, timeline)</label><textarea id="eq-msg" name="message"></textarea></div>
+      <button type="submit" class="btn btn-primary">📩 Send Enquiry</button>
+    </form>
+    <div class="btns" style="margin-top:1.75rem;">
       <a class="btn btn-outline" href="images/products/PHX-DAQ-24_Datasheet_RevB.pdf?v=3" target="_blank" rel="noopener">⬇ Datasheet (PDF)</a>
       <a class="btn btn-outline" href="images/products/PHX-DAQ-24_Integration_Overview.pdf?v=2" target="_blank" rel="noopener">⬇ Integration Overview (PDF)</a>
     </div>
-    <p class="cta-note">Specifications are subject to change without notice. PHX-DAQ 24 and PHX-Sense Studio are products of Phoenixtek Solution. LabVIEW is a trademark of National Instruments. Document DS-PHXDAQ24, Rev B, October 2026.</p>
+    <p class="cta-note">Specifications are subject to change without notice. PHX-DAQ 24 and PHX-Sense Studio are products of Phoenixtek Solutions. LabVIEW is a trademark of National Instruments. Document DS-PHXDAQ24, Rev B, October 2026.</p>
   </div>
 
   <div class="support-strip">
@@ -700,7 +825,7 @@
   </div>
 
   <footer>
-    <p>© 2026 Phoenixtek Solution. All rights reserved. &nbsp;|&nbsp; <a href="https://phoenixtek.in">phoenixtek.in</a></p>
+    <p>© 2026 Phoenixtek Solutions. All rights reserved. &nbsp;|&nbsp; <a href="https://phoenixtek.in">phoenixtek.in</a></p>
   </footer>
 
   <script>
@@ -782,6 +907,25 @@
     };
     requestAnimationFrame(tick);
   })();
+  </script>
+  <script>
+    // Analytics: count downloads, WhatsApp/call/email clicks and enquiry form submissions as GA4 events
+    (() => {
+        if (typeof gtag !== 'function') return;
+        document.addEventListener('click', e => {
+            const a = e.target.closest('a[href]');
+            if (!a) return;
+            const href = a.getAttribute('href');
+            const file = href.split('?')[0].split('/').pop();
+            if (/\.(pdf|exe|apk|zip)$/i.test(file)) gtag('event', 'file_download', { file_name: file, link_url: a.href });
+            else if (/wa\.me|whatsapp/i.test(href)) gtag('event', 'whatsapp_click', { link_url: a.href });
+            else if (href.startsWith('tel:')) gtag('event', 'phone_click');
+            else if (href.startsWith('mailto:')) gtag('event', 'email_click', { link_url: href.split('?')[0] });
+        });
+        document.addEventListener('submit', e => {
+            gtag('event', 'generate_lead', { form_id: e.target.id || e.target.getAttribute('action') || 'form', page: location.pathname });
+        });
+    })();
   </script>
 </body>
 </html>
