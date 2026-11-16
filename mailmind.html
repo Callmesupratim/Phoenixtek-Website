@@ -237,8 +237,35 @@
        style="display:inline-block;background:linear-gradient(135deg,#FF6B35,#ff8c5a);color:white;font-weight:700;font-size:1rem;padding:0.85rem 2.2rem;border-radius:50px;text-decoration:none;margin-top:0.5rem;">
       ⬇ Download for Windows
     </a>
-    <p style="color:#666;font-size:0.8rem;margin-top:0.75rem;">Free download · Windows 10/11 · <span class="mm-version">v1.1.13</span></p>
+    <p style="color:#666;font-size:0.8rem;margin-top:0.75rem;">Free download · Windows 10/11 · <span class="mm-version">v1.1.13</span> · <a href="#previous-versions" style="color:#FF6B35;">Previous versions</a></p>
   </div>
+
+  <div class="section" id="previous-versions">
+    <h2>Previous versions</h2>
+    <p>Need an earlier build? Download any past release of Mailmind below. Mailmind checks for updates when it starts, so an older version may offer to update itself to the latest release.</p>
+    <div class="mm-old-list" id="mm-old-list">
+      <p style="color:#888;">Loading releases… If this list does not appear, browse all versions on <a href="https://github.com/Callmesupratim/mailmind/releases" target="_blank" rel="noopener">GitHub Releases</a>.</p>
+    </div>
+    <button type="button" id="mm-old-more" class="mm-old-more" hidden>Show all versions</button>
+    <p style="font-size:0.85rem;color:#888;margin-top:1rem;">Full release notes: <a href="https://github.com/Callmesupratim/mailmind/releases" target="_blank" rel="noopener">github.com/Callmesupratim/mailmind/releases</a></p>
+  </div>
+  <style>
+    .mm-old-list { border: 1px solid #E3DBD0; border-radius: 14px; overflow: hidden; background: #fff; }
+    .mm-old-row { display: grid; grid-template-columns: 90px 1fr auto auto; gap: 1rem; align-items: center; padding: 0.8rem 1.1rem; border-top: 1px solid #EFE8DF; font-size: 0.92rem; }
+    .mm-old-row:first-child { border-top: none; }
+    .mm-old-row.hidden-row { display: none; }
+    .mm-old-row .v { font-weight: 700; color: #17130F; font-variant-numeric: tabular-nums; }
+    .mm-old-row .t { color: #6b625a; }
+    .mm-old-row .d { color: #8a8178; font-size: 0.82rem; white-space: nowrap; font-variant-numeric: tabular-nums; }
+    .mm-old-row a.dl { color: #FF6B35; font-weight: 700; text-decoration: none; white-space: nowrap; }
+    .mm-old-row a.dl:hover { text-decoration: underline; }
+    .mm-old-more { margin-top: 0.9rem; background: #fff; border: 1px solid #E3DBD0; border-radius: 10px; padding: 0.6rem 1.2rem; font: inherit; font-weight: 600; cursor: pointer; color: #17130F; }
+    .mm-old-more:hover { border-color: #FF6B35; color: #FF6B35; }
+    @media (max-width: 600px) {
+      .mm-old-row { grid-template-columns: 70px 1fr auto; }
+      .mm-old-row .t { display: none; }
+    }
+  </style>
 
   <div class="section">
     <h2>What is Mailmind?</h2>
@@ -325,12 +352,41 @@
   </footer>
 
 <script>
-  fetch('https://api.github.com/repos/Callmesupratim/mailmind/releases/latest')
+  // Latest version label + "Previous versions" list, both from the public GitHub releases API
+  fetch('https://api.github.com/repos/Callmesupratim/mailmind/releases?per_page=100')
     .then(function(r){ return r.ok ? r.json() : null; })
-    .then(function(d){
-      if (!d || !d.tag_name) return;
-      var v = d.tag_name;
-      document.querySelectorAll('.mm-version').forEach(function(el){ el.textContent = v; });
+    .then(function(list){
+      if (!Array.isArray(list)) return;
+      var rel = list.filter(function(r){ return !r.draft && !r.prerelease; });
+      if (!rel.length) return;
+      var latest = rel[0].tag_name;
+      document.querySelectorAll('.mm-version').forEach(function(el){ el.textContent = latest; });
+
+      var box = document.getElementById('mm-old-list'), more = document.getElementById('mm-old-more');
+      var SHOW = 8, rows = [];
+      rel.slice(1).forEach(function(r){
+        var exe = (r.assets || []).filter(function(a){ return /\.exe$/i.test(a.name); })[0];
+        if (!exe) return;
+        var title = (r.name || '').replace(/^(Mailmind\s+)?v?[\d.]+\s*[—–-]?\s*/i, '');
+        var date = new Date(r.published_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+        var row = document.createElement('div');
+        row.className = 'mm-old-row' + (rows.length >= SHOW ? ' hidden-row' : '');
+        var v = document.createElement('span'); v.className = 'v'; v.textContent = r.tag_name;
+        var t = document.createElement('span'); t.className = 't'; t.textContent = title;
+        var d = document.createElement('span'); d.className = 'd'; d.textContent = date;
+        var a = document.createElement('a'); a.className = 'dl'; a.href = exe.browser_download_url;
+        a.textContent = '⬇ ' + (exe.size ? (exe.size / 1048576).toFixed(0) + ' MB' : 'Download');
+        a.setAttribute('aria-label', 'Download Mailmind ' + r.tag_name);
+        row.append(v, t, d, a); rows.push(row);
+      });
+      if (!rows.length) return;
+      box.textContent = '';
+      rows.forEach(function(row){ box.appendChild(row); });
+      if (rows.length > SHOW) {
+        more.hidden = false;
+        more.textContent = 'Show all ' + rows.length + ' versions';
+        more.onclick = function(){ rows.forEach(function(row){ row.classList.remove('hidden-row'); }); more.hidden = true; };
+      }
     })
     .catch(function(){});
 </script>
