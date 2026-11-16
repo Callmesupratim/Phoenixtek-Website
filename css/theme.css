@@ -1,6 +1,5 @@
 /* Phoenixtek site theme: the warm drafting-sheet look from the homepage, applied to every sub-page.
    Linked last in each page's <head>, so it overrides that page's own inline styles. */
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Instrument+Serif:ital@1&display=swap');
 
 :root {
   --primary: #FF6B35;
@@ -68,3 +67,29 @@ article h2, article h3 { font-family: 'DM Sans', sans-serif; font-weight: 700; c
 /* Policy pages */
 .pp h1 { color: var(--ink); font-size: 2rem; letter-spacing: -0.03em; }
 .pp h2 { color: var(--ink); }
+
+/* WhatsApp floating button (same as homepage) */
+.whatsapp-btn {
+  position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 999;
+  width: 56px; height: 56px; border-radius: 50%; background: #25D366;
+  display: flex; align-items: center; justify-content: center; text-decoration: none;
+  box-shadow: 0 6px 20px rgba(37,211,102,0.4); transition: transform .2s, box-shadow .2s;
+}
+.whatsapp-btn:hover { transform: scale(1.1); box-shadow: 0 8px 28px rgba(37,211,102,0.55); }
+.whatsapp-btn svg { width: 30px; height: 30px; fill: #fff; }
+@media print { .whatsapp-btn { display: none; } }
+
+/* "From Paper Files to Real-Time Control" article: drafting-sheet layout, site palette and type */
+body:has(> .sheet) {
+  --paper: #F4EFE8; --paper-raised: #fff; --ink: #17130F; --ink-soft: #6b625a;
+  --line: #E3DBD0; --line-soft: #ECE5DB; --accent: #FF6B35; --accent-ink: #c4471a;
+  --steel: #3d3530; --steel-soft: #F4EFE8;
+  font-family: 'DM Sans', -apple-system, "Segoe UI", sans-serif; font-size: 17px;
+}
+.backnav a, .sheet .eyebrow, .sheet .meta-field, .sheet .signoff { font-family: 'DM Sans', sans-serif; }
+.sheet .eyebrow { font-family: ui-monospace, Menlo, Consolas, monospace; font-weight: 500; letter-spacing: 0.14em; }
+.sheet .titleblock { border-radius: 18px; border-top-width: 1px; box-shadow: 0 20px 44px rgba(23,19,15,0.08); }
+.sheet h1 { font-family: 'DM Sans', sans-serif; letter-spacing: -0.035em; line-height: 1.08; }
+.sheet .dek { font-family: var(--serif); font-size: 22px; line-height: 1.4; }
+.sheet blockquote { font-family: var(--serif); font-style: italic; }
+.sheet figure > div, .sheet .fig-frame { border-radius: 14px; }
